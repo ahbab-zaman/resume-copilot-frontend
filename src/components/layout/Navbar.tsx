@@ -1,8 +1,14 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 
+import { auth } from "@/lib/auth";
 import { navLinks } from "@/components/landing/content";
 
-export function Navbar() {
+import { NavbarActions } from "./NavbarActions";
+
+export async function Navbar() {
+  const session = await auth.api.getSession({ headers: await headers() });
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -30,20 +36,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            href="/login"
-            className="hidden h-8 items-center justify-center rounded-sm border border-border bg-surface px-3 text-[14px] font-medium leading-5 text-text-primary transition hover:bg-surface-secondary sm:inline-flex"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/register"
-            className="inline-flex h-8 items-center justify-center rounded-sm bg-accent px-3 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90"
-          >
-            Get started
-          </Link>
-        </div>
+        <NavbarActions user={session?.user ?? null} />
       </div>
     </header>
   );

@@ -1,13 +1,15 @@
 # Progress Tracker
 
+> **Used in:** Frontend repo AND Backend repo. Each repo keeps its own copy and checks off only the boxes relevant to it for shared features - update this after every completed feature.
+
 ---
 
 ## Current Status
 
-**Phase:** Phase 2 - App Shell
+**Phase:** Phase 4 - Copilot Flow
 **Repo (frontend/backend/both):** frontend
-**Last completed:** better-auth auth flow, authenticated shell, placeholder dashboard, JWT-aware API client, and frontend better-auth schema migration
-**Next:** build the pricing page, then finish the backend JWT verification middleware for cross-repo auth
+**Last completed:** 11 ATS Analysis - AI Service
+**Next:** 12 Resume Optimizer
 
 ---
 
@@ -16,61 +18,60 @@
 ### Phase 1 - Foundation
 
 - [ ] 01 Backend Skeleton _(backend)_
-- [x] 02 Frontend Skeleton + better-auth _(frontend)_
+- [x] 02 Frontend Skeleton + better-auth _(frontend)_ - email/password + Google OAuth working
 - [ ] 03 Database Schema _(both)_
 - [ ] 04 Cross-Repo Auth Wiring _(both)_
 
 ### Phase 2 - App Shell
 
-- [x] 05 Sidebar + Authenticated Layout _(frontend)_
-- [ ] 06 Landing + Pricing Pages _(frontend)_
+- [ ] 05 Sidebar + Authenticated Layout _(frontend)_
+- [x] 06 State Management Setup _(frontend)_ - QueryProvider/ReduxProvider added and root layout wrapped
+- [ ] 07 Landing + Pricing Pages _(frontend)_
 
 ### Phase 3 - Resume Manager
 
-- [ ] 07 Resumes Page - Full UI _(frontend)_
-- [ ] 08 Resume Upload + Extraction _(both)_
+- [x] 08 Resumes Page - Full UI _(frontend)_ - resume library UI with upload, inline rename, delete, and set-active actions
+- [x] 09 Resume Upload + Extraction _(both)_ - frontend wired to the backend resumes API
 
 ### Phase 4 - Copilot Flow
 
-- [ ] 09 Copilot Page - Full UI _(frontend)_
-- [ ] 10 ATS Analysis - AI Service _(both)_
-- [ ] 11 Resume Optimizer _(both)_
-- [ ] 12 Cover Letter Generator _(both)_
-- [ ] 13 Mock Interview Generator (Copilot tab) _(both)_
+- [x] 10 Copilot Page - Full UI _(frontend)_ - dense three-column Copilot workspace with analysis input, processing states, and output tabs
+- [x] 11 ATS Analysis - AI Service _(both)_ - frontend wired to the backend analyses API and renders live ATS results
+- [ ] 12 Resume Optimizer _(both)_
+- [ ] 13 Cover Letter Generator _(both)_
+- [ ] 14 Mock Interview Generator (Copilot tab) _(both)_
 
 ### Phase 5 - Interview Practice
 
-- [ ] 14 Interview Page - Full UI _(frontend)_
-- [ ] 15 Interview Page - Wired _(both)_
+- [ ] 15 Interview Page - Full UI _(frontend)_
+- [ ] 16 Interview Page - Wired _(both)_
 
 ### Phase 6 - Application Tracker
 
-- [ ] 16 Applications Page - Full UI _(frontend)_
-- [ ] 17 Applications - Wired _(both)_
+- [ ] 17 Applications Page - Full UI _(frontend)_
+- [ ] 18 Applications - Wired _(both)_
 
 ### Phase 7 - Dashboard
 
-- [ ] 18 Dashboard Page - Full UI _(frontend)_
-- [ ] 19 Dashboard - Real Data _(both)_
+- [ ] 19 Dashboard Page - Full UI _(frontend)_
+- [ ] 20 Dashboard - Real Data _(both)_
 
 ### Phase 8 - Settings
 
-- [ ] 20 Settings Page _(frontend)_
+- [ ] 21 Settings Page _(frontend)_
 
 ---
 
 ## Decisions Made During Build
 
-- Authentication is owned entirely by the frontend via better-auth.
-- The authenticated shell redirects unauthenticated users at the layout level.
-- The frontend API client fetches a fresh bearer JWT per request instead of caching it.
-- Google OAuth is wired in the auth config when the required client credentials are present.
-- The frontend better-auth tables (`user`, `session`, `account`, `verification`) are now provisioned in the shared Postgres database.
+- TanStack Query owns all backend/server state in the frontend.
+- Redux Toolkit is reserved for client-only cross-page state like active resume and UI preferences.
+- The root layout now mounts both providers once, instead of recreating them per page.
+- The Copilot workspace now owns the ATS analysis flow in the frontend, with live data rendered from the backend analyses endpoint.
 
 ---
 
 ## Notes
 
-- Frontend auth pages are implemented at `/login` and `/register`.
-- The authenticated routes `/dashboard`, `/copilot`, `/resumes`, `/applications`, `/interview`, and `/settings` now exist behind the app layout guard.
-- Backend `verifyAuth` middleware still needs to be completed to finish cross-repo auth wiring.
+- Feature 03 (Database Schema) is partially done from this repo's side: better-auth's own tables (`user`, `session`, `account`, `verification`) already exist since auth is working. The box stays unchecked until the backend's Sequelize-owned tables also exist - it's a _(both)_ feature.
+- TanStack Query and Redux Toolkit are now installed and wired into the root layout. Query state is reserved for backend data; Redux is reserved for client-only cross-page state.

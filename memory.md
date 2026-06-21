@@ -1,49 +1,40 @@
-# Memory â€” Landing Page UI (Frontend)
+# Memory â€” Copilot ATS UI + Wiring (Frontend)
 
-Last updated: 2026-06-21 00:00
+Last updated: 2026-06-22
 
 ## What was built
 
-- Replaced the starter `src/app/page.tsx` with a full static landing page UI for Feature 06.
-- The page now includes:
-  - sticky public navbar
-  - hero section with mesh-gradient style background treatment
-  - CTA pair for `Try free` and `See pricing`
-  - trust strip
-  - feature grid
-  - metrics band
-  - testimonial/social-proof section
-  - pricing cards
-  - FAQ section
-  - dark CTA banner
-  - footer
-- Updated `src/app/layout.tsx` metadata and body classes to match the design system baseline.
-- Captured the landing page patterns in `context/ui-registry.md`.
+- Replaced the `/copilot` placeholder with a full in-app Copilot workspace in `src/components/copilot/CopilotWorkspace.tsx`.
+- Wired the page from `src/app/(app)/copilot/page.tsx`.
+- Added frontend API contract types in `src/types/api.ts`.
+- Added a TanStack Query hook for analysis fetches in `src/hooks/queries/useAnalysis.ts`.
+- Updated `context/ui-registry.md` with the Copilot workspace visual pattern.
+- Updated `context/progress-tracker.md` to mark Copilot page UI and ATS analysis wiring as completed on the frontend side.
+- Added `ai-resume-frontend/.env.example` for local setup documentation.
 
 ## Decisions made
 
-- Kept the landing page mock-data only, with no logic or backend wiring.
-- Followed the marketing register from `ui-rules.md`: pill buttons, larger radii, generous section spacing, and the hero-only gradient treatment.
-- Used the existing project tokens from `ui-tokens.md` and avoided raw Tailwind color scales.
-- Preserved the reference page structure rather than inventing a different marketing layout.
+- Kept the Copilot screen in the in-app register: 6/8px radius, dense cards, no marketing-style visuals.
+- Used a preview analysis state so the full layout is visible before data exists.
+- Treated analysis data as server state via TanStack Query and kept Redux out of the Copilot flow.
+- Used the backend analyses API as the source of truth for saved ATS results.
 
 ## Problems solved
 
-- The repo initially had the default Next.js starter page at `src/app/page.tsx`; that was fully replaced.
-- `npm run lint` could not run directly in PowerShell because of execution policy, so it was verified successfully via `cmd /c npm run lint`.
-- `npm run build` completed successfully after the landing page changes.
+- The Copilot route was a placeholder before this session.
+- The frontend build completed successfully after wiring the new page and API types.
 
 ## Current state
 
-- The landing page renders as a static marketing page and matches the supplied `public/assets/home.jpg` direction closely.
-- `context/ui-registry.md` now has the landing-page shell patterns recorded in the registry format.
-- No product logic is connected on the landing page yet.
+- `/copilot` now has a three-panel analysis workspace with input, processing, ATS score summary, insights, and tabbed output previews.
+- The frontend is ready to call `POST /api/analyses` and display the returned analysis.
+- The backend analyses endpoint was implemented in the same session and the frontend is aligned to that contract.
 
 ## Next session starts with
 
-- Build the `/pricing` page in the same marketing register and visual language, still using mock data only.
+- Build the resume optimizer flow for `POST /api/analyses/:id/optimize` and wire the “Resume draft” tab to live data.
 
 ## Open questions
 
-- None for the frontend landing page work.
-- The backend repo does not need any follow-up from this session.
+- The optimize/cover letter/interview endpoints are not wired yet.
+- Google OAuth remains optional and depends on whether the corresponding frontend credentials are available.

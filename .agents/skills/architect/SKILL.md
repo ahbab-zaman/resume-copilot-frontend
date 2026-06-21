@@ -1,117 +1,399 @@
+# Architecture
+
+> **Used in:** Frontend repo AND Backend repo (identical copy in both `context/` folders). This is the most important file in the project — it defines the boundary between the two codebases.
+
+## Why Two Repos
+
+The original reference docs this project is adapted from assumed one Next.js full-stack app (Server Actions, API routes, and DB calls all in the same process). **This project is split into two deployable services that share one PostgreSQL database and talk over HTTP:**
+
+```
+┌─────────────────────────┐         REST + Bearer JWT        ┌──────────────────────────┐
+│   FRONTEND (Next.js)    │ ───────────────────────────────▶ │   BACKEND (Express)     │
+│   - All UI               │                                  │   - All business logic   │
+│   - better-auth (full)   │ ◀─────────────────────────────── │   - All AI calls         │
+│   - issues session JWTs  │           JSON responses          │   - Sequelize / Postgres │
+└────────────┬─────────────┘                                  └────────────┬─────────────┘
+             │                                                              │
+             │              shared Postgres instance, different schemas    │
+             └──────────────────────────────────────────────────────────────┘
+```
+
+Neither repo imports code from the other. The only contract between them is the REST API documented below and the JWT verification mechanism.
+
 ---
-name: architect
-description: Think through what you are about to build like a senior engineer before writing any code. Surfaces decisions, aligns on language, and produces a clear implementation plan you confirm before anything starts.
+
+## Stack
+
+| Layer                  | Tool                                                             | Lives In           |
+| ---------------------- | ---------------------------------------------------------------- | ------------------ |
+| Frontend framework     | Next.js 15+ (App Router)                                         | Frontend repo      |
+| Styling                | Tailwind CSS + shadcn/ui                                         | Frontend repo      |
+| Auth                   | better-auth (email/password + Google OAuth, owns its own tables) | Frontend repo      |
+| Backend framework      | Express + TypeScript                                             | Backend repo       |
+| ORM                    | Sequelize                                                        | Backend repo       |
+| Database               | PostgreSQL (single instance, shared)                             | Both connect to it |
+| AI — primary           | Gemini 2.5 Flash                                                 | Backend repo only  |
+| AI — fallback          | DeepSeek V3                                                      | Backend repo only  |
+| PDF generation         | @react-pdf/renderer                                              | Backend repo only  |
+| Resume text extraction | pdf-parse                                                        | Backend repo only  |
+| Language               | TypeScript strict                                                | Both               |
+
 ---
 
-> **Project-specific addendum (AI Resume Job Pilot):** This project is split into two repos — a Next.js frontend and an Express backend — that share one Postgres database and talk only over the REST contract documented in `architecture.md`. Before Step 1 finishes, always identify which repo (or both) the feature touches, using `build-plan.md`'s frontend/backend/both labelling as the reference. If a feature spans both, the implementation plan in Step 5 must say explicitly which parts happen in which repo and what the REST contract between them looks like for this feature — never let "the feature" stay ambiguous about which codebase owns which piece.
+## Authentication — How It Crosses the Boundary
 
-You are a senior engineer sitting with a developer before they start building. Your job is not to interrogate them — it is to think alongside them. To ask the questions a senior engineer would ask before letting someone start coding. To catch the things that seem obvious but aren't. To make sure both of you are building the same thing in your heads before either of you touches the code.
+**better-auth owns authentication completely.** It runs inside the Next.js app, manages its own tables (`user`, `session`, `account`, `verification`) in the shared Postgres database, and handles email/password + Google OAuth end to end. The Express backend never touches these tables and never issues or revalidates sessions itself.
 
-This is a thinking session. Not a grilling session.
+To let the backend trust a request, better-auth's **JWT plugin** is enabled:
 
-## Step 1 — Understand What's Here
-
-Before saying anything, take stock of what already exists:
-
-- Read the feature description the developer gave you
-- Read any context files, documentation, or existing code available — for this project that means `project-overview.md`, `architecture.md`, `build-plan.md`, `progress-tracker.md`, `code-standards.md`, and `library-docs.md` in this repo's `context/` folder
-- Build a clear picture of what needs to be built and what already exists
-- Identify whether the feature lives in this repo only, the other repo only, or both — if both, note the exact REST endpoint(s) from `architecture.md` that will carry the contract between them
-
-Do not ask about anything already clearly answered by existing documentation. A good senior engineer does their homework before the meeting.
-
-## Step 2 — Align on Language
-
-Every project has its own vocabulary. Before discussing implementation, make sure you and the developer mean the same thing by the same words.
-
-Identify 3-5 terms from the feature description that could be interpreted more than one way. Define each one based on what you understand from the context. Present them to the developer for confirmation.
+1. Frontend signs a user in via better-auth (cookie-based session as normal for browser navigation).
+2. For every call to the Express API, the frontend's API client fetches a short-lived JWT from better-auth (`authClient.token()` / the JWT plugin's token endpoint) and sends it as `Authorization: Bearer <token>`.
+3. better-auth exposes a JWKS endpoint at `https://<frontend-domain>/api/auth/jwks`.
+4. The Express backend has a middleware that fetches and caches that JWKS, verifies the JWT signature and expiry on every request using `jose`, and extracts `userId` from the `sub` claim.
+5. If verification fails → `401` with a generic message. The backend never tries to renew or manage the session itself — that is entirely the frontend's job.
 
 ```
-Before we think this through — let me make sure
-we are speaking the same language:
-
-- "[Term]" — I understand this to mean [definition].
-  Is that right?
-- "[Term]" — I am treating this as [definition].
-  Does that match what you have in mind?
-
-Correct anything that is off before we go further.
+Browser ──login──▶ better-auth (Next.js) ──writes──▶ user/session/account tables
+Browser ──API call + Bearer JWT──▶ Express ──verifies via JWKS──▶ trusts req.userId
 ```
 
-Update your understanding immediately if the developer corrects a term. Do not continue until the language is aligned.
+**Invariant:** the backend must never accept a request without a valid, verified JWT on any route except health checks. There is no backend-side login, registration, or token-issuing code at all — if a feature seems to need one, it belongs in the frontend's better-auth config instead.
 
-## Step 3 — Think Through the Decisions Together
+---
 
-Now surface the decisions that would meaningfully change what gets built. Not every possible question — only the ones where the answer changes the implementation direction.
-
-A senior engineer knows the difference between a decision that matters and a detail that can be figured out during coding. Ask only what matters.
-
-For each decision:
-
-- Ask one question at a time
-- Share what you would do and why — give the developer something to react to, not a blank page to fill
-- Listen to their answer before moving to the next decision
-- If their answer makes another decision irrelevant — skip it
+## Folder Structure — Frontend Repo
 
 ```
-[The decision that needs to be made]
-
-My thinking: [what you would do and the reason behind it]
-
-What do you think — does that approach work for you,
-or do you see it differently?
+/
+├── context/                       → these 9 files
+├── app/
+│   ├── layout.tsx                 → Root layout, font, theme provider
+│   ├── page.tsx                   → Landing page
+│   ├── (marketing)/
+│   │   └── pricing/page.tsx
+│   ├── (auth)/
+│   │   ├── login/page.tsx
+│   │   └── register/page.tsx
+│   ├── (app)/                     → authenticated shell with sidebar layout
+│   │   ├── layout.tsx             → Sidebar + auth guard
+│   │   ├── dashboard/page.tsx
+│   │   ├── copilot/page.tsx
+│   │   ├── resumes/page.tsx
+│   │   ├── applications/page.tsx
+│   │   ├── interview/page.tsx
+│   │   └── settings/page.tsx
+│   └── api/
+│       └── auth/[...all]/route.ts → better-auth handler, the ONLY backend-like code in this repo
+├── components/
+│   ├── ui/                        → shadcn/ui components only
+│   ├── layout/
+│   │   ├── Sidebar.tsx
+│   │   ├── Navbar.tsx             → public marketing navbar
+│   │   └── Footer.tsx
+│   ├── landing/
+│   │   ├── Hero.tsx
+│   │   ├── Features.tsx
+│   │   ├── HowItWorks.tsx
+│   │   └── Faq.tsx
+│   ├── copilot/
+│   │   ├── UploadPanel.tsx
+│   │   ├── ProcessingSteps.tsx
+│   │   ├── AtsScoreDashboard.tsx
+│   │   ├── InsightsPanel.tsx
+│   │   └── OutputTabs.tsx
+│   ├── resumes/
+│   │   └── ResumeTable.tsx
+│   ├── applications/
+│   │   ├── KanbanBoard.tsx
+│   │   └── ApplicationCard.tsx
+│   ├── interview/
+│   │   └── QuestionCard.tsx
+│   └── settings/
+│       └── ProfileForm.tsx
+├── providers/
+│   ├── QueryProvider.tsx           → wraps the app in a TanStack Query QueryClientProvider
+│   └── ReduxProvider.tsx           → wraps the app in the Redux store Provider
+├── store/
+│   ├── index.ts                    → configureStore(), combines slices
+│   ├── activeResumeSlice.ts         → currently active resume, shared across pages
+│   ├── uiSlice.ts                  → theme, sidebar collapsed state
+│   └── hooks.ts                    → typed useAppDispatch / useAppSelector
+├── hooks/
+│   └── queries/                    → one file per resource, TanStack Query hooks only
+│       ├── useResumes.ts
+│       ├── useAnalysis.ts
+│       └── useApplications.ts
+├── lib/
+│   ├── auth.ts                    → better-auth server instance + JWT plugin config
+│   ├── auth-client.ts              → better-auth React client
+│   ├── api-client.ts              → fetch wrapper that calls the Express backend with Bearer token
+│   └── utils.ts
+└── types/
+    └── api.ts                     → request/response types mirroring the backend contract (hand-kept in sync, never imported across repos)
 ```
 
-Work through decisions in order of impact. The decision that affects the most downstream work comes first. For this project, a decision that changes the REST contract between the two repos always outranks a decision that's contained inside one repo, since it affects both codebases.
-
-## Step 4 — Know When You Are Done
-
-Stop when every decision that would change the implementation has been resolved. Not when every possible question is answered. When what matters is settled.
-
-A good senior engineer knows when the plan is solid enough to start. They do not keep asking questions for the sake of being thorough.
-
-When you are done, say:
+## Folder Structure — Backend Repo
 
 ```
-Blueprint ready.
+/
+├── context/                       → these 9 files
+├── src/
+│   ├── server.ts                  → entrypoint, starts Express
+│   ├── app.ts                     → Express app, middleware wiring
+│   ├── config/
+│   │   ├── db.ts                  → Sequelize instance
+│   │   └── env.ts                 → typed env var loader
+│   ├── middleware/
+│   │   ├── verifyAuth.ts          → JWKS fetch + JWT verification
+│   │   └── errorHandler.ts
+│   ├── models/                    → Sequelize models — one file per table
+│   │   ├── Resume.ts
+│   │   ├── JobAnalysis.ts
+│   │   ├── OptimizedResume.ts
+│   │   ├── CoverLetter.ts
+│   │   ├── InterviewSession.ts
+│   │   ├── Application.ts
+│   │   └── AgentLog.ts
+│   ├── routes/                    → route definitions only, no logic
+│   │   ├── resumes.routes.ts
+│   │   ├── analyses.routes.ts
+│   │   ├── coverLetters.routes.ts
+│   │   ├── interview.routes.ts
+│   │   ├── applications.routes.ts
+│   │   └── dashboard.routes.ts
+│   ├── controllers/               → request/response handling, calls services
+│   │   ├── resumes.controller.ts
+│   │   ├── analyses.controller.ts
+│   │   ├── coverLetters.controller.ts
+│   │   ├── interview.controller.ts
+│   │   ├── applications.controller.ts
+│   │   └── dashboard.controller.ts
+│   ├── services/
+│   │   ├── ai/
+│   │   │   ├── geminiClient.ts
+│   │   │   ├── deepseekClient.ts
+│   │   │   ├── aiClient.ts        → generateStructured() with fallback logic
+│   │   │   └── prompts/           → one file per AI feature
+│   │   │       ├── atsAnalysis.ts
+│   │   │       ├── resumeOptimizer.ts
+│   │   │       ├── coverLetter.ts
+│   │   │       └── interviewQuestions.ts
+│   │   ├── pdf/
+│   │   │   └── generatePdf.tsx
+│   │   └── parsing/
+│   │       └── extractResumeText.ts
+│   ├── types/
+│   │   └── index.ts
+│   └── utils/
+│       └── logger.ts
 ```
 
-## Step 5 — Produce the Implementation Plan
+---
 
-After saying "Blueprint ready", write a clear implementation plan based on everything discussed.
+## System Boundaries
+
+| Folder                               | Owns                                                                                                                 |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `app/` (frontend)                    | Pages and layouts only. No business logic, no direct DB access.                                                      |
+| `components/` (frontend)             | UI only. Data comes from props or `lib/api-client.ts` calls.                                                         |
+| `lib/auth*.ts` (frontend)            | The entire authentication system. Nothing outside this touches auth tables.                                          |
+| `routes/` + `controllers/` (backend) | HTTP layer only — validation, calling services, shaping the response. No AI calls or DB queries written inline here. |
+| `services/ai/` (backend)             | All AI provider calls and the Gemini→DeepSeek fallback. Nothing here touches Express request/response objects.       |
+| `models/` (backend)                  | Sequelize models and table definitions only.                                                                         |
+| `middleware/verifyAuth.ts` (backend) | The only place that understands better-auth JWTs.                                                                    |
+
+---
+
+## Data Flow
+
+### Copilot Analysis (the flagship flow)
 
 ```
-## Implementation Plan — [Feature Name]
-
-### Repo(s) involved
-[Frontend / Backend / Both — and if both, the exact endpoint(s) connecting them]
-
-### What we are building
-[One clear paragraph describing exactly what will be built]
-
-### Language we agreed on
-- [Term]: [agreed definition]
-- [Term]: [agreed definition]
-
-### Decisions made
-- [Decision]: [what was decided and the reasoning]
-- [Decision]: [what was decided and the reasoning]
-
-### Assumptions
-- [Anything you assumed that was not explicitly confirmed]
-
-### How to build it
-[A concise ordered list of implementation steps, labelled per repo where it matters]
+User uploads resume + pastes JD on /copilot
+        ↓
+Frontend POSTs multipart form to backend: POST /api/resumes (if new resume)
+        ↓
+Backend extracts text (pdf-parse), saves Resume row, returns resumeId
+        ↓
+Frontend POSTs: POST /api/analyses { resumeId, jobDescriptionText }
+        ↓
+Backend controller calls services/ai/aiClient.generateStructured(atsAnalysisPrompt, ...)
+        ↓
+Gemini 2.5 Flash attempt → on error/quota → DeepSeek V3 attempt
+        ↓
+Structured JSON validated against expected shape
+        ↓
+JobAnalysis row saved, returned to frontend
+        ↓
+Frontend renders ATS Score Dashboard + Insights Panel
 ```
 
-Present the plan to the developer. Wait for them to confirm before anything gets built.
+### Optimized Resume / Cover Letter / Interview Questions (on-demand, from an existing analysis)
 
-Only after explicit confirmation does implementation begin.
+```
+User clicks "Optimize Resume" / "Generate Cover Letter" / "Generate Interview Qs" on results screen
+        ↓
+Frontend POSTs to the relevant backend endpoint with { analysisId, ...options }
+        ↓
+Backend loads the JobAnalysis + original Resume from DB
+        ↓
+Calls the matching AI prompt module through aiClient.generateStructured()
+        ↓
+Result saved (OptimizedResume / CoverLetter / InterviewSession row)
+        ↓
+If a PDF was requested → services/pdf/generatePdf.tsx renders a buffer → saved to disk/storage → URL returned
+        ↓
+Frontend renders the result / triggers download
+```
 
-## What This Session Is Not
+### Application Tracker
 
-This is not an interrogation. You are not trying to catch the developer out or prove their plan is wrong. You are helping them think more clearly before they build.
+```
+User drags a card to a new column / adds a new application
+        ↓
+Frontend PATCHes/POSTs: /api/applications/:id or /api/applications
+        ↓
+Backend updates Application row, scoped to req.userId from the verified JWT
+        ↓
+Frontend refetches the board
+```
 
-This is not a specification session. You are not writing a full spec document. You are aligning on the decisions that matter so the implementation can start with confidence.
+---
 
-This is not open-ended. You are not asking questions forever. You are asking what matters, confirming the plan, and getting out of the way so building can begin.
+## Database Schema (PostgreSQL, owned by Sequelize except where noted)
+
+### `user`, `session`, `account`, `verification` — owned by better-auth, never written to by the backend
+
+The backend treats `user.id` purely as a foreign-key value (no FK constraint enforced across the boundary, just an indexed `userId` column on every business table). Never query or join into these tables from the backend; the verified JWT already gives you `userId`.
+
+### `resumes`
+
+| Column            | Type        | Notes                              |
+| ----------------- | ----------- | ---------------------------------- |
+| id                | uuid        | PK                                 |
+| user_id           | uuid        | from JWT `sub`, always filtered on |
+| title             | text        | user-given or filename             |
+| original_file_url | text        | stored PDF location                |
+| parsed_text       | text        | extracted via pdf-parse            |
+| is_active         | boolean     | one active resume per user         |
+| created_at        | timestamptz |                                    |
+| updated_at        | timestamptz |                                    |
+
+### `job_analyses`
+
+| Column               | Type        | Notes                               |
+| -------------------- | ----------- | ----------------------------------- |
+| id                   | uuid        | PK                                  |
+| user_id              | uuid        |                                     |
+| resume_id            | uuid        | FK → resumes.id                     |
+| job_description_text | text        |                                     |
+| job_title_detected   | text        |                                     |
+| seniority_detected   | text        | junior / mid / senior               |
+| ats_score            | integer     | overall 0–100                       |
+| skills_match         | integer     | 0–100                               |
+| experience_match     | integer     | 0–100                               |
+| education_match      | integer     | 0–100                               |
+| missing_keywords     | text[]      |                                     |
+| strengths            | text[]      |                                     |
+| weaknesses           | text[]      |                                     |
+| job_summary          | jsonb       | recruiter-intent summary            |
+| ai_model_used        | text        | 'gemini-2.5-flash' or 'deepseek-v3' |
+| created_at           | timestamptz |                                     |
+
+### `optimized_resumes`
+
+| Column            | Type        | Notes                                                 |
+| ----------------- | ----------- | ----------------------------------------------------- |
+| id                | uuid        | PK                                                    |
+| analysis_id       | uuid        | FK → job_analyses.id                                  |
+| user_id           | uuid        |                                                       |
+| optimized_content | jsonb       | structured sections, original kept on the resumes row |
+| pdf_url           | text        | nullable until exported                               |
+| created_at        | timestamptz |                                                       |
+
+### `cover_letters`
+
+| Column      | Type        | Notes                              |
+| ----------- | ----------- | ---------------------------------- |
+| id          | uuid        | PK                                 |
+| analysis_id | uuid        | FK → job_analyses.id               |
+| user_id     | uuid        |                                    |
+| tone        | text        | professional / startup / corporate |
+| content     | text        |                                    |
+| pdf_url     | text        | nullable                           |
+| created_at  | timestamptz |                                    |
+
+### `interview_sessions`
+
+| Column     | Type        | Notes                                                    |
+| ---------- | ----------- | -------------------------------------------------------- |
+| id         | uuid        | PK                                                       |
+| user_id    | uuid        |                                                          |
+| role       | text        | frontend / backend / fullstack                           |
+| difficulty | text        | junior / mid / senior                                    |
+| questions  | jsonb       | array of `{ category, question, modelAnswer, followUp }` |
+| created_at | timestamptz |                                                          |
+
+### `applications`
+
+| Column       | Type        | Notes                                              |
+| ------------ | ----------- | -------------------------------------------------- |
+| id           | uuid        | PK                                                 |
+| user_id      | uuid        |                                                    |
+| company      | text        |                                                    |
+| role         | text        |                                                    |
+| status       | text        | applied / screening / interview / rejected / offer |
+| applied_date | date        |                                                    |
+| notes        | text        |                                                    |
+| created_at   | timestamptz |                                                    |
+| updated_at   | timestamptz |                                                    |
+
+### `agent_logs`
+
+| Column     | Type        | Notes                   |
+| ---------- | ----------- | ----------------------- |
+| id         | uuid        | PK                      |
+| user_id    | uuid        | nullable                |
+| feature    | text        | which AI feature failed |
+| level      | text        | info / warning / error  |
+| message    | text        |                         |
+| created_at | timestamptz |                         |
+
+---
+
+## REST API Contract (the only thing the two repos share)
+
+All routes require `Authorization: Bearer <jwt>` except where noted. All responses use `{ success: boolean, data?: T, error?: string }`.
+
+| Method | Path                             | Purpose                                                     |
+| ------ | -------------------------------- | ----------------------------------------------------------- |
+| POST   | `/api/resumes`                   | Upload resume PDF, extract text, save                       |
+| GET    | `/api/resumes`                   | List user's resumes                                         |
+| PATCH  | `/api/resumes/:id`               | Rename / set active                                         |
+| DELETE | `/api/resumes/:id`               | Delete                                                      |
+| POST   | `/api/analyses`                  | Run Copilot ATS analysis `{ resumeId, jobDescriptionText }` |
+| GET    | `/api/analyses/:id`              | Fetch a saved analysis                                      |
+| POST   | `/api/analyses/:id/optimize`     | Generate optimized resume                                   |
+| POST   | `/api/analyses/:id/cover-letter` | Generate cover letter `{ tone }`                            |
+| POST   | `/api/interview`                 | Generate interview questions `{ role, difficulty }`         |
+| GET    | `/api/applications`              | List applications                                           |
+| POST   | `/api/applications`              | Create application                                          |
+| PATCH  | `/api/applications/:id`          | Update status/notes                                         |
+| DELETE | `/api/applications/:id`          | Delete                                                      |
+| GET    | `/api/dashboard/stats`           | Counts for stat cards                                       |
+| GET    | `/api/dashboard/activity`        | Recent activity feed                                        |
+| GET    | `/health`                        | No auth — uptime check                                      |
+
+---
+
+## Invariants
+
+- The backend has **zero** login/register/session code. All of that lives in the frontend's better-auth config.
+- The frontend has **zero** AI calls, **zero** Sequelize/Postgres queries, and **zero** PDF generation. All of that lives in the backend.
+- Every backend route except `/health` runs through `verifyAuth` middleware before any controller code executes.
+- Every backend DB query filters on `user_id` taken from the verified JWT — never trust a `userId` in the request body.
+- AI calls always go through `aiClient.generateStructured()` — never call the Gemini or DeepSeek SDKs directly from a controller.
+- Every AI call is wrapped in try/catch; a Gemini failure always falls back to DeepSeek before the request is allowed to fail; a failure of both is logged to `agent_logs` and returned to the user as a generic, human-readable error.
+- PDF buffers are generated server-side only and uploaded/saved, never streamed raw HTML to the client to print.
+- No hardcoded hex colors or raw Tailwind color classes in frontend components — use the tokens in `ui-tokens.md`.
+- TanStack Query owns all server data (resumes, analyses, applications, dashboard stats); Redux owns only client-only state with no server source of truth (active resume selection, theme, sidebar state). The same piece of data is never duplicated into both — see `code-standards.md`'s State Management section.

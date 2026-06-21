@@ -41,7 +41,7 @@ Composition-only route. The visual patterns now live in reusable landing/layout 
 ### Public Navbar
 
 File: `src/components/layout/Navbar.tsx`
-Last updated: `2026-06-21`
+Last updated: `2026-06-22`
 
 | Property | Class |
 | --- | --- |
@@ -56,7 +56,27 @@ Last updated: `2026-06-21`
 | Accent usage | `bg-accent`, `text-on-primary` |
 
 **Pattern notes:**
-Public navigation uses a sticky bar, compact pill links, and a strong primary CTA. Keep it minimal and token-only.
+Public navigation uses a sticky bar, compact pill links, and a strong primary CTA when logged out. When a session exists, the right-side controls hand off to the account dropdown instead of showing auth CTAs.
+
+### Navbar Actions Dropdown
+
+File: `src/components/layout/NavbarActions.tsx`
+Last updated: `2026-06-22`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface` |
+| Border | `border border-border`, `border-t border-border` |
+| Border radius | `rounded-sm`, `rounded-md`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `h-8`, `px-3 py-2`, `p-2` |
+| Hover state | `hover:bg-surface-secondary`, `hover:text-text-primary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `text-on-primary` |
+
+**Pattern notes:**
+Logged-in users see a compact account button with a dropdown that includes the main app routes plus sign out. Keep this menu token-only and aligned to the top-right of the navbar.
 
 ### Hero Section
 
@@ -217,3 +237,43 @@ Last updated: `2026-06-21`
 
 **Pattern notes:**
 Authenticated navigation keeps the shell compact and utility-first: fixed 240px column, hairline dividers, one active left border, and a pinned user card at the bottom. It should stay visually quieter than the marketing pages and never use the pill-button register.
+
+### Resume Manager
+
+File: `src/components/resumes/ResumeManager.tsx`
+Last updated: `2026-06-22`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary` |
+| Border | `border border-border`, `border-b border-border` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-success-foreground` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-6`, `p-5`, `p-4`, `px-4 py-4`, `px-3 py-2`, `h-10`, `h-8` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `text-on-primary`, `bg-success-light` |
+
+**Pattern notes:**
+Resume management stays in the in-app register: compact cards, table rows, and small 6px-radius controls. Upload, rename, set-active, and delete actions all use the same token set as the sidebar shell, and the active state is represented with a semantic badge instead of a custom color.
+
+### Copilot Workspace
+
+File: `src/components/copilot/CopilotWorkspace.tsx`
+Last updated: `2026-06-22`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-border`, `bg-error-light`, `bg-success-light`, `bg-warning-light`, `bg-link-bg-soft` |
+| Border | `border border-border`, `border-accent`, `border-error-light` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-success`, `text-warning`, `text-error`, `text-link-deep` |
+| Text - secondary | `text-text-secondary`, `text-text-muted`, `text-success-foreground`, `text-warning-foreground`, `text-error-foreground` |
+| Spacing | `p-6`, `p-4`, `px-3 py-2`, `px-2 py-0.5`, `mt-2`, `mt-3`, `mt-4`, `mt-5` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-link-bg-soft` |
+
+**Pattern notes:**
+Copilot uses the in-app register exclusively: dense 16px cards, 6px controls, and rounded status chips. The page combines a three-column work area with a tabbed output panel, but the visual language stays aligned to the rest of the authenticated shell rather than introducing a marketing-style treatment.

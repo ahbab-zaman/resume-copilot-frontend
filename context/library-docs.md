@@ -200,6 +200,143 @@ async function handleAnalyze() {
 
 ---
 
+## TanStack Query
+
+The only way components read or mutate backend data. See `code-standards.md`'s State Management section for what does and doesn't belong here.
+
+```typescript
+// providers/QueryProvider.tsx
+"use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+
+export function QueryProvider({ children }: { children: React.ReactNode }) {
+  const [client] = useState(() => new QueryClient({
+    defaultOptions: { queries: { staleTime: 30_000, retry: 1 } },
+  }));
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
+}
+```
+
+```typescript
+// hooks/queries/useResumes.ts
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFetch } from "@/lib/api-client";
+import type { Resume } from "@/types/api";
+
+export function useResumes() {
+  return useQuery({
+    queryKey: ["resumes"],
+    queryFn: () => apiFetch<Resume[]>("/api/resumes"),
+  });
+}
+
+export function useUploadResume() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (formData: FormData) =>
+      apiFetch<Resume>("/api/resumes", { method: "POST", body: formData }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["resumes"] }),
+  });
+}
+```
+
+```typescript
+// Usage in a page/component
+"use client";
+import { useResumes } from "@/hooks/queries/useResumes";
+
+export function ResumeTable() {
+  const { data, isLoading, error } = useResumes();
+  if (isLoading) return <Skeleton />;
+  if (error || !data?.success) return <ErrorState message={data?.error} />;
+  return <Table rows={data.data} />;
+}
+```
+
+**Rules:**
+
+- One query hook file per resource — never call `useQuery` with an inline key directly in a page component.
+- Query keys are simple, flat arrays (`["resumes"]`, `["analysis", analysisId]`) — never build a key from an object that changes reference every render.
+- Every mutation that changes a list invalidates that list's query key in `onSuccess` — never manually patch the cache unless the optimistic-update pattern specifically calls for it (the Kanban board is the one place that does, for instant drag feedback).
+- `apiFetch`'s `{ success, data, error }` shape is checked in every consuming component — `isLoading`/`error` from TanStack Query covers network failure, `data.success === false` covers a backend-returned business error (e.g. validation failure), and both have to be handled.
+
+---
+
+## Redux Toolkit
+
+Client-only, cross-page state with no server source of truth. See `code-standards.md` for what does and doesn't belong here — this is deliberately small in this project.
+
+```typescript
+// store/activeResumeSlice.ts
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+type ActiveResumeState = { resumeId: string | null };
+const initialState: ActiveResumeState = { resumeId: null };
+
+const activeResumeSlice = createSlice({
+  name: "activeResume",
+  initialState,
+  reducers: {
+    setActiveResume: (state, action: PayloadAction<string | null>) => {
+      state.resumeId = action.payload;
+    },
+  },
+});
+
+export const { setActiveResume } = activeResumeSlice.actions;
+export default activeResumeSlice.reducer;
+```
+
+```typescript
+// store/index.ts
+import { configureStore } from "@reduxjs/toolkit";
+import activeResumeReducer from "./activeResumeSlice";
+import uiReducer from "./uiSlice";
+
+export const store = configureStore({
+  reducer: {
+    activeResume: activeResumeReducer,
+    ui: uiReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+```
+
+```typescript
+// store/hooks.ts
+import {
+  useDispatch,
+  useSelector,
+  type TypedUseSelectorHook,
+} from "react-redux";
+import type { RootState, AppDispatch } from "./index";
+
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+```
+
+```typescript
+// providers/ReduxProvider.tsx
+"use client";
+import { Provider } from "react-redux";
+import { store } from "@/store";
+
+export function ReduxProvider({ children }: { children: React.ReactNode }) {
+  return <Provider store={store}>{children}</Provider>;
+}
+```
+
+**Rules:**
+
+- Always use `useAppDispatch`/`useAppSelector` from `store/hooks.ts` — never the untyped `useDispatch`/`useSelector` directly.
+- A slice never stores anything also fetched by a TanStack Query hook — `activeResumeSlice` stores only the _selected ID_, the resume data itself still comes from `useResumes()`.
+- `store/index.ts` is instantiated once via `ReduxProvider` in the root layout — never per-page.
+
+---
+
 ## Dependencies
 
 Approved for this repo:
@@ -209,5 +346,7 @@ Approved for this repo:
 - `tailwindcss`, `shadcn/ui`, `lucide-react`
 - `react-hook-form`, `@hookform/resolvers`, `zod`
 - `@dnd-kit/core` — Kanban drag-and-drop
+- `@tanstack/react-query` — all server data fetching/caching
+- `@reduxjs/toolkit`, `react-redux` — client-only cross-page state only
 
 Never install `sequelize`, any AI SDK, `pdf-parse`, or `@react-pdf/renderer` in this repo — those belong to the backend.

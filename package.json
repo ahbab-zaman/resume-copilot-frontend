@@ -10,12 +10,15 @@
     "auth:migrate": "node scripts/migrate-better-auth.mjs"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
+    "@tanstack/react-query": "^5.101.0",
     "better-auth": "^1.6.20",
     "geist": "^1.7.2",
     "next": "16.2.9",
     "pg": "^8.22.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-redux": "^9.3.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
