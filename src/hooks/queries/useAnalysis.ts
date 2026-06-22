@@ -1,9 +1,14 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { apiFetch } from "@/lib/api-client";
-import type { AnalysisRecord } from "@/types/api";
+import type {
+  AnalysisRecord,
+  CoverLetterRecord,
+  CoverLetterTone,
+  OptimizedResumeRecord,
+} from "@/types/api";
 
 export function useAnalysis(analysisId: string | null) {
   return useQuery({
@@ -25,3 +30,49 @@ export function useAnalysis(analysisId: string | null) {
   });
 }
 
+export function useOptimizeResume(analysisId: string | null) {
+  return useMutation({
+    mutationFn: async () => {
+      if (!analysisId) {
+        throw new Error("Analysis id is required.");
+      }
+
+      const response = await apiFetch<OptimizedResumeRecord>(
+        `/api/analyses/${analysisId}/optimize`,
+        {
+          method: "POST",
+        },
+      );
+
+      if (!response.success || !response.data) {
+        throw new Error(response.error ?? "Could not optimize the resume.");
+      }
+
+      return response.data;
+    },
+  });
+}
+
+export function useCoverLetter(analysisId: string | null) {
+  return useMutation({
+    mutationFn: async (tone: CoverLetterTone) => {
+      if (!analysisId) {
+        throw new Error("Analysis id is required.");
+      }
+
+      const response = await apiFetch<CoverLetterRecord>(
+        `/api/analyses/${analysisId}/cover-letter`,
+        {
+          method: "POST",
+          body: JSON.stringify({ tone }),
+        },
+      );
+
+      if (!response.success || !response.data) {
+        throw new Error(response.error ?? "Could not generate the cover letter.");
+      }
+
+      return response.data;
+    },
+  });
+}

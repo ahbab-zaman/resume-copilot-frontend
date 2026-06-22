@@ -8,8 +8,8 @@
 
 **Phase:** Phase 4 - Copilot Flow
 **Repo (frontend/backend/both):** frontend
-**Last completed:** 11 ATS Analysis - AI Service
-**Next:** 12 Resume Optimizer
+**Last completed:** 13 Cover Letter Generator
+**Next:** 14 Mock Interview Generator (Copilot tab)
 
 ---
 
@@ -20,13 +20,13 @@
 - [ ] 01 Backend Skeleton _(backend)_
 - [x] 02 Frontend Skeleton + better-auth _(frontend)_ - email/password + Google OAuth working
 - [ ] 03 Database Schema _(both)_
-- [ ] 04 Cross-Repo Auth Wiring _(both)_
+- [x] 04 Cross-Repo Auth Wiring _(both)_ - api-client fetches fresh bearer JWTs and backend verifyAuth accepts them
 
 ### Phase 2 - App Shell
 
-- [ ] 05 Sidebar + Authenticated Layout _(frontend)_
+- [x] 05 Sidebar + Authenticated Layout _(frontend)_ - protected app shell with sidebar and login redirect
 - [x] 06 State Management Setup _(frontend)_ - QueryProvider/ReduxProvider added and root layout wrapped
-- [ ] 07 Landing + Pricing Pages _(frontend)_
+- [x] 07 Landing + Pricing Pages _(frontend)_ - public landing page and pricing section are in place
 
 ### Phase 3 - Resume Manager
 
@@ -37,8 +37,8 @@
 
 - [x] 10 Copilot Page - Full UI _(frontend)_ - dense three-column Copilot workspace with analysis input, processing states, and output tabs
 - [x] 11 ATS Analysis - AI Service _(both)_ - frontend wired to the backend analyses API and renders live ATS results
-- [ ] 12 Resume Optimizer _(both)_
-- [ ] 13 Cover Letter Generator _(both)_
+- [x] 12 Resume Optimizer _(both)_ - Copilot resume tab now shows original vs optimized content and calls the backend optimize endpoint
+- [x] 13 Cover Letter Generator _(both)_ - Copilot cover letter tab now calls the backend tone-based generator and lets the draft be edited locally
 - [ ] 14 Mock Interview Generator (Copilot tab) _(both)_
 
 ### Phase 5 - Interview Practice
@@ -68,6 +68,8 @@
 - Redux Toolkit is reserved for client-only cross-page state like active resume and UI preferences.
 - The root layout now mounts both providers once, instead of recreating them per page.
 - The Copilot workspace now owns the ATS analysis flow in the frontend, with live data rendered from the backend analyses endpoint.
+- The Copilot workspace now also owns the resume optimization flow, with side-by-side comparison against the source resume.
+- The Copilot workspace now also owns the cover letter flow, with tone selection, generated draft editing, and backend persistence.
 
 ---
 

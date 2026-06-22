@@ -21,3 +21,36 @@ export type AnalysisRecord = {
   createdAt: string;
 };
 
+export type OptimizedResumeSectionPair = {
+  section: string;
+  original: string;
+  optimized: string;
+  reason: string;
+};
+
+export type OptimizedResumeContent = {
+  headline: string;
+  summary: string;
+  sectionPairs: OptimizedResumeSectionPair[];
+  keywordIntegrations: string[];
+  nextSteps: string[];
+};
+
+export type OptimizedResumeRecord = {
+  id: string;
+  analysisId: string;
+  optimizedContent: OptimizedResumeContent;
+  pdfUrl: string | null;
+  createdAt: string;
+};
+
+export type CoverLetterTone = "professional" | "startup" | "corporate";
+
+export type CoverLetterRecord = {
+  id: string;
+  analysisId: string;
+  tone: CoverLetterTone;
+  content: string;
+  pdfUrl: string | null;
+  createdAt: string;
+};

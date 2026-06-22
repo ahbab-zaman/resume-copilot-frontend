@@ -276,4 +276,4 @@ Last updated: `2026-06-22`
 | Accent usage | `bg-accent`, `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-link-bg-soft` |
 
 **Pattern notes:**
-Copilot uses the in-app register exclusively: dense 16px cards, 6px controls, and rounded status chips. The page combines a three-column work area with a tabbed output panel, but the visual language stays aligned to the rest of the authenticated shell rather than introducing a marketing-style treatment.
+Copilot uses the in-app register exclusively: dense 16px cards, 6px controls, and rounded status chips. The page combines a three-column work area with a tabbed output panel, the resume tab uses a two-panel compare layout with a scrollable source-text pane on the left and a structured rewrite pane on the right, and the cover-letter tab now follows the same dense pattern with a tone selector, editable draft textarea, and disabled PDF action until the backend provides a file URL. Keep those compare/editor patterns and the token-based keyword chips consistent with the rest of the authenticated shell rather than introducing a marketing-style treatment.

@@ -4,9 +4,18 @@ import Link from "next/link";
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import {
+  useCoverLetter,
+  useOptimizeResume,
+} from "@/hooks/queries/useAnalysis";
 import { useResumes } from "@/hooks/queries/useResumes";
-import { apiFetch } from "@/lib/api-client";
-import type { AnalysisRecord } from "@/types/api";
+import { apiDownload, apiFetch } from "@/lib/api-client";
+import type {
+  AnalysisRecord,
+  CoverLetterRecord,
+  CoverLetterTone,
+  OptimizedResumeRecord,
+} from "@/types/api";
 
 type OutputTabKey = "summary" | "resume" | "cover-letter" | "interview";
 
@@ -55,6 +64,30 @@ function formatDate(value: string): string {
     day: "numeric",
     year: "numeric",
   }).format(new Date(value));
+}
+
+async function downloadBlob(
+  path: string,
+  filename: string,
+  options: RequestInit = {},
+): Promise<string | null> {
+  const response = await apiDownload(path, options);
+
+  if (!response.success || !response.blob) {
+    return response.error ?? "Could not download the file.";
+  }
+
+  const url = URL.createObjectURL(response.blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.rel = "noreferrer";
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+
+  return null;
 }
 
 function getScoreTone(score: number): {
@@ -139,6 +172,13 @@ export function CopilotWorkspace() {
   const [analysisResult, setAnalysisResult] = useState<AnalysisRecord | null>(
     null,
   );
+  const [optimizedResume, setOptimizedResume] =
+    useState<OptimizedResumeRecord | null>(null);
+  const [coverLetterResult, setCoverLetterResult] =
+    useState<CoverLetterRecord | null>(null);
+  const [coverLetterTone, setCoverLetterTone] =
+    useState<CoverLetterTone>("professional");
+  const [coverLetterDraft, setCoverLetterDraft] = useState("");
   const [selectedTab, setSelectedTab] = useState<OutputTabKey>("summary");
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -160,6 +200,16 @@ export function CopilotWorkspace() {
   }, [activeResume?.id, resumes, selectedResumeId]);
 
   useEffect(() => {
+    setAnalysisResult(null);
+    setOptimizedResume(null);
+    setCoverLetterResult(null);
+    setCoverLetterDraft("");
+    setCoverLetterTone("professional");
+    setSelectedTab("summary");
+    setFeedbackMessage(null);
+  }, [selectedResumeId]);
+
+  useEffect(() => {
     if (
       selectedResumeId &&
       resumes.length > 0 &&
@@ -171,6 +221,12 @@ export function CopilotWorkspace() {
 
   const selectedResume =
     resumes.find((resume) => resume.id === selectedResumeId) ?? activeResume;
+  const canOptimize =
+    analysisResult !== null && analysisResult.id !== "preview";
+  const canGenerateCoverLetter =
+    analysisResult !== null && analysisResult.id !== "preview";
+  const optimizeResumeMutation = useOptimizeResume(analysisResult?.id ?? null);
+  const coverLetterMutation = useCoverLetter(analysisResult?.id ?? null);
 
   const analysisMutation = useMutation({
     mutationFn: async () => {
@@ -199,6 +255,9 @@ export function CopilotWorkspace() {
     },
     onSuccess: async (data) => {
       setAnalysisResult(data);
+      setOptimizedResume(null);
+      setCoverLetterResult(null);
+      setCoverLetterDraft("");
       setSelectedTab("summary");
       setFeedbackMessage(`Analysis saved with ${data.aiModelUsed}.`);
       await queryClient.setQueryData(["analysis", data.id], data);
@@ -211,6 +270,84 @@ export function CopilotWorkspace() {
       );
     },
   });
+
+  function handleOptimizeResume(): void {
+    if (!canOptimize) {
+      setFeedbackMessage("Run an analysis before optimizing the resume.");
+      return;
+    }
+
+    optimizeResumeMutation.mutate(undefined, {
+      onSuccess: (data) => {
+        setOptimizedResume(data);
+        setSelectedTab("resume");
+        setFeedbackMessage("Optimized resume saved.");
+      },
+      onError: (mutationError) => {
+        setFeedbackMessage(
+          mutationError instanceof Error
+            ? mutationError.message
+            : "Something went wrong.",
+        );
+      },
+    });
+  }
+
+  function handleGenerateCoverLetter(): void {
+    if (!canGenerateCoverLetter) {
+      setFeedbackMessage("Run an analysis before generating a cover letter.");
+      return;
+    }
+
+    coverLetterMutation.mutate(coverLetterTone, {
+      onSuccess: (data) => {
+        setCoverLetterResult(data);
+        setCoverLetterDraft(data.content);
+        setSelectedTab("cover-letter");
+        setFeedbackMessage("Cover letter saved.");
+      },
+      onError: (mutationError) => {
+        setFeedbackMessage(
+          mutationError instanceof Error
+            ? mutationError.message
+            : "Something went wrong.",
+        );
+      },
+    });
+  }
+
+  async function handleDownloadOptimizedResume(): Promise<void> {
+    if (!optimizedResume) {
+      setFeedbackMessage("Generate the optimized resume before downloading.");
+      return;
+    }
+
+    const errorMessage = await downloadBlob(
+      `/api/analyses/${analysisResult?.id}/optimize/download`,
+      `optimized-resume-${analysisResult?.id}.pdf`,
+    );
+
+    if (errorMessage) {
+      setFeedbackMessage(errorMessage);
+    }
+  }
+
+  async function handleDownloadCoverLetter(): Promise<void> {
+    if (!coverLetterResult) {
+      setFeedbackMessage("Generate the cover letter before downloading.");
+      return;
+    }
+
+    const tone = coverLetterResult.tone ?? coverLetterTone;
+    const errorMessage = await downloadBlob(
+      `/api/analyses/${analysisResult?.id}/cover-letter/download?tone=${encodeURIComponent(tone)}`,
+      `cover-letter-${analysisResult?.id}-${tone}.pdf`,
+    );
+
+    if (errorMessage) {
+      setFeedbackMessage(errorMessage);
+    }
+  }
 
   const liveAnalysis = analysisResult ?? previewAnalysis;
   const tone = getScoreTone(liveAnalysis.atsScore);
@@ -602,56 +739,314 @@ export function CopilotWorkspace() {
             ) : null}
 
             {selectedTab === "resume" ? (
-              <div className="space-y-4">
-                <div>
-                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                    Resume draft
-                  </p>
-                  <p className="mt-2 text-[16px] leading-7 text-text-primary">
-                    Next step: generate an optimized resume from this saved
-                    analysis.
-                  </p>
+              <div className="space-y-5">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                  <div>
+                    <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                      Resume draft
+                    </p>
+                    <p className="mt-2 text-[16px] leading-7 text-text-primary">
+                      Compare the source resume with the optimized rewrite
+                      generated from the analysis.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      className="inline-flex h-8 items-center justify-center rounded-sm bg-accent px-3 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={
+                        !canOptimize || optimizeResumeMutation.isPending
+                      }
+                      onClick={handleOptimizeResume}
+                    >
+                      {optimizeResumeMutation.isPending
+                        ? "Optimizing..."
+                        : "Generate optimized resume"}
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex h-8 items-center justify-center rounded-sm border border-border bg-surface px-3 text-[14px] font-medium leading-5 text-text-primary transition hover:bg-surface-secondary disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={!optimizedResume}
+                      onClick={() => {
+                        void handleDownloadOptimizedResume();
+                      }}
+                    >
+                      Download PDF
+                    </button>
+                  </div>
                 </div>
-                <div className="rounded-md border border-border bg-surface p-4">
-                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                    Preview
-                  </p>
-                  <p className="mt-3 text-[14px] leading-6 text-text-secondary">
-                    Highlight the strongest resume bullets, mirror the job title
-                    language, and keep the language specific to the role.
-                  </p>
-                </div>
-                <p className="text-[12px] leading-4 text-text-muted">
-                  This tab is ready for the optimize endpoint in the next
-                  backend pass.
-                </p>
+
+                {!canOptimize ? (
+                  <div className="rounded-md border border-border bg-surface-secondary p-4">
+                    <p className="text-[14px] font-medium leading-5 text-text-primary">
+                      Run an analysis first.
+                    </p>
+                    <p className="mt-1 text-[14px] leading-5 text-text-secondary">
+                      The optimizer uses the saved analysis and original resume
+                      text, so this tab unlocks after Copilot finishes.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="grid gap-4 xl:grid-cols-2">
+                      <article className="rounded-md border border-border bg-surface-secondary p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                              Original
+                            </p>
+                            <h3 className="mt-2 text-[18px] font-semibold leading-7 tracking-[-0.04em] text-text-primary">
+                              {selectedResume?.title ?? "Selected resume"}
+                            </h3>
+                          </div>
+                          <span className="inline-flex rounded-full bg-surface px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
+                            Source text
+                          </span>
+                        </div>
+
+                        <div className="mt-4 rounded-md border border-border bg-surface p-4">
+                          <pre className="max-h-[420px] overflow-auto whitespace-pre-wrap text-[14px] leading-6 text-text-secondary">
+                            {selectedResume?.parsedText ??
+                              "No source resume text is available."}
+                          </pre>
+                        </div>
+                      </article>
+
+                      <article className="rounded-md border border-border bg-surface-secondary p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <div>
+                            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                              Optimized
+                            </p>
+                            <h3 className="mt-2 text-[18px] font-semibold leading-7 tracking-[-0.04em] text-text-primary">
+                              {optimizedResume?.optimizedContent.headline ??
+                                "Generate the rewrite to compare it here."}
+                            </h3>
+                          </div>
+                          <span className="inline-flex rounded-full bg-success-light px-2 py-0.5 text-[12px] font-medium leading-4 text-success-foreground">
+                            {optimizedResume ? "Saved" : "Pending"}
+                          </span>
+                        </div>
+
+                        {optimizedResume ? (
+                          <div className="mt-4 space-y-4">
+                            <div className="rounded-md border border-border bg-surface p-4">
+                              <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                                Summary
+                              </p>
+                              <p className="mt-2 text-[14px] leading-6 text-text-primary">
+                                {optimizedResume.optimizedContent.summary}
+                              </p>
+                            </div>
+
+                            <div className="space-y-3">
+                              {optimizedResume.optimizedContent.sectionPairs.map(
+                                (pair) => (
+                                  <div
+                                    key={`${pair.section}-${pair.optimized}`}
+                                    className="rounded-md border border-border bg-surface p-4"
+                                  >
+                                    <div className="flex flex-wrap items-center justify-between gap-3">
+                                      <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                                        {pair.section}
+                                      </p>
+                                      <span className="text-[12px] leading-4 text-text-muted">
+                                        {pair.reason}
+                                      </span>
+                                    </div>
+                                    <div className="mt-4 grid gap-3 md:grid-cols-2">
+                                      <div className="rounded-sm border border-border bg-surface-secondary p-3">
+                                        <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                                          Original
+                                        </p>
+                                        <p className="mt-2 whitespace-pre-wrap text-[14px] leading-6 text-text-secondary">
+                                          {pair.original}
+                                        </p>
+                                      </div>
+                                      <div className="rounded-sm border border-accent bg-surface-secondary p-3">
+                                        <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                                          Optimized
+                                        </p>
+                                        <p className="mt-2 whitespace-pre-wrap text-[14px] leading-6 text-text-primary">
+                                          {pair.optimized}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ),
+                              )}
+                            </div>
+
+                            <div className="rounded-md border border-border bg-surface p-4">
+                              <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                                Keyword integrations
+                              </p>
+                              <div className="mt-3 flex flex-wrap gap-2">
+                                {optimizedResume.optimizedContent.keywordIntegrations.map(
+                                  (keyword) => (
+                                    <span
+                                      key={keyword}
+                                      className="inline-flex rounded-full bg-link-bg-soft px-2 py-0.5 text-[12px] font-medium leading-4 text-link-deep"
+                                    >
+                                      {keyword}
+                                    </span>
+                                  ),
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="rounded-md border border-border bg-surface p-4">
+                              <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                                Next steps
+                              </p>
+                              <ul className="mt-3 space-y-2">
+                                {optimizedResume.optimizedContent.nextSteps.map(
+                                  (step) => (
+                                    <li
+                                      key={step}
+                                      className="rounded-sm border border-border bg-surface-secondary px-3 py-2 text-[14px] leading-5 text-text-secondary"
+                                    >
+                                      {step}
+                                    </li>
+                                  ),
+                                )}
+                              </ul>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="mt-4 rounded-md border border-border bg-surface p-4">
+                            <p className="text-[14px] font-medium leading-5 text-text-primary">
+                              Ready to rewrite.
+                            </p>
+                            <p className="mt-1 text-[14px] leading-5 text-text-secondary">
+                              Generate the optimized resume to populate this
+                              side of the comparison with tailored bullets,
+                              keyword placements, and follow-up actions.
+                            </p>
+                          </div>
+                        )}
+                      </article>
+                    </div>
+
+                    <p className="text-[12px] leading-4 text-text-muted">
+                      The backend stores the optimized resume so it can be
+                      revisited later from the saved analysis.
+                    </p>
+                  </>
+                )}
               </div>
             ) : null}
 
             {selectedTab === "cover-letter" ? (
               <div className="space-y-4">
-                <div>
-                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                    Cover letter
-                  </p>
-                  <p className="mt-2 text-[16px] leading-7 text-text-primary">
-                    Tone-aware letter preview for the same analysis context.
-                  </p>
-                </div>
-                <div className="grid gap-2 sm:grid-cols-3">
-                  {["Professional", "Startup", "Corporate"].map((toneOption) => (
-                    <div
-                      key={toneOption}
-                      className="rounded-md border border-border bg-surface p-3 text-[14px] leading-5 text-text-secondary"
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                  <div>
+                    <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                      Cover letter
+                    </p>
+                    <p className="mt-2 text-[16px] leading-7 text-text-primary">
+                      Generate a tone-aware draft, then edit it before export.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <label className="flex items-center gap-2 rounded-sm border border-border bg-surface px-3 py-2">
+                      <span className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                        Tone
+                      </span>
+                      <select
+                        className="h-8 rounded-sm border border-border bg-surface px-2 text-[14px] leading-5 text-text-primary outline-none transition focus:border-accent focus:ring-1 focus:ring-accent"
+                        value={coverLetterTone}
+                        onChange={(event) =>
+                          setCoverLetterTone(
+                            event.target.value as CoverLetterTone,
+                          )
+                        }
+                      >
+                        <option value="professional">Professional</option>
+                        <option value="startup">Startup</option>
+                        <option value="corporate">Corporate</option>
+                      </select>
+                    </label>
+
+                    <button
+                      type="button"
+                      className="inline-flex h-8 items-center justify-center rounded-sm bg-accent px-3 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={
+                        !canGenerateCoverLetter ||
+                        coverLetterMutation.isPending
+                      }
+                      onClick={handleGenerateCoverLetter}
                     >
-                      {toneOption}
-                    </div>
-                  ))}
+                      {coverLetterMutation.isPending
+                        ? "Generating..."
+                        : "Generate cover letter"}
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex h-8 items-center justify-center rounded-sm border border-border bg-surface px-3 text-[14px] font-medium leading-5 text-text-primary transition hover:bg-surface-secondary disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={!coverLetterResult}
+                      onClick={() => {
+                        void handleDownloadCoverLetter();
+                      }}
+                    >
+                      Download PDF
+                    </button>
+                  </div>
                 </div>
-                <p className="text-[12px] leading-4 text-text-muted">
-                  The future backend endpoint will fill this panel and let the
-                  user edit before export.
-                </p>
+
+                {!canGenerateCoverLetter ? (
+                  <div className="rounded-md border border-border bg-surface-secondary p-4">
+                    <p className="text-[14px] font-medium leading-5 text-text-primary">
+                      Run an analysis first.
+                    </p>
+                    <p className="mt-1 text-[14px] leading-5 text-text-secondary">
+                      The cover letter uses the saved analysis and original
+                      resume text, so this tab unlocks after Copilot finishes.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="rounded-md border border-border bg-surface-secondary p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                          Draft
+                        </p>
+                        <span
+                          className={`inline-flex rounded-full px-2 py-0.5 text-[12px] font-medium leading-4 ${
+                            coverLetterResult
+                              ? "bg-success-light text-success-foreground"
+                              : "bg-surface text-text-secondary"
+                          }`}
+                        >
+                          {coverLetterResult
+                            ? coverLetterResult.tone
+                            : "Pending"}
+                        </span>
+                      </div>
+                      <textarea
+                        className="mt-3 min-h-[320px] w-full rounded-sm border border-border bg-surface px-3 py-2 text-[14px] leading-6 text-text-primary outline-none transition placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent"
+                        placeholder="Generate a cover letter to populate this draft, then refine the wording here."
+                        value={coverLetterDraft}
+                        onChange={(event) =>
+                          setCoverLetterDraft(event.target.value)
+                        }
+                      />
+                    </div>
+
+                    <div className="rounded-md border border-border bg-surface p-4">
+                      <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                        Guidance
+                      </p>
+                      <p className="mt-2 text-[14px] leading-6 text-text-secondary">
+                        The backend stores the generated cover letter with the
+                        saved analysis. If PDF export is available later, the
+                        button above will activate automatically.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : null}
 
