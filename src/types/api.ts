@@ -73,3 +73,47 @@ export type InterviewSessionRecord = {
   questions: InterviewQuestion[];
   createdAt: string;
 };
+
+export type ApplicationStatus =
+  | "applied"
+  | "screening"
+  | "interview"
+  | "rejected"
+  | "offer";
+
+export type ApplicationRecord = {
+  id: string;
+  company: string;
+  role: string;
+  status: ApplicationStatus;
+  appliedDate: string;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DashboardStatsRecord = {
+  activeResume: {
+    id: string;
+    title: string;
+  } | null;
+  resumeCount: number;
+  applicationCount: number;
+  atsChecksThisWeek: number;
+  interviewSessionCount: number;
+};
+
+export type DashboardActivityCategory =
+  | "resume"
+  | "analysis"
+  | "cover-letter"
+  | "application"
+  | "interview";
+
+export type DashboardActivityRecord = {
+  id: string;
+  category: DashboardActivityCategory;
+  title: string;
+  detail: string;
+  createdAt: string;
+};

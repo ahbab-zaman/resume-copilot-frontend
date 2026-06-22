@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import type { InterviewQuestion } from "@/types/api";
 
@@ -8,7 +8,8 @@ type QuestionCardProps = {
   question: InterviewQuestion;
   index: number;
   total: number;
-  onNext: () => void;
+  onNext?: () => void;
+  showNextButton?: boolean;
 };
 
 export function QuestionCard({
@@ -16,12 +17,10 @@ export function QuestionCard({
   index,
   total,
   onNext,
+  showNextButton = true,
 }: QuestionCardProps) {
   const [showAnswer, setShowAnswer] = useState(false);
-
-  useEffect(() => {
-    setShowAnswer(false);
-  }, [question]);
+  const canAdvance = showNextButton && typeof onNext === "function";
 
   return (
     <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
@@ -73,18 +72,26 @@ export function QuestionCard({
         </p>
       )}
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <span className="inline-flex rounded-full bg-surface-secondary px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
-          {index + 1}/{total}
-        </span>
-        <button
-          type="button"
-          className="inline-flex h-8 items-center justify-center rounded-sm bg-accent px-3 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90"
-          onClick={onNext}
-        >
-          Next question
-        </button>
-      </div>
+      {canAdvance ? (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <span className="inline-flex rounded-full bg-surface-secondary px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
+            {index + 1}/{total}
+          </span>
+          <button
+            type="button"
+            className="inline-flex h-8 items-center justify-center rounded-sm bg-accent px-3 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90"
+            onClick={onNext}
+          >
+            Next question
+          </button>
+        </div>
+      ) : (
+        <div className="mt-4">
+          <span className="inline-flex rounded-full bg-surface-secondary px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
+            {index + 1}/{total}
+          </span>
+        </div>
+      )}
     </article>
   );
 }

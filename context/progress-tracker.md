@@ -6,10 +6,10 @@
 
 ## Current Status
 
-**Phase:** Phase 4 - Copilot Flow
+**Phase:** Phase 8 - Settings
 **Repo (frontend/backend/both):** frontend
-**Last completed:** 14 Mock Interview Generator (Copilot tab)
-**Next:** 15 Interview Page - Full UI
+**Last completed:** 20 Dashboard - Real Data
+**Next:** 21 Settings Page
 
 ---
 
@@ -43,18 +43,18 @@
 
 ### Phase 5 - Interview Practice
 
-- [ ] 15 Interview Page - Full UI _(frontend)_
-- [ ] 16 Interview Page - Wired _(both)_
+- [x] 15 Interview Page - Full UI _(frontend)_ - standalone interview practice page now uses live-generated sessions with grouped Technical/Behavioral/HR cards
+- [x] 16 Interview Page - Wired _(both)_ - frontend generates real sessions from the backend interview endpoint and renders the saved response
 
 ### Phase 6 - Application Tracker
 
-- [ ] 17 Applications Page - Full UI _(frontend)_
-- [ ] 18 Applications - Wired _(both)_
+- [x] 17 Applications Page - Full UI _(frontend)_
+- [x] 18 Applications - Wired _(both)_
 
 ### Phase 7 - Dashboard
 
-- [ ] 19 Dashboard Page - Full UI _(frontend)_
-- [ ] 20 Dashboard - Real Data _(both)_
+- [x] 19 Dashboard Page - Full UI _(frontend)_
+- [x] 20 Dashboard - Real Data _(both)_
 
 ### Phase 8 - Settings
 
@@ -71,6 +71,8 @@
 - The Copilot workspace now also owns the resume optimization flow, with side-by-side comparison against the source resume.
 - The Copilot workspace now also owns the cover letter flow, with tone selection, generated draft editing, and backend persistence.
 - The Copilot workspace now also owns the mock interview flow, with role/difficulty selection, saved interview sessions, and a reusable question-card pattern.
+- The applications tracker now owns the Kanban workflow, with filter/search controls, drag-to-status updates, and create/edit/delete dialogs wired to the backend CRUD API.
+- The dashboard page now owns the live analytics shell, with stat cards, a resume-attention banner, recent activity, a weekly checklist, quick-action links, and loading/error states backed by the dashboard endpoints.
 
 ---
 
@@ -78,3 +80,4 @@
 
 - Feature 03 (Database Schema) is partially done from this repo's side: better-auth's own tables (`user`, `session`, `account`, `verification`) already exist since auth is working. The box stays unchecked until the backend's Sequelize-owned tables also exist - it's a _(both)_ feature.
 - TanStack Query and Redux Toolkit are now installed and wired into the root layout. Query state is reserved for backend data; Redux is reserved for client-only cross-page state.
+- The dashboard UI is now wired to real dashboard data; the next step is the settings page.

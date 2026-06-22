@@ -296,4 +296,64 @@ Last updated: `2026-06-23`
 | Accent usage | `bg-accent` |
 
 **Pattern notes:**
-This is the reusable interview practice card for Copilot and the standalone interview page. Keep the answer toggle compact, keep the next-question action visually primary, and preserve the same dense in-app register used by the rest of Copilot rather than introducing a larger marketing-style card.
+This is the reusable interview practice card for Copilot and the standalone interview page. Keep the answer toggle compact, keep the next-question action visually primary when it is shown, and preserve the same dense in-app register used by the rest of Copilot rather than introducing a larger marketing-style card. In list mode, the same card can render without the next-question button while keeping the answer reveal and count chip intact.
+
+### Interview Workspace
+
+File: `src/components/interview/InterviewWorkspace.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-error-light` |
+| Border | `border border-border`, `border-error-light` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-error-foreground` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent` |
+
+**Pattern notes:**
+The standalone interview page uses the same dense in-app register as Copilot, but it is more structured: a setup card, an empty state when no session exists, a live session details panel, and three category sections for Technical, Behavioral, and HR. It should stay token-only and never fall back to mock question data once the backend is connected.
+
+### Applications Workspace
+
+File: `src/components/applications/ApplicationsWorkspace.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-background/70` |
+| Border | `border border-border` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-error-foreground` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-6`, `p-4`, `px-3 py-2`, `py-0.5`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `min-h-[160px]` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `ring-accent`, `bg-link-bg-soft`, `bg-violet-light`, `bg-success-light`, `bg-error-light`, `bg-success` |
+
+**Pattern notes:**
+The applications tracker is a dense Kanban board in the in-app register: hero summary, stats row, filter bar, five status columns, draggable cards, and modal dialogs for create/edit/delete flows. Keep status chips token-based, keep drag feedback to the single accent ring, and keep all interactions in the same 6px-radius system used by the rest of the authenticated shell.
+
+### Dashboard Workspace
+
+File: `src/components/dashboard/DashboardWorkspace.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-warning-light`, `bg-link-bg-soft`, `bg-violet-light`, `bg-success-light` |
+| Border | `border border-border`, `border border-warning-light`, `border-success`, `border-border` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-warning-foreground`, `text-link-deep`, `text-violet-foreground`, `text-success-foreground` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `gap-2`, `gap-3`, `gap-4`, `gap-5`, `space-y-3`, `space-y-6` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `bg-warning-light`, `bg-link-bg-soft`, `bg-violet-light`, `bg-success-light` |
+
+**Pattern notes:**
+Dashboard stays in the in-app register and combines a neutral hero, a warning resume-attention banner, four stat cards, a recent-activity feed, a weekly focus checklist, and a quick-actions rail. Keep it dense, token-only, and utility-first. The real-data version keeps the same visual language while adding loading, empty, and error states inside the same surface/card pattern.
