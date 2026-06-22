@@ -36,6 +36,11 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isRegister = mode === "register";
+  const badgeLabel = isRegister ? "Start free" : "Welcome back";
+  const headline = isRegister ? "Create your account." : "Sign in to continue.";
+  const description = isRegister
+    ? "Save resumes, run ATS checks, and keep every application organized in one place."
+    : "Pick up where you left off and keep your resume workflow moving.";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -101,18 +106,16 @@ export function AuthForm({ mode }: AuthFormProps) {
   }
 
   return (
-    <div className="w-full rounded-lg border border-border bg-surface p-8 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]">
-      <div className="space-y-2">
-        <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-          {isRegister ? "Create account" : "Welcome back"}
+    <div className="w-full rounded-[16px] border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset] sm:p-8">
+      <div className="space-y-3">
+        <p className="inline-flex rounded-full border border-border bg-surface-secondary px-3 py-1 font-mono text-[12px] leading-4 text-text-muted">
+          {badgeLabel}
         </p>
         <h1 className="text-[32px] font-semibold leading-10 tracking-[-0.04em] text-text-primary">
-          {isRegister ? "Start tailoring faster." : "Sign in to continue."}
+          {headline}
         </h1>
         <p className="text-[16px] leading-6 text-text-secondary">
-          {isRegister
-            ? "Create your account to upload resumes, run ATS checks, and keep every application organized."
-            : "Pick up where you left off and keep your resume workflow moving."}
+          {description}
         </p>
       </div>
 
@@ -161,6 +164,11 @@ export function AuthForm({ mode }: AuthFormProps) {
             type="password"
             value={password}
           />
+          {isRegister ? (
+            <p className="text-[12px] leading-4 text-text-muted">
+              Use at least 8 characters. Longer passwords are better.
+            </p>
+          ) : null}
         </label>
 
         {isRegister ? (
@@ -187,7 +195,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         ) : null}
 
         <button
-          className="inline-flex h-10 w-full items-center justify-center rounded-sm bg-accent px-4 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-10 w-full items-center justify-center rounded-sm bg-accent px-4 text-[14px] font-medium leading-5 text-on-primary transition duration-150 hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           disabled={isSubmitting}
           type="submit"
         >
@@ -206,12 +214,12 @@ export function AuthForm({ mode }: AuthFormProps) {
       </div>
 
       <button
-        className="mt-6 inline-flex h-10 w-full items-center justify-center gap-2 rounded-sm border border-border bg-surface px-4 text-[14px] font-medium leading-5 text-text-primary transition hover:bg-surface-secondary disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-6 inline-flex h-10 w-full items-center justify-center gap-2 rounded-sm border border-border bg-surface px-4 text-[14px] font-medium leading-5 text-text-primary transition duration-150 hover:bg-surface-secondary active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
         disabled={isSubmitting}
         type="button"
         onClick={handleGoogleSignIn}
       >
-        <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-google text-[10px] font-semibold text-on-primary">
+        <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-google text-[10px] font-semibold leading-none text-on-primary">
           G
         </span>
         Continue with Google

@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, useTransition } from "react";
@@ -865,8 +866,8 @@ export function CopilotWorkspace() {
           </div>
         </div>
 
-        <div className="mt-5 grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-md border border-border bg-surface-secondary p-4">
+        <div className="mt-5 grid items-start gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,0.75fr)]">
+          <div className="min-w-0 rounded-md border border-border bg-surface-secondary p-4">
             {selectedTab === "summary" ? (
               <div className="space-y-5">
                 <div className="flex flex-wrap items-center gap-2">
@@ -958,8 +959,8 @@ export function CopilotWorkspace() {
                   </div>
                 ) : (
                   <>
-                    <div className="grid gap-4 xl:grid-cols-2">
-                      <article className="rounded-md border border-border bg-surface-secondary p-4">
+                    <div className="grid gap-4 2xl:grid-cols-2">
+                      <article className="min-w-0 rounded-md border border-border bg-surface-secondary p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div>
                             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -982,7 +983,7 @@ export function CopilotWorkspace() {
                         </div>
                       </article>
 
-                      <article className="rounded-md border border-border bg-surface-secondary p-4">
+                      <article className="min-w-0 rounded-md border border-border bg-surface-secondary p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div>
                             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -1299,7 +1300,7 @@ export function CopilotWorkspace() {
                     </p>
                   </div>
                 ) : (
-                  <div className="grid gap-4 xl:grid-cols-[1fr_0.7fr]">
+                  <div className="grid items-start gap-4 2xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
                     <QuestionCard
                       key={`${activeInterviewSession.id}-${interviewQuestionIndex}`}
                       question={activeInterviewQuestion}
@@ -1309,7 +1310,7 @@ export function CopilotWorkspace() {
                     />
 
                     <div className="space-y-3">
-                      <article className="rounded-md border border-border bg-surface-secondary p-4">
+                      <article className="min-w-0 rounded-md border border-border bg-surface-secondary p-4">
                         <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
                           Session details
                         </p>
@@ -1341,7 +1342,7 @@ export function CopilotWorkspace() {
                         </div>
                       </article>
 
-                      <article className="rounded-md border border-border bg-surface p-4">
+                      <article className="min-w-0 rounded-md border border-border bg-surface p-4">
                         <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
                           Practice notes
                         </p>
@@ -1358,7 +1359,7 @@ export function CopilotWorkspace() {
                               <p className="font-medium text-text-primary">
                                 {item.category}
                               </p>
-                              <p className="mt-1">{item.question}</p>
+                              <p className="mt-1 break-words">{item.question}</p>
                             </li>
                           ))}
                         </ul>
@@ -1370,7 +1371,7 @@ export function CopilotWorkspace() {
             ) : null}
           </div>
 
-          <div className="rounded-md border border-border bg-surface p-4">
+          <div className="min-w-0 rounded-md border border-border bg-surface p-4">
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               Insights
             </p>

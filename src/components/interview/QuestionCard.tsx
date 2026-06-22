@@ -23,7 +23,7 @@ export function QuestionCard({
   const canAdvance = showNextButton && typeof onNext === "function";
 
   return (
-    <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+    <article className="min-w-0 rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -43,7 +43,7 @@ export function QuestionCard({
         </button>
       </div>
 
-      <p className="mt-4 text-[16px] leading-7 text-text-primary">
+      <p className="mt-4 break-words text-[16px] leading-7 text-text-primary">
         {question.question}
       </p>
 
@@ -53,7 +53,7 @@ export function QuestionCard({
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               Model answer
             </p>
-            <p className="mt-2 text-[14px] leading-6 text-text-secondary">
+            <p className="mt-2 break-words text-[14px] leading-6 text-text-secondary">
               {question.modelAnswer}
             </p>
           </div>
@@ -61,7 +61,7 @@ export function QuestionCard({
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               Follow-up
             </p>
-            <p className="mt-2 text-[14px] leading-6 text-text-secondary">
+            <p className="mt-2 break-words text-[14px] leading-6 text-text-secondary">
               {question.followUp}
             </p>
           </div>

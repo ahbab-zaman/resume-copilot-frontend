@@ -5,33 +5,31 @@ import { auth } from "@/lib/auth";
 import { navLinks } from "@/components/landing/content";
 
 import { NavbarActions } from "./NavbarActions";
-
+import Image from "next/image";
+import logo from "../../../public/assets/logo-pilot.png";
 export async function Navbar() {
   const session = await auth.api.getSession({ headers: await headers() });
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-border bg-surface/95 backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-350 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-[12px] bg-accent text-[13px] font-semibold text-on-primary">
-            A
-          </div>
+          <Image height={60} width={60} src={logo} alt="Resume Copilot Logo" />
           <div>
             <p className="text-[14px] font-semibold leading-5 tracking-[-0.03em] text-text-primary">
-              AI Resume
+              Resume Copilot
             </p>
-            <p className="text-[12px] leading-4 text-text-muted">Job pilot</p>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <a
-              key={link}
-              href={`#${link.toLowerCase().replaceAll(" ", "-")}`}
-              className="rounded-full px-3 py-2 text-[14px] leading-5 text-text-secondary transition hover:bg-surface-secondary hover:text-text-primary"
+              key={link.href}
+              href={link.href}
+              className="relative rounded-full px-3 py-2 text-[14px] leading-5 text-text-secondary transition hover:bg-surface-secondary hover:text-text-primary"
             >
-              {link}
+              {link.label}
             </a>
           ))}
         </nav>

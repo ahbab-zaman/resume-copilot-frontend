@@ -1,4 +1,7 @@
 import { footerColumns } from "@/components/landing/content";
+import Link from "next/link";
+import logo from "../../../public/assets/logo-pilot.png";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,23 +10,30 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-[12px] bg-accent text-[13px] font-semibold text-on-primary">
-                A
-              </div>
+              <Link
+                href="/"
+                className="flex h-10 w-10 items-center justify-center rounded-sm bg-accent text-[13px] font-semibold text-on-primary"
+              >
+                <Image
+                  height={80}
+                  width={80}
+                  src={logo}
+                  alt="Resume Copilot Logo"
+                />
+              </Link>
               <div>
                 <p className="text-[14px] font-semibold leading-5 text-text-primary">
-                  AI Resume
+                  Resume Copilot
                 </p>
-                <p className="text-[12px] leading-4 text-text-muted">Job pilot</p>
               </div>
             </div>
             <p className="mt-4 max-w-md text-[14px] leading-6 text-text-secondary">
-              A mock landing page built to match the reference screenshot and
-              the project UI rules before any feature logic is connected.
+              A focused workspace for resume tailoring, ATS scoring, interview
+              prep, and application tracking.
             </p>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
             {footerColumns.map((column) => (
               <div key={column.title}>
                 <p className="text-[12px] font-medium leading-4 text-text-muted">
@@ -31,12 +41,12 @@ export function Footer() {
                 </p>
                 <ul className="mt-4 space-y-3">
                   {column.links.map((link) => (
-                    <li key={link}>
+                    <li key={link.label}>
                       <a
-                        href="#"
-                        className="text-[14px] leading-5 text-text-secondary hover:text-text-primary"
+                        href={link.href}
+                        className="text-[14px] leading-5 text-text-secondary transition hover:text-text-primary"
                       >
-                        {link}
+                        {link.label}
                       </a>
                     </li>
                   ))}
@@ -45,8 +55,8 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <p className="mt-10 text-[12px] leading-4 text-text-muted">
-          Mock data only. No backend logic is connected on this page yet.
+        <p className="mt-10 border-t border-border pt-6 text-[12px] leading-4 text-text-muted">
+          (c) 2026 AI Resume CoPilot
         </p>
       </div>
     </footer>

@@ -41,11 +41,11 @@ Composition-only route. The visual patterns now live in reusable landing/layout 
 ### Public Navbar
 
 File: `src/components/layout/Navbar.tsx`
-Last updated: `2026-06-22`
+Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-background`, `bg-surface` |
+| Background | `bg-surface` |
 | Border | `border-b border-border/80`, `border border-border` |
 | Border radius | `rounded-[12px]`, `rounded-sm`, `rounded-full` |
 | Text - primary | `text-text-primary`, `text-on-primary` |
@@ -56,16 +56,16 @@ Last updated: `2026-06-22`
 | Accent usage | `bg-accent`, `text-on-primary` |
 
 **Pattern notes:**
-Public navigation uses a sticky bar, compact pill links, and a strong primary CTA when logged out. When a session exists, the right-side controls hand off to the account dropdown instead of showing auth CTAs.
+Public navigation uses a sticky surface bar, compact pill links, and a strong primary CTA when logged out. The public links now resolve to dedicated marketing routes, while the landing-page sections still handle intra-page anchors elsewhere on the page. When a session exists, the right-side controls hand off to the account dropdown instead of showing auth CTAs.
 
 ### Navbar Actions Dropdown
 
 File: `src/components/layout/NavbarActions.tsx`
-Last updated: `2026-06-22`
+Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-surface` |
+| Background | `bg-surface`, `bg-canvas/95` |
 | Border | `border border-border`, `border-t border-border` |
 | Border radius | `rounded-sm`, `rounded-md`, `rounded-full` |
 | Text - primary | `text-text-primary`, `text-on-primary` |
@@ -76,7 +76,7 @@ Last updated: `2026-06-22`
 | Accent usage | `bg-accent`, `text-on-primary` |
 
 **Pattern notes:**
-Logged-in users see a compact account button with a dropdown that includes the main app routes plus sign out. Keep this menu token-only and aligned to the top-right of the navbar.
+Logged-in users see a compact account button with a dropdown that includes the main app routes plus sign out. On mobile, the same control opens an opaque canvas-backed drawer so the menu never reads as transparent. Keep this menu token-only and aligned to the top-right of the navbar.
 
 ### Hero Section
 
@@ -181,7 +181,7 @@ FAQ cards stay deliberately plain. The only variation is a single highlighted ac
 ### Footer
 
 File: `src/components/layout/Footer.tsx`
-Last updated: `2026-06-21`
+Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
@@ -196,27 +196,47 @@ Last updated: `2026-06-21`
 | Accent usage | `bg-accent`, `text-on-primary` |
 
 **Pattern notes:**
-Footer repeats the same logo treatment as the navbar and keeps links low-contrast. It should remain visually quiet relative to the hero and CTA.
+Footer repeats the same logo treatment as the navbar and keeps links low-contrast. It should remain visually quiet relative to the hero and CTA, and only point to real public destinations.
+
+### Call To Action
+
+File: `src/components/landing/CallToAction.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-background`, `bg-surface`, `bg-accent` |
+| Border | `border border-border`, `border border-white/15` |
+| Border radius | `rounded-[24px]`, `rounded-[18px]`, `rounded-[100px]` |
+| Text - primary | `text-on-primary`, `text-text-primary` |
+| Text - secondary | `text-white/70` |
+| Spacing | `px-4 py-16`, `px-6 py-6`, `px-6 py-10` |
+| Hover state | `hover:bg-surface-secondary` |
+| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]`, `shadow-[0_2px_2px_rgba(0,0,0,0.08),0_8px_16px_-4px_rgba(0,0,0,0.18),0_0_0_1px_rgba(255,255,255,0.06)_inset]` |
+| Accent usage | `bg-accent` |
+
+**Pattern notes:**
+The CTA now layers the hero-style radial gradient behind an inverted callout card, so the ending band feels connected to the landing hero without reusing the hero mesh directly as a card fill. Keep the outer wrapper roomy and the inner action pill clean and high-contrast.
 
 ### Auth Form
 
 File: `src/components/auth/AuthForm.tsx`
-Last updated: `2026-06-21`
+Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
 | Background | `bg-surface`, `bg-surface-secondary`, `bg-error-light` |
 | Border | `border border-border`, `border-error/30` |
-| Border radius | `rounded-lg`, `rounded-sm`, `rounded-full` |
+| Border radius | `rounded-[16px]`, `rounded-sm`, `rounded-full` |
 | Text - primary | `text-text-primary`, `text-on-primary`, `text-error-foreground` |
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
-| Spacing | `p-8`, `mt-6`, `mt-8`, `px-3 py-2` |
-| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Spacing | `p-6`, `p-8`, `mt-6`, `mt-8`, `px-3 py-2` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90`, `active:scale-[0.98]` |
 | Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04), 0 0 0 1px var(--border) inset` |
 | Accent usage | `bg-accent`, `bg-google` |
 
 **Pattern notes:**
-Public auth uses a centered, surface card with a two-column feel on wide screens and a single strong primary action. Error messaging stays token-based and the Google button uses the dedicated brand token, not a generic blue.
+Public auth uses a centered, surface card with a two-column page shell on wide screens, compact 6px controls, and a single strong primary action. Error messaging stays token-based and the Google button uses the dedicated brand token, not a generic blue.
 
 ### Authenticated Sidebar
 
@@ -257,6 +277,116 @@ Last updated: `2026-06-22`
 
 **Pattern notes:**
 Resume management stays in the in-app register: compact cards, table rows, and small 6px-radius controls. Upload, rename, set-active, and delete actions all use the same token set as the sidebar shell, and the active state is represented with a semantic badge instead of a custom color.
+
+### Phase 3 Design Pass Additions
+
+File: `src/components/layout/AppChrome.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-background`, `bg-surface` |
+| Border | `border-b border-border`, `border-l border-border`, `border-r border-border` |
+| Border radius | `rounded-sm`, `rounded-md` |
+| Text - primary | `text-text-primary`, `text-on-primary` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `h-12`, `px-4`, `p-4`, `py-6` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `text-on-primary` |
+
+**Pattern notes:**
+The app chrome now owns the responsive top bar and mobile drawer, while the sidebar stays as the desktop navigation surface. Keep this shell token-only and fixed to the in-app 6px register.
+
+File: `src/components/landing/RevealSection.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `none` |
+| Border | `none` |
+| Border radius | `none` |
+| Text - primary | `text-text-primary` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `translate-y-4`, `opacity-0`, `opacity-100` |
+| Hover state | `none` |
+| Shadow | `none` |
+| Accent usage | `none` |
+
+**Pattern notes:**
+Marketing sections use this wrapper for the one-time scroll reveal. It should only control transform and opacity, with no extra chrome.
+
+File: `src/components/shared/UploadDropzone.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary` |
+| Border | `border-2 border-dashed border-border-strong`, `border-accent` |
+| Border radius | `rounded-md`, `rounded-full` |
+| Text - primary | `text-text-primary` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-6`, `mt-4`, `mt-2` |
+| Hover state | `hover:bg-surface-secondary` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `border-accent` |
+
+**Pattern notes:**
+Reusable upload chrome for Copilot and the resumes modal. Keep it minimal, drag-safe, and token-only.
+
+File: `src/components/landing/HowItWorks.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface-secondary`, `bg-surface` |
+| Border | `border border-border` |
+| Border radius | `rounded-[12px]` |
+| Text - primary | `text-text-primary`, `text-accent` |
+| Text - secondary | `text-text-secondary` |
+| Spacing | `px-4 py-16`, `p-6`, `mt-12` |
+| Hover state | `none` |
+| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 8px -8px rgba(0,0,0,0.04), 0 0 0 1px var(--border) inset` |
+| Accent usage | `bg-accent` |
+
+**Pattern notes:**
+Landing step cards use the marketing register with a simple numbered flow and the same stacked shadow treatment as the other marketing cards.
+
+File: `src/components/landing/AtsPreview.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary` |
+| Border | `border border-border` |
+| Border radius | `rounded-[16px]`, `rounded-[14px]`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary` |
+| Text - secondary | `text-text-secondary`, `text-text-muted`, `text-success-foreground`, `text-warning-foreground`, `text-error-foreground` |
+| Spacing | `p-6`, `p-5`, `mt-4`, `mt-5` |
+| Hover state | `none` |
+| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04), 0 0 0 1px var(--border) inset` |
+| Accent usage | `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-violet` |
+
+**Pattern notes:**
+The landing ATS preview is a static, honest mock of the real analysis layout. Keep it marketing-friendly but still visibly rooted in the in-app score system.
+
+File: `src/components/settings/SettingsWorkspace.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-link-bg-soft`, `bg-success-light`, `bg-error-light` |
+| Border | `border border-border`, `border-error/30`, `border-success/30` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-link-deep`, `text-success-foreground`, `text-error-foreground` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `bg-link-bg-soft`, `bg-success-light`, `bg-error-light` |
+
+**Pattern notes:**
+Settings now uses a left-side tab rail on desktop, a horizontal tab row on smaller screens, a locked-light appearance card, and a typed-email account deletion confirmation.
 
 ### Copilot Workspace
 

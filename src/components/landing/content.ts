@@ -1,57 +1,69 @@
-export const navLinks = ["Features", "How it works", "Pricing", "FAQ"];
-
-export const trustedBy = ["Catalog", "Galileo", "Hourglass", "Netzsche", "Boltshift"];
+export const navLinks = [
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Features", href: "/features" },
+  { label: "How it works", href: "/how-it-works" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "FAQ", href: "/faq" },
+];
 
 export const featureCards = [
   {
-    title: "Smart task management",
+    title: "ATS scoring",
     description:
-      "Keep every application, resume, and follow-up in one calm workspace.",
-    accent: "Task auto-assigned",
+      "See match quality, missing keywords, and the hiring signals behind a job description.",
+    icon: "score",
   },
   {
-    title: "AI email summaries",
+    title: "Resume optimization",
     description:
-      "Turn job descriptions and recruiter notes into concise action items.",
-    accent: "Reply draft generated",
+      "Turn one resume into a sharper draft with stronger verbs, better structure, and clearer signals.",
+    icon: "resume",
   },
   {
-    title: "Workflow automations",
+    title: "Cover letters and interview prep",
     description:
-      "Move from analysis to cover letter and interview prep without context switching.",
-    accent: "Resume optimized",
-  },
-  {
-    title: "Team analytics",
-    description:
-      "See where your applications are stalling and what to prioritize next.",
-    accent: "Projects in progress",
+      "Generate a tailored letter and role-specific questions from the same analysis.",
+    icon: "prep",
   },
 ];
 
-export const metrics = [
-  { value: "50k+", label: "applications tailored" },
-  { value: "99%", label: "ATS clarity" },
-  { value: "12h", label: "saved every week" },
-  { value: "4.9/5", label: "user rating" },
+export const howItWorksSteps = [
+  {
+    number: "1",
+    title: "Upload your resume",
+    description:
+      "Drop in a PDF or choose an existing file from your workspace.",
+  },
+  {
+    number: "2",
+    title: "Paste the job description",
+    description:
+      "The analysis compares your resume against the job you actually want.",
+  },
+  {
+    number: "3",
+    title: "Get the full application kit",
+    description:
+      "Review the ATS score, optimize the resume, generate a letter, and practice interview questions.",
+  },
 ];
 
 export const testimonials = [
   {
     quote:
-      "The flow feels immediate. I paste a JD, get a sharper resume, and know exactly what to fix next.",
+      "I got three callbacks in the first week because the ATS gap was obvious and the optimized resume was easy to trust.",
     name: "Marta E.",
     title: "Product designer",
   },
   {
     quote:
-      "It looks polished enough to trust, but stays focused on the actual job search work.",
+      "The page feels focused instead of noisy. I can move from resume to interview prep without losing context.",
     name: "Jordan T.",
     title: "Frontend engineer",
   },
   {
     quote:
-      "The mock interview cards and ATS summary make the next step obvious instead of overwhelming.",
+      "It makes the next step obvious, which is the part most job tools get wrong.",
     name: "Lina S.",
     title: "Career switcher",
   },
@@ -59,64 +71,72 @@ export const testimonials = [
 
 export const pricingPlans = [
   {
-    name: "Starter",
+    name: "Free",
     price: "$0",
-    description: "For trying the workflow and exploring the layout.",
-    features: ["One resume upload", "Basic ATS analysis", "Saved mock data"],
+    description: "A simple starting point for testing the full workflow.",
+    features: ["One active resume", "ATS analysis", "Interview question set"],
+    featured: false,
   },
   {
-    name: "Growth",
+    name: "Growing job search",
     price: "$0",
-    description: "For regular job seekers who need a repeatable system.",
+    description:
+      "Everything stays free for now while the product is in build-out.",
     features: [
       "Unlimited analyses",
-      "Optimized resume drafts",
-      "Cover letter and interview prep",
+      "Resume optimization",
+      "Cover letter drafts",
+      "Application tracking",
     ],
     featured: true,
   },
   {
-    name: "Enterprise",
+    name: "Team later",
     price: "Custom",
-    description: "For teams, coaches, and larger career services workflows.",
-    features: ["Shared templates", "Reporting views", "White-glove support"],
+    description: "Reserved for future coaching and support workflows.",
+    features: ["Shared templates", "Bulk reporting", "Priority support"],
+    featured: false,
   },
 ];
 
 export const faqs = [
   {
-    question: "How does the resume analysis work?",
+    question: "How does the Copilot flow work?",
     answer:
-      "You upload a resume, paste a job description, and the app returns a structured ATS score with matched and missing keywords.",
+      "You upload a resume, paste a job description, and the backend returns an ATS score plus the outputs you can generate from it.",
   },
   {
-    question: "Can I generate cover letters from the same analysis?",
+    question: "Is pricing live yet?",
     answer:
-      "Yes. The mock layout shows the full path from one analysis into an optimized resume, cover letter, and interview questions.",
+      "No. The pricing page is presentational only for now and shows the free tier clearly.",
   },
   {
-    question: "Does this page connect to live data yet?",
+    question: "Does the app support mobile?",
     answer:
-      "No. This feature is mock UI only, so the page is safe to review and refine before wiring any backend behavior.",
+      "Yes. The shell collapses into mobile-safe layouts with a drawer sidebar and stacked content.",
   },
   {
-    question: "Can I use this on mobile?",
+    question: "Can I revisit generated outputs later?",
     answer:
-      "Yes. The layout compresses into a single-column marketing page and keeps the key sections readable on smaller screens.",
+      "Yes. The backend saves analysis, optimized resume, cover letter, and interview session records.",
   },
 ];
 
 export const footerColumns = [
   {
     title: "Product",
-    links: ["Features", "Pricing", "FAQ"],
+    links: [
+      { label: "Features", href: "/features" },
+      { label: "How it works", href: "/how-it-works" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "FAQ", href: "/faq" },
+    ],
   },
   {
-    title: "Company",
-    links: ["About", "Careers", "Contact"],
-  },
-  {
-    title: "Resources",
-    links: ["Docs", "Blog", "Support"],
+    title: "Account",
+    links: [
+      { label: "Log In", href: "/login" },
+      { label: "Get Started", href: "/register" },
+    ],
   },
 ];

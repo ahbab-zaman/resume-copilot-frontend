@@ -13,8 +13,7 @@ export function SectionHeading({
         {eyebrow}
       </p>
       <h2
-        className="mt-3 text-text-primary font-semibold tracking-[-0.04em]"
-        style={{ fontSize: "32px", lineHeight: "40px" }}
+        className="mt-3 text-[32px] font-semibold leading-10 tracking-[-0.04em] text-text-primary"
       >
         {title}
       </h2>

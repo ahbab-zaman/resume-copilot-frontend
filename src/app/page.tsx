@@ -1,8 +1,9 @@
+import { AtsPreview } from "@/components/landing/AtsPreview";
 import { CallToAction } from "@/components/landing/CallToAction";
 import { Faq } from "@/components/landing/Faq";
 import { Features } from "@/components/landing/Features";
 import { Hero } from "@/components/landing/Hero";
-import { Pricing } from "@/components/landing/Pricing";
+import { HowItWorks } from "@/components/landing/HowItWorks";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
@@ -14,8 +15,9 @@ export default function Home() {
       <main>
         <Hero />
         <Features />
+        <HowItWorks />
+        <AtsPreview />
         <SocialProof />
-        <Pricing />
         <Faq />
         <CallToAction />
       </main>

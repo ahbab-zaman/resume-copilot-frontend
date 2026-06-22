@@ -81,3 +81,4 @@
 - Feature 03 (Database Schema) is partially done from this repo's side: better-auth's own tables (`user`, `session`, `account`, `verification`) already exist since auth is working. The box stays unchecked until the backend's Sequelize-owned tables also exist - it's a _(both)_ feature.
 - TanStack Query and Redux Toolkit are now installed and wired into the root layout. Query state is reserved for backend data; Redux is reserved for client-only cross-page state.
 - The dashboard UI is now wired to real dashboard data, and the settings page is now complete.
+- Phase 3 design-pass work for the frontend is complete in this repo as of 2026-06-23, covering landing, pricing, app shell, resumes, copilot, applications, interview, dashboard, and settings.
