@@ -327,3 +327,54 @@ typography: caption (12px / 400)
 - Shadows are always stacked (see Elevation table) — never a single generic `box-shadow` value.
 - Match score bars, skill badges, and Kanban status badges always use the score-band/status tokens above — never hardcoded colors.
 - All borders default to `--color-border` — never `border-gray-*`.
+- Every transition uses a duration + easing token from the Motion scale below — never an inline arbitrary value like `duration-[180ms]`.
+
+---
+
+## Motion & Animation Tokens
+
+Senior-level UI reads as _intentional_, not decorated — motion has a system here exactly like color does. Full application rules live in `ui-rules.md`'s Motion & Microinteractions section; these are the raw values.
+
+```css
+@theme {
+  /* Duration */
+  --duration-fast: 120ms; /* hover/focus state changes, badge color shifts */
+  --duration-base: 200ms; /* default — button press, tab switch, fade-in of fetched content */
+  --duration-moderate: 320ms; /* drawer/dialog open, sidebar collapse, accordion expand */
+  --duration-slow: 480ms; /* page-section reveal on scroll, multi-element stagger */
+  --duration-hero: 800ms; /* landing hero entrance only */
+
+  /* Easing */
+  --ease-standard: cubic-bezier(
+    0.4,
+    0,
+    0.2,
+    1
+  ); /* default for almost everything */
+  --ease-emphasized: cubic-bezier(
+    0.2,
+    0,
+    0,
+    1
+  ); /* entrances — decelerate into place */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1); /* exits — accelerate away */
+  --ease-snap: cubic-bezier(
+    0.34,
+    1.56,
+    0.64,
+    1
+  ); /* Kanban card drop, slight overshoot */
+}
+```
+
+| Token                                   | Value | Use                                                      |
+| --------------------------------------- | ----- | -------------------------------------------------------- |
+| `duration-fast` + `ease-standard`       | 120ms | Button hover, link underline, badge hover                |
+| `duration-base` + `ease-standard`       | 200ms | Tab switch, skeleton → content fade, button press scale  |
+| `duration-moderate` + `ease-emphasized` | 320ms | Dialog/dropdown open, sidebar item expand, accordion     |
+| `duration-moderate` + `ease-exit`       | 320ms | Dialog/dropdown close                                    |
+| `duration-slow` + `ease-emphasized`     | 480ms | Scroll-triggered section reveal, staggered card entrance |
+| `duration-hero` + `ease-emphasized`     | 800ms | Landing hero headline/CTA entrance only                  |
+| `duration-base` + `ease-snap`           | 200ms | Kanban card drop settling into its new column            |
+
+Never animate more than `transform`, `opacity`, and `color`/`background-color` — never animate `width`, `height`, `top`/`left`, or `box-shadow` directly (causes layout thrash/jank). Reposition with `transform: translate(...)`, resize with `transform: scale(...)` where visually equivalent.

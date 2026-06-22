@@ -13,6 +13,108 @@ Apply `${GeistSans.variable} ${GeistMono.variable}` on the `<html>` tag in the r
 
 ---
 
+## Motion & Microinteractions
+
+Every interactive element has a deliberate motion response — the absence of motion on hover/press/load is itself a bug, not a neutral default. Use the duration/easing tokens from `ui-tokens.md` exclusively.
+
+### Buttons
+
+- Hover: background lightens 4% (in-app: `bg-surface-secondary` swap) or text/background invert (marketing pill), `duration-fast`.
+- Press (`:active`): `scale(0.98)`, `duration-fast`, `ease-standard` — gives tactile feedback without a layout shift.
+- Disabled: opacity 0.5, no hover/press response, cursor `not-allowed`.
+
+### Cards (in-app: stat cards, resume rows, question cards, Kanban cards)
+
+- Hover (where clickable): elevation steps up one level (e.g. Level 1 → Level 2) and `border-border` shifts to `border-border-strong`, `duration-fast`.
+- Entrance: when a list of cards mounts (dashboard stats, resume table rows, question cards), stagger a `fade + translateY(8px → 0)` at `duration-base`/`ease-emphasized`, 40ms delay between siblings, capped at 6 staggered items — beyond that, fade the rest in together to avoid a sluggish feel.
+
+### Tabs (Copilot Output Tabs)
+
+- Active tab indicator slides via `transform: translateX()` under the tab row, `duration-base`/`ease-standard` — never a hard cut.
+- Tab content cross-fades, `duration-base`.
+
+### Dialogs, Dropdowns, Modals
+
+- Open: `scale(0.96) + opacity 0 → scale(1) + opacity 1`, `duration-moderate`/`ease-emphasized`, with a backdrop fade-in at the same duration.
+- Close: reverse, `ease-exit`, slightly faster feel is fine (`duration-base`).
+
+### Sidebar
+
+- Active-item indicator bar transitions position via `transform`, `duration-fast`, when switching routes — never an instant snap.
+- Hover state on inactive items: background fade-in, `duration-fast`.
+
+### Kanban Drag (Applications page)
+
+- Picked-up card: scale to 1.03, elevate to Level 4, slight rotate (1–2deg) for a tactile "lifted" feel.
+- Drop: animate into the new position with `duration-base`/`ease-snap` (the only place the slight-overshoot easing is used) — it should feel like it settles, not stops dead.
+- Column drop-zone: background tints `bg-surface-secondary` while a card hovers over it.
+
+### Loading States
+
+- Skeleton screens (gray pulsing blocks matching the real layout's shape), never a bare spinner, for anything that takes >300ms: resume table, dashboard stats, Kanban board, question list.
+- Skeleton → real content: cross-fade, `duration-base`, never an abrupt swap.
+- The Copilot's multi-step "Analyzing..." state: cycle through 3–4 step labels (e.g. "Reading resume" → "Comparing against job description" → "Scoring matches") every ~1.5s while the single backend request is in flight — purely cosmetic pacing, not real progress tracking, since the backend doesn't report intermediate steps (see `library-docs.md`'s Polling pattern note).
+
+### Scroll-Triggered Reveals (Landing Page Only)
+
+- Each marketing section (Features, How It Works, Testimonials) fades + translates up 16px as it enters the viewport, `duration-slow`/`ease-emphasized`, triggered once (no repeat on scroll-back), using `IntersectionObserver` — never a scroll-linked/parallax effect, which reads as gimmicky against Vercel's restrained brand voice.
+
+### What Never Animates
+
+- Color changes on data that updates in place (ATS score number ticking up) — instant, no count-up animation; the brand's calm voice doesn't do playful number tweens here.
+- Page navigation between sidebar routes — instant route swap, no page transition wrapper (Next.js App Router default).
+- Table row reordering on sort — instant, no FLIP animation (out of scope for this project's complexity budget).
+
+---
+
+## Responsive Strategy
+
+Three breakpoints, using Tailwind's defaults directly — no custom breakpoint tokens needed.
+
+| Name    | Width      | Tailwind prefix  |
+| ------- | ---------- | ---------------- |
+| Mobile  | < 640px    | (none — default) |
+| Tablet  | 640–1023px | `sm:`            |
+| Desktop | ≥ 1024px   | `lg:`            |
+
+Exact per-page responsive behavior lives in each page's file under `context/design-specs/` — the rules below are the _cross-page_ defaults every page inherits unless its spec says otherwise.
+
+### Sidebar (In-App Shell)
+
+- Desktop (`lg:`): fixed 240px sidebar, always visible.
+- Tablet/Mobile: sidebar collapses to a slide-in drawer triggered by a hamburger icon in a thin top bar (48px), backdrop overlay, closes on item click or backdrop tap. Drawer slides via `transform: translateX()`, `duration-moderate`/`ease-emphasized`.
+
+### Public Navbar
+
+- Desktop (`lg:`): logo, centered links, right-side auth buttons all visible.
+- Tablet/Mobile: nav links collapse into a hamburger → full-screen overlay menu; logo + hamburger remain in the 64px bar.
+
+### Grids (feature rows, pricing tiers, dashboard stat cards, resume/question lists)
+
+- Desktop: as specified per page (commonly 3-up or 4-up).
+- Tablet: drop to 2-up.
+- Mobile: 1-up, full width.
+
+### Kanban Board
+
+- Desktop/Tablet: five columns side by side, horizontal scroll if the viewport can't fit all five (never force-shrink columns below a usable width).
+- Mobile: single-column view with a status selector (segmented control or dropdown) swapping which column is visible — five columns side-by-side on a phone screen is unusable, don't attempt it.
+
+### Forms (Copilot input panel, Settings, auth)
+
+- Desktop: multi-column where it makes sense (Settings' Personal Info section).
+- Mobile: always single column, full-width inputs, label above field (never inline label + field on mobile).
+
+### Touch Targets
+
+- Every interactive element is at least 44×44px on mobile/tablet, even if its visual size is smaller — pad the hit area, don't enlarge the visible chrome.
+
+### Typography Scaling
+
+- `display-xl`/`display-lg` step down one size at mobile (e.g. hero headline: 48px desktop → 36px mobile) to avoid wrapping into more than 3 lines. Body and caption sizes stay constant across breakpoints — only display sizes scale.
+
+---
+
 ## Two Registers — Marketing vs. In-App
 
 This project has two distinct visual modes, and a component built for one must never bleed into the other:

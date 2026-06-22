@@ -1,37 +1,39 @@
-# Memory — Dashboard Page Full UI (Frontend)
+# Memory â€” Settings Page Complete (Frontend)
 
-Last updated: 2026-06-23
+Last updated: 2026-06-23 02:29
 
 ## What was built
 
-- Added `src/components/dashboard/DashboardWorkspace.tsx` for the new `/dashboard` page UI.
-- Replaced `src/app/(app)/dashboard/page.tsx` with a thin route that renders the dashboard workspace.
-- Updated `context/ui-registry.md` with the dashboard pattern.
-- Updated `context/progress-tracker.md` to mark feature 19 complete on the frontend side.
-- Fixed a TypeScript bug in `src/components/applications/ApplicationsWorkspace.tsx` where `onDragEnd` was referenced but not passed into `ApplicationCard`.
+- Added `src/components/settings/SettingsWorkspace.tsx` for the new `/settings` UI.
+- Replaced `src/app/(app)/settings/page.tsx` with a thin server route that loads the session and renders the workspace.
+- Added a settings entry to `context/ui-registry.md`.
+- Updated `context/progress-tracker.md` to mark feature 21 complete on the frontend side.
 
 ## Decisions made
 
-- Kept the dashboard in the dense in-app register used by the authenticated shell.
-- Used a mock-data-only dashboard shell for feature 19, with stat cards, a resume-attention banner, recent activity, a weekly checklist, and quick-action links.
-- Kept the route component thin so the page can later swap to real data without changing the visual structure.
+- Settings keeps the in-app card register used across dashboard, Copilot, resumes, applications, and interview.
+- Profile editing is limited to the display name, since the user email comes from better-auth and should stay read-only here.
+- Theme preference is stored locally in Redux and `localStorage` for now; the app shell still renders the existing light token set.
+- Account deletion uses better-auth's `deleteUser` action with a `DELETE` confirmation step and optional password entry.
 
 ## Problems solved
 
-- The dashboard route had only a placeholder before this session.
-- A build-time TypeScript error in the applications workspace was exposed during verification and fixed so the repo still builds cleanly.
+- Verified the better-auth client surface exposes `updateUser` and `deleteUser` for the settings flow.
+- Confirmed the settings route still works as a server-rendered authenticated page while the interactions stay client-side.
+- Frontend `eslint` and production `next build` both pass for the new settings work.
 
 ## Current state
 
-- `/dashboard` now shows the full mock UI for feature 19.
-- The frontend builds and lints cleanly after the dashboard work and the applications prop fix.
-- Feature 20 is still pending: dashboard stats and activity must be wired to real backend endpoints.
+- `/settings` is implemented and usable.
+- The frontend build passes cleanly.
+- The full frontend lint run still reports pre-existing unrelated hook issues in `CopilotWorkspace.tsx` and `ResumeManager.tsx`.
 
 ## Next session starts with
 
-- Build feature 20: wire `/api/dashboard/stats` and `/api/dashboard/activity` into the frontend dashboard.
+- No product feature remains on the planned 21-feature list.
+- If continuing work, either address the existing unrelated lint warnings/errors or wire the theme preference into an actual dark-mode visual system later.
 
 ## Open questions
 
-- The dashboard UI still uses mock data until the backend endpoints are implemented.
-- The backend repo should add the dashboard stats/activity endpoints next so the frontend can switch over without changing the page layout.
+- Theme is currently persisted but not visually applied as dark mode yet.
+- It is still worth deciding whether delete-account should always require a password for every auth provider or only when better-auth needs it.

@@ -357,3 +357,23 @@ Last updated: `2026-06-23`
 
 **Pattern notes:**
 Dashboard stays in the in-app register and combines a neutral hero, a warning resume-attention banner, four stat cards, a recent-activity feed, a weekly focus checklist, and a quick-actions rail. Keep it dense, token-only, and utility-first. The real-data version keeps the same visual language while adding loading, empty, and error states inside the same surface/card pattern.
+
+### Settings Workspace
+
+File: `src/components/settings/SettingsWorkspace.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-warning-light`, `bg-link-bg-soft`, `bg-success-light`, `bg-error-light` |
+| Border | `border border-border`, `border border-warning-light`, `border border-error-light`, `border-error/30`, `border-success/30` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-warning-foreground`, `text-link-deep`, `text-success-foreground`, `text-error-foreground` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `space-y-3`, `space-y-4`, `space-y-6` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `bg-link-bg-soft`, `bg-success-light`, `bg-warning-light`, `bg-error-light` |
+
+**Pattern notes:**
+Settings keeps the dense in-app register but adds three distinct surfaces: a profile form, a local-only theme chooser, and a destructive account-delete block. Preserve the same compact 6px controls, token-based semantic chips, and explicit confirmation pattern for dangerous actions. The theme selector is intentionally stateful without introducing a global dark-mode visual treatment yet.

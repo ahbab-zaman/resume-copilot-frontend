@@ -39,7 +39,16 @@ This repo has **no** database query layer of its own beyond better-auth's own ta
 │   ├── library-docs.md
 │   ├── ui-rules.md
 │   ├── ui-tokens.md
-│   └── ui-registry.md
+│   ├── ui-registry.md
+│   └── design-specs/              → page-by-page detailed visual specs, Phase 3 only
+│       ├── navbar-footer.md
+│       ├── landing.md
+│       ├── copilot.md
+│       ├── resumes.md
+│       ├── dashboard.md
+│       ├── applications.md
+│       ├── interview.md
+│       └── settings.md
 ├── skills/                        ← /architect /imprint /recover /remember /review
 ├── app/
 │   ├── layout.tsx
@@ -144,12 +153,13 @@ This repo owns authentication completely via better-auth:
 6. `context/library-docs.md` — exact usage patterns for Next.js, better-auth, shadcn, drag-and-drop
 7. `context/ui-rules.md` + `context/ui-tokens.md` — visual rules and design tokens
 8. `context/ui-registry.md` — what's already been built, to match before inventing something new
+9. `context/design-specs/[page].md` — when in Phase 3 (Design Pass), read the spec file matching the page you're building, in addition to everything above
 
 ---
 
 ## 8. Skills Installed
 
-All in `/.agents/skills/`. Use them — don't skip them because a task feels small.
+All in `skills/`. Use them — don't skip them because a task feels small.
 
 | Skill                                  | When to run it                                                                                    |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -184,7 +194,7 @@ All in `/.agents/skills/`. Use them — don't skip them because a task feels sma
 ```
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_BACKEND_URL=http://localhost:4000
-DATABASE_URL=postgresql://neondb_owner:npg_0s6fwVvqmIQT@ep-flat-moon-adexcgwo-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+DATABASE_URL=postgres://...          # better-auth's own tables, same Postgres instance the backend uses
 BETTER_AUTH_SECRET=...
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
