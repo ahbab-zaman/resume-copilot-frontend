@@ -261,7 +261,7 @@ Resume management stays in the in-app register: compact cards, table rows, and s
 ### Copilot Workspace
 
 File: `src/components/copilot/CopilotWorkspace.tsx`
-Last updated: `2026-06-22`
+Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
@@ -276,4 +276,24 @@ Last updated: `2026-06-22`
 | Accent usage | `bg-accent`, `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-link-bg-soft` |
 
 **Pattern notes:**
-Copilot uses the in-app register exclusively: dense 16px cards, 6px controls, and rounded status chips. The page combines a three-column work area with a tabbed output panel, the resume tab uses a two-panel compare layout with a scrollable source-text pane on the left and a structured rewrite pane on the right, and the cover-letter tab now follows the same dense pattern with a tone selector, editable draft textarea, and disabled PDF action until the backend provides a file URL. Keep those compare/editor patterns and the token-based keyword chips consistent with the rest of the authenticated shell rather than introducing a marketing-style treatment.
+Copilot uses the in-app register exclusively: dense 16px cards, 6px controls, and rounded status chips. The page combines a three-column work area with a tabbed output panel, the resume tab uses a two-panel compare layout with a scrollable source-text pane on the left and a structured rewrite pane on the right, the cover-letter tab follows the same dense pattern with a tone selector and editable draft textarea, and the interview tab now uses role/difficulty selectors plus a reusable question-card workflow with answer reveal and next-question actions. Keep those compare/editor patterns and token-based chips consistent with the rest of the authenticated shell rather than introducing a marketing-style treatment.
+
+### Interview Question Card
+
+File: `src/components/interview/QuestionCard.tsx`
+Last updated: `2026-06-23`
+
+| Property | Class |
+| --- | --- |
+| Background | `bg-surface`, `bg-surface-secondary` |
+| Border | `border border-border` |
+| Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
+| Text - primary | `text-text-primary`, `text-on-primary` |
+| Text - secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing | `p-4`, `mt-2`, `mt-4`, `px-3 py-2`, `h-8` |
+| Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
+| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent` |
+
+**Pattern notes:**
+This is the reusable interview practice card for Copilot and the standalone interview page. Keep the answer toggle compact, keep the next-question action visually primary, and preserve the same dense in-app register used by the rest of Copilot rather than introducing a larger marketing-style card.

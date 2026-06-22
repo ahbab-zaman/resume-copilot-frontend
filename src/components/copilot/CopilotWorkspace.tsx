@@ -8,12 +8,17 @@ import {
   useCoverLetter,
   useOptimizeResume,
 } from "@/hooks/queries/useAnalysis";
+import { useGenerateInterviewQuestions } from "@/hooks/queries/useInterview";
 import { useResumes } from "@/hooks/queries/useResumes";
 import { apiDownload, apiFetch } from "@/lib/api-client";
+import { QuestionCard } from "@/components/interview/QuestionCard";
 import type {
   AnalysisRecord,
   CoverLetterRecord,
   CoverLetterTone,
+  InterviewDifficulty,
+  InterviewRole,
+  InterviewSessionRecord,
   OptimizedResumeRecord,
 } from "@/types/api";
 
@@ -58,12 +63,113 @@ const previewAnalysis: AnalysisRecord = {
   createdAt: new Date().toISOString(),
 };
 
+const previewInterviewSession: InterviewSessionRecord = {
+  id: "preview",
+  role: "fullstack",
+  difficulty: "mid",
+  questions: [
+    {
+      category: "Technical",
+      question:
+        "How would you structure a production-ready feature from API contract to UI delivery?",
+      modelAnswer:
+        "I would start by clarifying the data shape, defining the backend contract, and building the UI against mocked responses before wiring the live endpoint. I would keep the implementation testable at each layer and verify error states before shipping.",
+      followUp:
+        "How would you handle a schema change after the UI is already in review?",
+    },
+    {
+      category: "Technical",
+      question:
+        "Tell me about a time you improved a user-facing workflow without expanding scope too much.",
+      modelAnswer:
+        "I would focus on the smallest change that removed the most friction, such as simplifying a form or reducing the number of steps to complete a task. I would validate the change with user feedback or a lightweight experiment instead of building extra features prematurely.",
+      followUp:
+        "What signal would tell you the simplification actually helped?",
+    },
+    {
+      category: "Behavioral",
+      question:
+        "Describe a time you had to balance speed and quality on a deadline.",
+      modelAnswer:
+        "I would explain how I protected the critical path first, then separated must-have work from nice-to-have polish. That usually means shipping the core flow with clear error handling and leaving secondary improvements for a follow-up iteration.",
+      followUp:
+        "How did you communicate the trade-offs to stakeholders?",
+    },
+    {
+      category: "Behavioral",
+      question:
+        "Tell me about a time you disagreed with a teammate about the implementation approach.",
+      modelAnswer:
+        "I would describe how I compared options against the actual constraints, then aligned on the approach that reduced risk or complexity. The goal is to keep the discussion grounded in the product outcome rather than personal preference.",
+      followUp:
+        "What would you do if the disagreement stayed unresolved?",
+    },
+    {
+      category: "HR",
+      question: "Why does this role make sense for your next move?",
+      modelAnswer:
+        "This role is a good fit because it combines ownership, delivery, and collaboration. I can contribute quickly while still growing in the areas that matter for the team, such as product thinking and reliable execution.",
+      followUp:
+        "What kind of team environment helps you do your best work?",
+    },
+    {
+      category: "HR",
+      question: "What would success look like for you in the first 90 days?",
+      modelAnswer:
+        "Success would mean I understand the product, ship a few meaningful improvements, and build trust with the team. I would want to show that I can learn quickly, communicate clearly, and deliver work that is easy to maintain.",
+      followUp:
+        "How would you prioritize your first few weeks?",
+    },
+  ],
+  createdAt: new Date().toISOString(),
+};
+
 function formatDate(value: string): string {
   return new Intl.DateTimeFormat("en", {
     month: "short",
     day: "numeric",
     year: "numeric",
   }).format(new Date(value));
+}
+
+function inferInterviewRole(title: string): InterviewRole {
+  const normalized = title.toLowerCase();
+
+  if (normalized.includes("backend")) {
+    return "backend";
+  }
+
+  if (normalized.includes("frontend") || normalized.includes("front-end")) {
+    return "frontend";
+  }
+
+  return "fullstack";
+}
+
+function inferInterviewDifficulty(
+  seniority: AnalysisRecord["seniorityDetected"] | null,
+): InterviewDifficulty {
+  if (seniority === "junior" || seniority === "mid" || seniority === "senior") {
+    return seniority;
+  }
+
+  return "mid";
+}
+
+function normalizeInterviewRole(value: string): InterviewRole {
+  if (value === "frontend" || value === "backend" || value === "fullstack") {
+    return value;
+  }
+
+  return "fullstack";
+}
+
+function normalizeInterviewDifficulty(value: string): InterviewDifficulty {
+  if (value === "junior" || value === "mid" || value === "senior") {
+    return value;
+  }
+
+  return "mid";
 }
 
 async function downloadBlob(
@@ -179,6 +285,12 @@ export function CopilotWorkspace() {
   const [coverLetterTone, setCoverLetterTone] =
     useState<CoverLetterTone>("professional");
   const [coverLetterDraft, setCoverLetterDraft] = useState("");
+  const [interviewSession, setInterviewSession] =
+    useState<InterviewSessionRecord | null>(null);
+  const [interviewRole, setInterviewRole] = useState<InterviewRole>("fullstack");
+  const [interviewDifficulty, setInterviewDifficulty] =
+    useState<InterviewDifficulty>("mid");
+  const [interviewQuestionIndex, setInterviewQuestionIndex] = useState(0);
   const [selectedTab, setSelectedTab] = useState<OutputTabKey>("summary");
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -204,6 +316,8 @@ export function CopilotWorkspace() {
     setOptimizedResume(null);
     setCoverLetterResult(null);
     setCoverLetterDraft("");
+    setInterviewSession(null);
+    setInterviewQuestionIndex(0);
     setCoverLetterTone("professional");
     setSelectedTab("summary");
     setFeedbackMessage(null);
@@ -219,14 +333,29 @@ export function CopilotWorkspace() {
     }
   }, [activeResume?.id, resumes, selectedResumeId]);
 
+  useEffect(() => {
+    if (!analysisResult || analysisResult.id === "preview") {
+      setInterviewRole("fullstack");
+      setInterviewDifficulty("mid");
+      return;
+    }
+
+    setInterviewRole(inferInterviewRole(analysisResult.jobTitleDetected));
+    setInterviewDifficulty(
+      inferInterviewDifficulty(analysisResult.seniorityDetected),
+    );
+  }, [analysisResult]);
+
   const selectedResume =
     resumes.find((resume) => resume.id === selectedResumeId) ?? activeResume;
   const canOptimize =
     analysisResult !== null && analysisResult.id !== "preview";
   const canGenerateCoverLetter =
     analysisResult !== null && analysisResult.id !== "preview";
+  const canGenerateInterviewQuestions = true;
   const optimizeResumeMutation = useOptimizeResume(analysisResult?.id ?? null);
   const coverLetterMutation = useCoverLetter(analysisResult?.id ?? null);
+  const interviewQuestionsMutation = useGenerateInterviewQuestions();
 
   const analysisMutation = useMutation({
     mutationFn: async () => {
@@ -316,6 +445,30 @@ export function CopilotWorkspace() {
     });
   }
 
+  function handleGenerateInterviewQuestions(): void {
+    interviewQuestionsMutation.mutate(
+      {
+        role: interviewRole,
+        difficulty: interviewDifficulty,
+      },
+      {
+        onSuccess: (data) => {
+          setInterviewSession(data);
+          setInterviewQuestionIndex(0);
+          setSelectedTab("interview");
+          setFeedbackMessage("Interview questions saved.");
+        },
+        onError: (mutationError) => {
+          setFeedbackMessage(
+            mutationError instanceof Error
+              ? mutationError.message
+              : "Something went wrong.",
+          );
+        },
+      },
+    );
+  }
+
   async function handleDownloadOptimizedResume(): Promise<void> {
     if (!optimizedResume) {
       setFeedbackMessage("Generate the optimized resume before downloading.");
@@ -347,6 +500,22 @@ export function CopilotWorkspace() {
     if (errorMessage) {
       setFeedbackMessage(errorMessage);
     }
+  }
+
+  const activeInterviewSession = interviewSession ?? previewInterviewSession;
+  const activeInterviewQuestion =
+    activeInterviewSession.questions[interviewQuestionIndex] ??
+    activeInterviewSession.questions[0] ??
+    previewInterviewSession.questions[0];
+
+  function handleNextInterviewQuestion(): void {
+    if (activeInterviewSession.questions.length === 0) {
+      return;
+    }
+
+    setInterviewQuestionIndex((current) =>
+      (current + 1) % activeInterviewSession.questions.length,
+    );
   }
 
   const liveAnalysis = analysisResult ?? previewAnalysis;
@@ -1051,41 +1220,152 @@ export function CopilotWorkspace() {
             ) : null}
 
             {selectedTab === "interview" ? (
-              <div className="space-y-3">
-                <div>
-                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                    Interview questions
-                  </p>
-                  <p className="mt-2 text-[16px] leading-7 text-text-primary">
-                    Prepare follow-up prompts that map back to the ATS findings.
-                  </p>
-                </div>
-                {[
-                  {
-                    title: "Technical",
-                    body: "Tell me about a system you improved for performance or usability.",
-                  },
-                  {
-                    title: "Behavioral",
-                    body: "Describe a time when you had to balance speed and quality.",
-                  },
-                  {
-                    title: "HR",
-                    body: "Why does this role make sense for your next move?",
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-md border border-border bg-surface p-3"
-                  >
+              <div className="space-y-4">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                  <div>
                     <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                      {item.title}
+                      Interview questions
                     </p>
-                    <p className="mt-2 text-[14px] leading-5 text-text-secondary">
-                      {item.body}
+                    <p className="mt-2 text-[16px] leading-7 text-text-primary">
+                      Generate a role-specific practice set and step through it
+                      one answer at a time.
                     </p>
                   </div>
-                ))}
+
+                  <div className="flex flex-wrap gap-2">
+                    <label className="flex items-center gap-2 rounded-sm border border-border bg-surface px-3 py-2">
+                      <span className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                        Role
+                      </span>
+                      <select
+                        className="h-8 rounded-sm border border-border bg-surface px-2 text-[14px] leading-5 text-text-primary outline-none transition focus:border-accent focus:ring-1 focus:ring-accent"
+                        value={interviewRole}
+                        onChange={(event) =>
+                          setInterviewRole(
+                            normalizeInterviewRole(event.target.value),
+                          )
+                        }
+                      >
+                        <option value="frontend">Frontend</option>
+                        <option value="backend">Backend</option>
+                        <option value="fullstack">Fullstack</option>
+                      </select>
+                    </label>
+
+                    <label className="flex items-center gap-2 rounded-sm border border-border bg-surface px-3 py-2">
+                      <span className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                        Difficulty
+                      </span>
+                      <select
+                        className="h-8 rounded-sm border border-border bg-surface px-2 text-[14px] leading-5 text-text-primary outline-none transition focus:border-accent focus:ring-1 focus:ring-accent"
+                        value={interviewDifficulty}
+                        onChange={(event) =>
+                          setInterviewDifficulty(
+                            normalizeInterviewDifficulty(event.target.value),
+                          )
+                        }
+                      >
+                        <option value="junior">Junior</option>
+                        <option value="mid">Mid</option>
+                        <option value="senior">Senior</option>
+                      </select>
+                    </label>
+
+                    <button
+                      type="button"
+                      className="inline-flex h-8 items-center justify-center rounded-sm bg-accent px-3 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={
+                        !canGenerateInterviewQuestions ||
+                        interviewQuestionsMutation.isPending
+                      }
+                      onClick={handleGenerateInterviewQuestions}
+                    >
+                      {interviewQuestionsMutation.isPending
+                        ? "Generating..."
+                        : "Generate questions"}
+                    </button>
+                  </div>
+                </div>
+
+                {!canGenerateInterviewQuestions ? (
+                  <div className="rounded-md border border-border bg-surface-secondary p-4">
+                    <p className="text-[14px] font-medium leading-5 text-text-primary">
+                      Run an analysis first.
+                    </p>
+                    <p className="mt-1 text-[14px] leading-5 text-text-secondary">
+                      The interview generator uses the saved analysis to pick a
+                      relevant role and difficulty before creating the practice
+                      set.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid gap-4 xl:grid-cols-[1fr_0.7fr]">
+                    <QuestionCard
+                      key={`${activeInterviewSession.id}-${interviewQuestionIndex}`}
+                      question={activeInterviewQuestion}
+                      index={interviewQuestionIndex}
+                      total={activeInterviewSession.questions.length}
+                      onNext={handleNextInterviewQuestion}
+                    />
+
+                    <div className="space-y-3">
+                      <article className="rounded-md border border-border bg-surface-secondary p-4">
+                        <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                          Session details
+                        </p>
+                        <div className="mt-3 space-y-2 text-[14px] leading-5 text-text-secondary">
+                          <p>
+                            Role:{" "}
+                            <span className="text-text-primary">
+                              {activeInterviewSession.role}
+                            </span>
+                          </p>
+                          <p>
+                            Difficulty:{" "}
+                            <span className="text-text-primary">
+                              {activeInterviewSession.difficulty}
+                            </span>
+                          </p>
+                          <p>
+                            Questions:{" "}
+                            <span className="text-text-primary">
+                              {activeInterviewSession.questions.length}
+                            </span>
+                          </p>
+                          <p>
+                            Saved on{" "}
+                            <span className="text-text-primary">
+                              {formatDate(activeInterviewSession.createdAt)}
+                            </span>
+                          </p>
+                        </div>
+                      </article>
+
+                      <article className="rounded-md border border-border bg-surface p-4">
+                        <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                          Practice notes
+                        </p>
+                        <ul className="mt-3 space-y-2">
+                          {activeInterviewSession.questions.map((item, itemIndex) => (
+                            <li
+                              key={`${item.category}-${itemIndex}-${item.question}`}
+                              className={`rounded-sm border px-3 py-2 text-[14px] leading-5 ${
+                                itemIndex === interviewQuestionIndex
+                                  ? "border-accent bg-surface-secondary text-text-primary"
+                                  : "border-border bg-surface-secondary text-text-secondary"
+                              }`}
+                            >
+                              <p className="font-medium text-text-primary">
+                                {item.category}
+                              </p>
+                              <p className="mt-1">{item.question}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </article>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : null}
           </div>

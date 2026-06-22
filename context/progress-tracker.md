@@ -8,8 +8,8 @@
 
 **Phase:** Phase 4 - Copilot Flow
 **Repo (frontend/backend/both):** frontend
-**Last completed:** 13 Cover Letter Generator
-**Next:** 14 Mock Interview Generator (Copilot tab)
+**Last completed:** 14 Mock Interview Generator (Copilot tab)
+**Next:** 15 Interview Page - Full UI
 
 ---
 
@@ -39,7 +39,7 @@
 - [x] 11 ATS Analysis - AI Service _(both)_ - frontend wired to the backend analyses API and renders live ATS results
 - [x] 12 Resume Optimizer _(both)_ - Copilot resume tab now shows original vs optimized content and calls the backend optimize endpoint
 - [x] 13 Cover Letter Generator _(both)_ - Copilot cover letter tab now calls the backend tone-based generator and lets the draft be edited locally
-- [ ] 14 Mock Interview Generator (Copilot tab) _(both)_
+- [x] 14 Mock Interview Generator (Copilot tab) _(both)_ - Copilot interview tab now generates a saved role/difficulty question set with show-answer and next-question controls
 
 ### Phase 5 - Interview Practice
 
@@ -70,6 +70,7 @@
 - The Copilot workspace now owns the ATS analysis flow in the frontend, with live data rendered from the backend analyses endpoint.
 - The Copilot workspace now also owns the resume optimization flow, with side-by-side comparison against the source resume.
 - The Copilot workspace now also owns the cover letter flow, with tone selection, generated draft editing, and backend persistence.
+- The Copilot workspace now also owns the mock interview flow, with role/difficulty selection, saved interview sessions, and a reusable question-card pattern.
 
 ---
 

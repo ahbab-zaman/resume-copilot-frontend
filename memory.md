@@ -1,40 +1,39 @@
-# Memory â€” Copilot ATS UI + Wiring (Frontend)
+# Memory — Copilot Interview Generator (Frontend)
 
-Last updated: 2026-06-22
+Last updated: 2026-06-23
 
 ## What was built
 
-- Replaced the `/copilot` placeholder with a full in-app Copilot workspace in `src/components/copilot/CopilotWorkspace.tsx`.
-- Wired the page from `src/app/(app)/copilot/page.tsx`.
-- Added frontend API contract types in `src/types/api.ts`.
-- Added a TanStack Query hook for analysis fetches in `src/hooks/queries/useAnalysis.ts`.
-- Updated `context/ui-registry.md` with the Copilot workspace visual pattern.
-- Updated `context/progress-tracker.md` to mark Copilot page UI and ATS analysis wiring as completed on the frontend side.
-- Added `ai-resume-frontend/.env.example` for local setup documentation.
+- Extended `src/components/copilot/CopilotWorkspace.tsx` with a real interview tab instead of the placeholder.
+- Added `src/hooks/queries/useInterview.ts` to call `POST /api/interview`.
+- Added `src/components/interview/QuestionCard.tsx` as the reusable interview practice card with answer reveal and next-question actions.
+- Added interview API types to `src/types/api.ts`.
+- Updated `context/ui-registry.md` with the Copilot interview pattern and the new Question Card pattern.
+- Updated `context/progress-tracker.md` to mark feature 14 complete on the frontend side.
 
 ## Decisions made
 
-- Kept the Copilot screen in the in-app register: 6/8px radius, dense cards, no marketing-style visuals.
-- Used a preview analysis state so the full layout is visible before data exists.
-- Treated analysis data as server state via TanStack Query and kept Redux out of the Copilot flow.
-- Used the backend analyses API as the source of truth for saved ATS results.
+- Kept the interview flow inside the Copilot workspace as a dense in-app register pattern, not a marketing-style layout.
+- Used a reusable question card so the Copilot interview tab and the standalone interview page can share the same visual treatment later.
+- Allowed the interview generator to run without an ATS analysis, while still auto-inferring a role/difficulty when analysis data exists.
 
 ## Problems solved
 
-- The Copilot route was a placeholder before this session.
-- The frontend build completed successfully after wiring the new page and API types.
+- The Copilot interview tab was previously a placeholder with hardcoded questions.
+- The frontend now generates saved interview sessions from the backend and can step through questions with show-answer/next-question controls.
+- The frontend build passes after wiring the new interview flow.
 
 ## Current state
 
-- `/copilot` now has a three-panel analysis workspace with input, processing, ATS score summary, insights, and tabbed output previews.
-- The frontend is ready to call `POST /api/analyses` and display the returned analysis.
-- The backend analyses endpoint was implemented in the same session and the frontend is aligned to that contract.
+- `/copilot` now supports ATS analysis, optimized resumes, cover letters, and interview question generation from the backend.
+- Interview generation returns a saved question set with role/difficulty metadata.
+- The question card pattern is now captured in `ui-registry.md`.
 
 ## Next session starts with
 
-- Build the resume optimizer flow for `POST /api/analyses/:id/optimize` and wire the “Resume draft” tab to live data.
+- Build feature 15: the standalone Interview page full UI in the frontend repo.
 
 ## Open questions
 
-- The optimize/cover letter/interview endpoints are not wired yet.
-- Google OAuth remains optional and depends on whether the corresponding frontend credentials are available.
+- The standalone `/interview` page still needs its own UI implementation.
+- If the interview page ends up reusing the same card component, keep it aligned with the Copilot interview pattern.

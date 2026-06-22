@@ -54,3 +54,22 @@ export type CoverLetterRecord = {
   pdfUrl: string | null;
   createdAt: string;
 };
+
+export type InterviewRole = "frontend" | "backend" | "fullstack";
+
+export type InterviewDifficulty = "junior" | "mid" | "senior";
+
+export type InterviewQuestion = {
+  category: "Technical" | "Behavioral" | "HR";
+  question: string;
+  modelAnswer: string;
+  followUp: string;
+};
+
+export type InterviewSessionRecord = {
+  id: string;
+  role: InterviewRole;
+  difficulty: InterviewDifficulty;
+  questions: InterviewQuestion[];
+  createdAt: string;
+};
