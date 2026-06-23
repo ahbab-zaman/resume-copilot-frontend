@@ -160,7 +160,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             className="h-10 w-full rounded-sm border border-border bg-surface px-3 text-[14px] leading-5 text-text-primary outline-none transition placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent"
             name="password"
             onChange={(event) => setPassword(event.target.value)}
-            placeholder="••••••••"
+            placeholder="Enter password"
             type="password"
             value={password}
           />
@@ -181,7 +181,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               className="h-10 w-full rounded-sm border border-border bg-surface px-3 text-[14px] leading-5 text-text-primary outline-none transition placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent"
               name="confirmPassword"
               onChange={(event) => setConfirmPassword(event.target.value)}
-              placeholder="••••••••"
+              placeholder="Confirm password"
               type="password"
               value={confirmPassword}
             />

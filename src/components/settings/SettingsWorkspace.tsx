@@ -210,7 +210,7 @@ export function SettingsWorkspace({ user }: SettingsWorkspaceProps) {
                     Update the display name used across the app.
                   </h2>
                 </div>
-                <span className="inline-flex rounded-full bg-link-bg-soft px-2 py-0.5 text-[12px] leading-4 text-link-deep">
+                <span className="inline-flex rounded-full bg-accent-light px-2 py-0.5 text-[12px] leading-4 text-accent">
                   Managed by login provider
                 </span>
               </div>

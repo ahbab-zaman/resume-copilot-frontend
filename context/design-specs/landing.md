@@ -21,10 +21,10 @@
 
 ### Desktop (≥1024px)
 
-- Full-bleed `bg-canvas`, `padding-top: 96px` (below the 64px fixed navbar, plus `spacing.3xl` breathing room), `padding-bottom: spacing.5xl`.
-- Mesh gradient (the only place it appears) rendered as an absolutely-positioned SVG/canvas layer behind the content, occupying roughly the top 60% of the band, radial-fading to transparent toward the bottom so it doesn't fight with the content below.
+- Full-bleed `bg-background`, `padding-top: 96px` (below the 64px fixed navbar, plus `spacing.3xl` breathing room), `padding-bottom: spacing.5xl`.
+- Aurora gradient (the only place it appears — use the `.aurora-gradient` utility class from globals.css) rendered as an absolutely-positioned layer behind the content, occupying roughly the top 60% of the band, radial-fading to transparent toward the bottom so it doesn't fight with the content below.
 - Content stack, centered, `max-w-3xl mx-auto text-center`:
-  - Small `caption-mono` eyebrow badge ("AI-POWERED JOB APPLICATIONS"), pill chrome, `bg-canvas-soft`, `mb-6`.
+  - Small `caption-mono` eyebrow badge ("AI-POWERED JOB APPLICATIONS"), pill chrome, `bg-surface-secondary`, `mb-6`.
   - Headline: `display-xl`, sentence-case, period-terminated — e.g. "Land your next role, faster."
   - Lead paragraph: `body-lg`, `text-text-secondary`, `max-w-xl mx-auto`, `mt-4`.
   - CTA row, `mt-8`, `gap-4`: `button-primary` ("Get Started Free") + `button-secondary` ("See How It Works" → scrolls to section 5).
@@ -38,7 +38,7 @@
 
 - `padding-top: 80px`, headline at `display-md` (24px) per the typography-scaling rule in `ui-rules.md`.
 - CTA row stacks vertically, full-width buttons.
-- Mesh gradient still renders but scaled/cropped to roughly the top 40% of the band — never hidden entirely, it's the brand's signature.
+- Aurora gradient still renders but scaled/cropped to roughly the top 40% of the band — never hidden entirely, it's the brand's signature.
 
 ---
 
@@ -63,7 +63,7 @@
 ## 4. ATS Analysis Preview
 
 - A non-interactive, realistic-looking static mockup of the actual `AtsScoreDashboard` component from `/copilot` (reuse the real component with hardcoded demo data rather than building a separate fake one — keeps it honest and reduces duplicate code).
-- Framed inside a `card-marketing-large`, Elevation Level 4, sitting on a `bg-canvas-soft` section band for contrast against the white cards above/below.
+- Framed inside a `card-marketing-large`, Elevation Level 4, sitting on a `bg-surface-secondary` section band for contrast against the white cards above/below.
 - Caption below: `body-sm`, `text-text-muted`, "Real output from an actual analysis."
 
 ---
@@ -85,11 +85,11 @@
 
 ## 7. Bottom CTA Band
 
-- `showcase-band-dark` treatment: `bg-accent` (ink black), `text-on-primary`, centered content, `display-lg` headline ("Ready to apply smarter?"), single `button-secondary` (white pill on black background — the one place the secondary button appears solo, no primary pairing, since the whole band IS the CTA).
+- `showcase-band-light` treatment: `bg-surface` callout on a `bg-background` section with the aurora glow behind it, centered content, `display-lg` headline ("Ready to apply smarter?"), single `button-primary` CTA (indigo pill) — the callout should read airy and premium, not like a solid color block.
 
 ---
 
 ## Page-Level Notes
 
-- Total page should not feel like a wall of equal-weight sections — alternate `bg-canvas` and `bg-canvas-soft` band backgrounds section-to-section (Hero: canvas, Features: canvas, How It Works: canvas-soft, ATS Preview: canvas-soft, Testimonials: canvas, FAQ: canvas, Bottom CTA: accent) to create visual rhythm without adding new colors.
+- Total page should not feel like a wall of equal-weight sections — alternate `bg-background` and `bg-surface-secondary` band backgrounds section-to-section (Hero: background, Features: background, How It Works: surface-secondary, ATS Preview: surface-secondary, Testimonials: background, FAQ: background, Bottom CTA: accent) to create visual rhythm without adding new colors.
 - Run `/imprint` after this page is built — it establishes the marketing-card and scroll-reveal patterns every other marketing surface (Pricing) should match.

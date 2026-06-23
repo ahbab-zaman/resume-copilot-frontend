@@ -11,7 +11,7 @@
 
 - Columns: **Resume** (filename + a small PDF icon), **Uploaded** (relative date, `caption`, `text-text-muted`), **Latest ATS Score** (a compact Match Score Bar + percentage, or "—" if never analyzed), **Status** (an "Active" badge, `bg-success-light`/`text-success-foreground`, shown only on the one active resume), **Actions** (overflow `⋯` menu: Set Active, Rename, Download, Delete).
 - Column headers: `caption-mono`, uppercase, `text-text-secondary`, per `ui-rules.md`'s data-table convention.
-- Row hover: `bg-surface-secondary`, `duration-fast`. Clicking a row (not on the actions menu) opens a side panel (Sheet component) showing the extracted text preview in `code` typography inside a `bg-canvas-soft-2` block, plus a list of every analysis ever run against this resume (clickable, jumps to that analysis on `/copilot`).
+- Row hover: `bg-surface-secondary`, `duration-fast`. Clicking a row (not on the actions menu) opens a side panel (Sheet component) showing the extracted text preview in `code` typography inside a `bg-surface-secondary` block, plus a list of every analysis ever run against this resume (clickable, jumps to that analysis on `/copilot`).
 - Delete: requires a confirmation dialog (Level 5 elevation, per `ui-rules.md`) — never delete on a single click.
 
 ### Empty State (no resumes yet)

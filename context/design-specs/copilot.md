@@ -26,7 +26,7 @@ Three-column grid `grid-cols-[280px_1fr_1fr] gap-6`, collapsing per Tablet/Mobil
 - **Column 3 — Insights Panel**:
   - Strengths: list with a green checkmark icon per item (lucide `CheckCircle2`, `text-success`), `body-sm`.
   - Weaknesses: list with an amber/warning icon (lucide `AlertCircle`, `text-warning`), `body-sm`.
-  - Below both lists: **Output Tabs** — `Resume` / `Cover Letter` / `Interview Qs`, tab-ghost chrome, active indicator slides per `ui-rules.md`'s Tab motion rule. Each tab's content area is a card that shows either a "Generate" button (if not yet generated for this analysis) or the generated result with a regenerate option.
+  - Below both lists: **Output Tabs** — `Resume` / `Cover Letter` / `Interview Qs`, tab-ghost chrome, active indicator slides per `ui-rules.md`'s Tab motion rule. The Analysis tab keeps the ATS insights summary, the Resume and Cover Letter tabs keep their generated outputs, and the Interview tab switches to a focused practice surface with one large question card plus a compact navigator. No analysis content appears in the Interview tab.
 
 ### Entrance Animation (Results State)
 

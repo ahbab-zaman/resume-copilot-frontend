@@ -1,6 +1,6 @@
 # UI Rules — Frontend
 
-> **Used in:** Frontend repo only. Visual direction follows the real Vercel design system — stark black/white/gray canvas, hairline borders, stacked shadows, sentence-case headlines, and exactly one decorative element (the mesh gradient, hero-scale only). Token values live in `ui-tokens.md`; this file is the rules for applying them.
+> **Used in:** Frontend repo only. A premium, considered identity — warm ivory canvas, hairline borders, stacked shadows, sentence-case headlines, one confident indigo accent used constantly, a champagne gold reserved for rare premium signals, and exactly one decorative element (the aurora gradient, hero-scale only). Token values live in `ui-tokens.md`; this file is the rules for applying them.
 
 ## Font
 
@@ -57,7 +57,7 @@ Every interactive element has a deliberate motion response — the absence of mo
 
 ### Scroll-Triggered Reveals (Landing Page Only)
 
-- Each marketing section (Features, How It Works, Testimonials) fades + translates up 16px as it enters the viewport, `duration-slow`/`ease-emphasized`, triggered once (no repeat on scroll-back), using `IntersectionObserver` — never a scroll-linked/parallax effect, which reads as gimmicky against Vercel's restrained brand voice.
+- Each marketing section (Features, How It Works, Testimonials) fades + translates up 16px as it enters the viewport, `duration-slow`/`ease-emphasized`, triggered once (no repeat on scroll-back), using `IntersectionObserver` — never a scroll-linked/parallax effect, which would undercut the considered, premium feel.
 
 ### What Never Animates
 
@@ -147,7 +147,7 @@ width: 240px
 ```
 
 - Logo + wordmark top, nav items below, user menu (avatar + email + sign out) pinned to the bottom.
-- Active item: `bg-surface-secondary`, `text-text-primary`, 2px left indicator bar in `bg-accent` (ink black) — mirrors Vercel's own app-shell active-row pattern.
+- Active item: `bg-surface-secondary`, `text-text-primary`, 2px left indicator bar in `bg-accent` (indigo).
 - Inactive item: `text-text-secondary`, no background, `body-sm` typography.
 - No nested/collapsible sections — six flat items only.
 
@@ -163,7 +163,7 @@ padding: spacing.sm spacing.lg
 
 - Logo left (set in `display-sm`, weight 700 is the one sanctioned exception for the logotype only — never on body text).
 - Center or right: nav links in `body-sm`, `text-text-secondary`, ghost-pill hover (`rounded-full`, visible only on hover).
-- Right cluster: "Log In" (`button-secondary-sm`, white) + "Get Started" (`button-primary-sm`, ink black) — both at the in-app 6px radius scale, matching Vercel's own `nav-cta-login`/`nav-cta-signup`, since these sit inside a 64px nav bar, not a hero band.
+- Right cluster: "Log In" (`button-secondary-sm`, white) + "Get Started" (`button-primary-sm`, indigo) — both at the in-app 6px radius scale, since these sit inside a 64px nav bar, not a hero band.
 
 ---
 
@@ -199,7 +199,7 @@ Use the scale defined in `ui-tokens.md` exactly. Key rules specific to this proj
 - **In-app page titles** (e.g. "Dashboard", "Find Jobs"): `display-lg`, sentence-case, **no period**.
 - **Card section headings**: `display-sm` or `body-sm-strong` depending on density — dashboard stat-card group titles use `display-md`, individual card titles use `body-sm-strong`.
 - **AI model / source credit labels** ("Analyzed with Gemini 2.5 Flash", "Jobs by Adzuna"-style credits if ever needed): `caption-mono`, `text-text-muted`.
-- **Resume extracted-text preview**: `code`, inside a `canvas-soft-2` inset block — this is the one place body content is allowed in mono, since it's literally raw extracted text, not prose.
+- **Resume extracted-text preview**: `code`, inside a `bg-surface-secondary` inset block — this is the one place body content is allowed in mono, since it's literally raw extracted text, not prose.
 
 ---
 
@@ -254,7 +254,7 @@ focus: ring-1 ring-accent border-accent
 ## Resume Table (`/resumes`)
 
 - White rows only, `1px solid border-border` between rows.
-- Column headers: `caption-mono`, uppercase via CSS `text-transform`, `text-text-secondary` — mirrors Vercel's own data-table header treatment (mono eyebrow + body-sm rows).
+- Column headers: `caption-mono`, uppercase via CSS `text-transform`, `text-text-secondary` — mono eyebrow + body-sm rows.
 - Row text: `body-sm`, `text-text-primary`.
 - Hover: `bg-surface-secondary`.
 
@@ -277,7 +277,7 @@ Fill color by score — see the ATS Match Score Bands table in `ui-tokens.md`.
 - Five columns: Applied, Screening, Interview, Rejected, Offer — equal width, `spacing.md` gap between columns.
 - Column header: status name (`body-sm-strong`) + count badge.
 - Card: `bg-surface`, `border-border`, `rounded-md`, Elevation Level 2. Company name `body-sm-strong`, role `body-sm` `text-text-secondary`, date `caption` `text-text-muted`.
-- Dragging state: card gets `ring-1 ring-accent` (ink black, not a colored ring — consistent with the single-accent rule).
+- Dragging state: card gets `ring-1 ring-accent` (indigo).
 
 ---
 
@@ -291,7 +291,7 @@ Fill color by score — see the ATS Match Score Bands table in `ui-tokens.md`.
 
 ## Landing Page Hero
 
-- The only place the mesh gradient appears. Render as inline SVG or canvas gradient behind the headline/CTA stack, scaled to roughly the top half of the hero band.
+- The only place the aurora gradient (indigo → violet → gold → teal stops, see `ui-tokens.md`) appears. Render as inline SVG or canvas gradient behind the headline/CTA stack, scaled to roughly the top half of the hero band.
 - Small `caption-mono` eyebrow badge above the headline (e.g. "AI-POWERED JOB APPLICATIONS").
 - Headline: `display-xl`, sentence-case, period-terminated.
 - Lead paragraph: `body-lg`, `text-text-secondary`.
@@ -318,11 +318,11 @@ Tokens defined with `@theme` in `globals.css` — no `tailwind.config.ts`. Alway
 
 ## Do Nots
 
-- Never introduce a colored accent beyond ink black + link blue + the documented semantic set (success/warning/error/violet) — no sixth accent color.
+- Never introduce a colored accent beyond indigo (the one constant accent) + gold (premium-only, three contexts max) + the documented jewel-tone semantic set — no additional accent colors.
 - Never use Tailwind's built-in color classes (`bg-blue-500`, `text-gray-600`) — use project tokens only.
 - Never render a heading in all-caps or with positive letter-spacing — sentence-case + negative tracking only.
 - Never apply a single flat `box-shadow` — always the stacked elevation levels in `ui-tokens.md`.
-- Never use the mesh gradient outside the landing-page hero — not as an icon, not as a card background, not reduced to one color.
+- Never use the aurora gradient outside the landing-page hero — not as an icon, not as a card background, not reduced to one color. Never use gold anywhere beyond its three sanctioned contexts (featured pricing card, premium badge, the gradient's warm stop).
 - Never set body paragraphs or prose in Geist Mono — mono is for extracted-text previews, code-like content, and technical eyebrow labels only.
 - Never use weight 700+ on Geist anywhere except the logotype.
 - Never mix the pill button scale and the 6px button scale on the same screen.

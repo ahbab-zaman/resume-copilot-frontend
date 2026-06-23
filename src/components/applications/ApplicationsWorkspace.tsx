@@ -33,12 +33,12 @@ const statusMeta: Record<
   applied: {
     label: "Applied",
     description: "Sent and waiting for the first reply.",
-    chipClass: "bg-link-bg-soft text-link-deep",
+    chipClass: "bg-accent-light text-accent",
   },
   screening: {
     label: "Screening",
     description: "Initial recruiter or hiring-manager review.",
-    chipClass: "bg-violet-light text-violet-foreground",
+    chipClass: "bg-teal-light text-teal-foreground",
   },
   interview: {
     label: "Interview",

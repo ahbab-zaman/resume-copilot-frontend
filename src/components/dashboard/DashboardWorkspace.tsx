@@ -134,10 +134,10 @@ function formatRelativeTime(value: string): string {
 function getActivityBadgeClass(category: DashboardActivityCategory): string {
   switch (category) {
     case "resume":
-      return "bg-link-bg-soft text-link-deep";
+      return "bg-accent-light text-accent";
     case "analysis":
     case "cover-letter":
-      return "bg-violet-light text-violet-foreground";
+      return "bg-teal-light text-teal-foreground";
     case "application":
       return "bg-success-light text-success-foreground";
     case "interview":
@@ -403,7 +403,7 @@ export function DashboardWorkspace() {
                 </h2>
               </div>
 
-              <span className="inline-flex rounded-full bg-link-bg-soft px-2 py-0.5 text-[12px] font-medium leading-4 text-link-deep">
+              <span className="inline-flex rounded-full bg-accent-light px-2 py-0.5 text-[12px] font-medium leading-4 text-accent">
                 2 of 3 complete
               </span>
             </div>

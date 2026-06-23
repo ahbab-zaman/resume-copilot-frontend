@@ -1,6 +1,6 @@
 # UI Tokens — Frontend
 
-> **Used in:** Frontend repo only. Adapted from the Vercel design system (real values, not approximated) — stark black/white/gray canvas, a single ink-black accent for every primary action, and the brand's signature multi-color mesh gradient reserved for marketing-page hero moments only. All colors, typography, spacing, and component values below. Never hardcode hex values or use raw Tailwind color classes in components.
+> **Used in:** Frontend repo only. A premium, considered palette — warm ivory canvas, one confident indigo accent used everywhere (buttons, links, active states), and a champagne gold reserved exclusively for rare "premium" signals (Pro tier, premium badges). Structural system (radius scales, elevation, motion, typography, two-register marketing/in-app split) is unchanged from before — only the color identity changed. Never hardcode hex values or use raw Tailwind color classes in components.
 
 ## How to Use
 
@@ -11,7 +11,7 @@ Tailwind v4. Tokens defined via `@theme` in `app/globals.css` — no `tailwind.c
 className = "bg-surface text-text-primary border-border rounded-sm";
 
 // Never
-className = "bg-[#fafafa] text-[#171717]";
+className = "bg-[#faf9f6] text-[#1c1b1f]";
 className = "bg-blue-500 text-gray-600";
 ```
 
@@ -23,67 +23,64 @@ className = "bg-blue-500 text-gray-600";
 @import "tailwindcss";
 
 @theme {
-  /* Fonts — Vercel's own faces, via the `geist` package */
+  /* Fonts */
   --font-sans: "Geist", "Inter", system-ui, -apple-system, sans-serif;
   --font-mono:
     "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
 
-  /* Surfaces — four-step ladder */
-  --color-canvas: #ffffff; /* cards, dialogs, modals */
-  --color-canvas-soft: #fafafa; /* default page background */
-  --color-canvas-soft-2: #f5f5f5; /* inset regions, hover states, dropdowns */
-  --color-background: #fafafa; /* alias — page body */
-  --color-surface: #ffffff; /* alias — card surface */
-  --color-surface-secondary: #f5f5f5; /* alias — inset surface */
+  /* Surfaces — warm ivory ladder, not cold gray */
+  --color-background: #faf9f6; /* warm ivory — default page background */
+  --color-surface: #ffffff; /* pure white — cards, dialogs, kept crisp against the warm body */
+  --color-surface-secondary: #f3f1ec; /* warm cream inset — hover states, dropdowns */
 
-  /* Borders */
-  --color-border: #ebebeb; /* hairline — all dividers, card borders, input borders */
-  --color-border-strong: #a1a1a1; /* hairline-strong — emphasised dividers */
+  /* Borders — warm-neutral, not blue-gray */
+  --color-border: #e8e4dc;
+  --color-border-strong: #c9c2b4;
 
-  /* Text */
-  --color-text-primary: #171717; /* ink — all headings and body on light surfaces */
-  --color-text-secondary: #4d4d4d; /* body — secondary text, captions, inactive nav */
-  --color-text-muted: #888888; /* mute — placeholders, fine print */
-  --color-on-primary: #ffffff; /* text on the ink-black surface */
+  /* Text — warm charcoal, not cool black */
+  --color-text-primary: #1c1b1f;
+  --color-text-secondary: #5b5752;
+  --color-text-muted: #94908a;
+  --color-on-primary: #ffffff;
 
-  /* The single accent — ink black, every primary CTA and active state */
-  --color-accent: #171717;
+  /* The one accent — deep indigo-violet, used for every CTA, link, and active state */
+  --color-accent: #4f3cc9;
+  --color-accent-deep: #3c2d9e; /* hover/pressed */
+  --color-accent-light: #ece8fb; /* soft badge background */
   --color-accent-foreground: #ffffff;
 
-  /* Link blue — reserved for inline links and info only, never reused as a status color */
-  --color-link: #0070f3;
-  --color-link-deep: #0761d1;
-  --color-link-bg-soft: #d3e5ff;
+  /* Champagne gold — premium signal ONLY. Pro tier, premium badges. Nowhere else. */
+  --color-gold: #c9a227;
+  --color-gold-light: #f5eac8;
+  --color-gold-foreground: #6b5310;
 
-  /* In-product semantic colors (extends the marketing-only palette for dashboard use) */
-  --color-success: #29bc9b; /* cyan-deep — ATS high score, "Offer" status, matched skill */
-  --color-success-light: #aaffec; /* cyan-soft */
-  --color-success-foreground: #0d6b56;
-  --color-warning: #f5a623;
-  --color-warning-light: #ffefcf;
-  --color-warning-foreground: #ab570a;
-  --color-error: #ee0000;
-  --color-error-light: #f7d4d6;
-  --color-error-foreground: #c50000;
-  --color-violet: #7928ca;
-  --color-violet-light: #d8ccf1;
-  --color-violet-foreground: #4c2889;
+  /* Jewel-tone semantics — muted, never flat/saturated */
+  --color-success: #1f8a5f; /* deep emerald */
+  --color-success-light: #dcf3e7;
+  --color-success-foreground: #0e5c3d;
+  --color-warning: #d98324; /* warm copper-amber */
+  --color-warning-light: #fbe8d2;
+  --color-warning-foreground: #8a4e0e;
+  --color-error: #c8385a; /* sophisticated rose, not stock red */
+  --color-error-light: #f8dce3;
+  --color-error-foreground: #8c1f3b;
+  --color-teal: #1b7a78; /* secondary jewel tone — category variety only */
+  --color-teal-light: #d9efee;
+  --color-teal-foreground: #0f4d4b;
 
   /* Google brand (OAuth button) */
   --color-google: #4285f4;
 
-  /* Brand mesh gradient — landing page hero ONLY, never miniaturised, never reused elsewhere */
-  --gradient-develop-start: #007cf0;
-  --gradient-develop-end: #00dfd8;
-  --gradient-preview-start: #7928ca;
-  --gradient-preview-end: #ff0080;
-  --gradient-ship-start: #ff4d4d;
-  --gradient-ship-end: #f9cb28;
+  /* Hero decoration — one signature gradient mesh, recolored to the new identity */
+  --gradient-aurora-start: #4f3cc9; /* indigo */
+  --gradient-aurora-mid: #8a6fe8; /* soft violet */
+  --gradient-aurora-end: #c9a227; /* champagne gold — the gradient is the one place gold appears more freely, since it's decorative, not a UI signal */
+  --gradient-aurora-accent: #1b7a78; /* teal accent stop */
 
   /* Border radius — two deliberate scales, never mixed on one screen */
   --radius-none: 0px;
   --radius-xs: 4px;
-  --radius-sm: 6px; /* in-app: nav buttons, form inputs, dropdowns — the authenticated app's scale */
+  --radius-sm: 6px; /* in-app: nav buttons, form inputs, dropdowns */
   --radius-md: 8px; /* in-app: cards (dashboard, copilot, resumes, applications, interview, settings) */
   --radius-lg: 12px; /* marketing: larger feature/pricing cards */
   --radius-xl: 16px; /* marketing: hero-adjacent image cards */
@@ -93,20 +90,14 @@ className = "bg-blue-500 text-gray-600";
 }
 ```
 
-Tailwind v4 generates utility classes automatically: `bg-accent`, `text-text-secondary`, `border-border`, `bg-success-light`, `rounded-sm`, etc.
-
 ---
 
 ## Two Radius Scales — Never Mixed on One Screen
 
-This project genuinely has two visual registers, matching Vercel's own marketing-vs-dashboard split:
-
-| Surface                                                                                     | Radius scale                        | Button shape                                                  |
-| ------------------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------- |
-| **Marketing** (`/`, `/pricing`, public navbar)                                              | `radius-lg` / `radius-xl` for cards | `radius-pill` (100px) — `button-primary` / `button-secondary` |
-| **In-app** (sidebar shell — dashboard, copilot, resumes, applications, interview, settings) | `radius-sm` / `radius-md` for cards | `radius-sm` (6px) — tight, dashboard-scale buttons            |
-
-Never put a 100px pill button next to a 6px-radius card, or vice versa — pick the register for the page and stay there.
+| Surface                                        | Radius scale                        | Button shape          |
+| ---------------------------------------------- | ----------------------------------- | --------------------- |
+| **Marketing** (`/`, `/pricing`, public navbar) | `radius-lg` / `radius-xl` for cards | `radius-pill` (100px) |
+| **In-app** (sidebar shell)                     | `radius-sm` / `radius-md` for cards | `radius-sm` (6px)     |
 
 ---
 
@@ -130,21 +121,26 @@ Never put a 100px pill button next to a 6px-radius card, or vice versa — pick 
 | Secondary text, labels         | `text-text-secondary` |
 | Placeholder, muted, fine print | `text-text-muted`     |
 
-### Accent (Ink Black — Reserve for Conversion Points Only)
+### Accent — Indigo (Used Constantly, Not Sparingly)
 
-| Element                                  | Token                         |
-| ---------------------------------------- | ----------------------------- |
-| Primary button background                | `bg-accent`                   |
-| Primary button text                      | `text-accent-foreground`      |
-| Active sidebar item — left indicator bar | `bg-accent` (2px left border) |
+Unlike a restrained single-purpose accent, this indigo is vibrant enough to carry every interactive signal in the product — buttons, links, active states, focus rings. Using it everywhere is what makes it feel intentional.
 
-### Links
+| Element                                  | Token                             |
+| ---------------------------------------- | --------------------------------- |
+| Primary button background                | `bg-accent`                       |
+| Primary button hover/press               | `bg-accent-deep`                  |
+| Primary button text                      | `text-accent-foreground`          |
+| Inline link                              | `text-accent`, underline on hover |
+| Active sidebar item — left indicator bar | `bg-accent`                       |
+| Soft badge background                    | `bg-accent-light`                 |
 
-| Element                        | Token                           |
-| ------------------------------ | ------------------------------- |
-| Inline body link               | `text-link`, underline on hover |
-| Visited / pressed link         | `text-link-deep`                |
-| Informational badge background | `bg-link-bg-soft`               |
+### Gold — Premium Signal, Used in Exactly Three Places
+
+1. The featured/Pro pricing tier card.
+2. A "Premium"/"Pro" badge, if one is ever needed.
+3. The hero gradient's warm stop (decorative, not a UI signal).
+
+Never use gold for a button, a link, a regular badge, or anything that appears more than a handful of times on a page. The moment it's common, it stops working.
 
 ### ATS Match Score Bands
 
@@ -165,106 +161,101 @@ Never put a 100px pill button next to a 6px-radius card, or vice versa — pick 
 
 | Status    | Background         | Text                      |
 | --------- | ------------------ | ------------------------- |
-| Applied   | `bg-link-bg-soft`  | `text-link-deep`          |
-| Screening | `bg-violet-light`  | `text-violet-foreground`  |
+| Applied   | `bg-accent-light`  | `text-accent`             |
+| Screening | `bg-teal-light`    | `text-teal-foreground`    |
 | Interview | `bg-success-light` | `text-success-foreground` |
 | Rejected  | `bg-error-light`   | `text-error-foreground`   |
 | Offer     | `bg-success`       | `text-on-primary`         |
 
 ### Interview Question Category Badges
 
-| Category   | Background             | Text                     |
-| ---------- | ---------------------- | ------------------------ |
-| Technical  | `bg-violet-light`      | `text-violet-foreground` |
-| Behavioral | `bg-link-bg-soft`      | `text-link-deep`         |
-| HR         | `bg-surface-secondary` | `text-text-secondary`    |
+| Category   | Background             | Text                   |
+| ---------- | ---------------------- | ---------------------- |
+| Technical  | `bg-accent-light`      | `text-accent`          |
+| Behavioral | `bg-teal-light`        | `text-teal-foreground` |
+| HR         | `bg-surface-secondary` | `text-text-secondary`  |
 
 ---
 
 ## Typography Scale
 
-Two faces carry everything: **Geist** (sans, weights 400/500/600 only — never 700+) for all narrative content, **Geist Mono** (weight 400 only) for technical labels — AI model badges, the resume's extracted-text preview, JSON-ish content, source credits. Body copy is never set in mono.
+(Unchanged from before — Geist sans, Geist Mono for technical labels, weight 600 ceiling, negative tracking on display sizes. See `ui-rules.md` for full application rules.)
 
-| Token            | Size | Weight | Line height | Letter spacing | Use                                                      |
-| ---------------- | ---- | ------ | ----------- | -------------- | -------------------------------------------------------- |
-| `display-xl`     | 48px | 600    | 48px        | -2.4px         | Landing page hero headline only                          |
-| `display-lg`     | 32px | 600    | 40px        | -1.28px        | Marketing section headlines, page `<h1>` on in-app pages |
-| `display-md`     | 24px | 600    | 32px        | -0.96px        | Card-cluster headlines, dashboard stat-card group titles |
-| `display-sm`     | 20px | 600    | 28px        | -0.6px         | Section headings inside cards                            |
-| `body-lg`        | 18px | 400    | 28px        | 0              | Lead paragraph under a marketing headline                |
-| `body-md`        | 16px | 400    | 24px        | 0              | Default body paragraph                                   |
-| `body-md-strong` | 16px | 500    | 24px        | 0              | Bolded inline body                                       |
-| `body-sm`        | 14px | 400    | 20px        | -0.28px        | Card text, sidebar nav items, table rows                 |
-| `body-sm-strong` | 14px | 500    | 20px        | -0.28px        | Nav CTA labels, emphasised row text                      |
-| `caption`        | 12px | 400    | 16px        | 0              | Timestamps, badge labels, fine print                     |
-| `caption-mono`   | 12px | 400    | 16px        | 0              | Section eyebrows, "AI model used" badge, source credits  |
-| `code`           | 13px | 400    | 20px        | 0              | Extracted resume text preview, any monospaced content    |
-| `button-md`      | 14px | 500    | 20px        | 0              | In-app (6px-radius) button labels                        |
-| `button-lg`      | 16px | 500    | 24px        | 0              | Marketing (pill) button labels                           |
-
-Stat numbers on dashboard: use `display-xl` at `text-text-primary`.
-
-### Typography Principles
-
-- **Negative tracking on every display size** — never revert to default tracking on headings.
-- **Sentence-case headlines.** The landing-page hero headline is period-terminated ("Land your next role, faster."); in-app page titles are not.
-- **Mono is for the technical layer only** — never set a body paragraph or a cover letter/resume preview's prose in mono, only literal extracted-text blocks or labels.
-- **Weight 600 is the ceiling.** Never use 700+ anywhere.
-
-### Font Setup
-
-See `library-docs.md` for the exact `geist` package import — do not load Geist via `next/font/google`, it isn't there; it ships as its own npm package from Vercel.
+| Token            | Size | Weight | Line height | Letter spacing | Use                                             |
+| ---------------- | ---- | ------ | ----------- | -------------- | ----------------------------------------------- |
+| `display-xl`     | 48px | 600    | 48px        | -2.4px         | Landing page hero headline only                 |
+| `display-lg`     | 32px | 600    | 40px        | -1.28px        | Marketing section headlines, in-app page `<h1>` |
+| `display-md`     | 24px | 600    | 32px        | -0.96px        | Card-cluster headlines                          |
+| `display-sm`     | 20px | 600    | 28px        | -0.6px         | Section headings inside cards                   |
+| `body-lg`        | 18px | 400    | 28px        | 0              | Lead paragraph under a marketing headline       |
+| `body-md`        | 16px | 400    | 24px        | 0              | Default body paragraph                          |
+| `body-md-strong` | 16px | 500    | 24px        | 0              | Bolded inline body                              |
+| `body-sm`        | 14px | 400    | 20px        | -0.28px        | Card text, sidebar nav items, table rows        |
+| `body-sm-strong` | 14px | 500    | 20px        | -0.28px        | Nav CTA labels, emphasised row text             |
+| `caption`        | 12px | 400    | 16px        | 0              | Timestamps, badge labels, fine print            |
+| `caption-mono`   | 12px | 400    | 16px        | 0              | Section eyebrows, "AI model used" badge         |
+| `code`           | 13px | 400    | 20px        | 0              | Extracted resume text preview                   |
+| `button-md`      | 14px | 500    | 20px        | 0              | In-app (6px-radius) button labels               |
+| `button-lg`      | 16px | 500    | 24px        | 0              | Marketing (pill) button labels                  |
 
 ---
 
 ## Spacing
 
-Base unit 4px, every value a multiple of 4.
-
-| Token       | Value      | Usage                                                                 |
-| ----------- | ---------- | --------------------------------------------------------------------- |
-| `xxs`       | 4px        | Tightest inline gaps                                                  |
-| `xs`        | 8px        | Badge/tag gaps, headline-to-paragraph gap inside a card               |
-| `sm`        | 12px       | Form field gaps, button row gaps                                      |
-| `md`        | 16px       | Section internal gaps, in-app card padding                            |
-| `lg`        | 24px       | Between sections, marketing card padding                              |
-| `xl`        | 32px       | Large marketing card padding (pricing cards)                          |
-| `2xl`–`6xl` | 40px–128px | Marketing band vertical padding only — never used inside in-app cards |
-| `section`   | 192px      | Landing page hero band only                                           |
-
-In-app cards (dashboard, copilot, resumes, applications, interview, settings) stay tight: `md` (16px) padding, `xs`–`sm` internal gaps. Marketing cards (landing, pricing) use `lg`–`xl` padding with generous whitespace between bands.
+(Unchanged — base unit 4px.) `xxs` 4px · `xs` 8px · `sm` 12px · `md` 16px · `lg` 24px · `xl` 32px · `2xl`–`6xl` 40–128px · `section` 192px.
 
 ---
 
 ## Elevation — Stacked Shadows, Never a Single Drop
 
-Vercel's signature: cards never use one heavy `box-shadow: 0 4px 12px ...` — always small offsets layered together, plus a 1px inset hairline ring so the edge stays crisp.
+Shadows stay neutral black-based regardless of accent color — that's standard practice and keeps elevation feeling like physical depth, not tinted color.
 
-| Level              | CSS                                                                                                                | Use in this project                                                               |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| 0 — Flat           | none                                                                                                               | Landing hero band, the polarity-flipped dark section if used                      |
-| 1 — Inset hairline | `0 0 0 1px var(--color-border) inset`                                                                              | Default card chrome — every in-app card (stat cards, resume rows, question cards) |
-| 2 — Subtle drop    | `0 1px 1px rgba(0,0,0,0.02), 0 2px 2px rgba(0,0,0,0.04)` + inset hairline                                          | Slightly elevated — Kanban cards, the ATS Score Dashboard card                    |
-| 3 — Soft stack     | `0 2px 2px rgba(0,0,0,0.04), 0 8px 8px -8px rgba(0,0,0,0.04)` + inset hairline                                     | Marketing feature cards                                                           |
-| 4 — Float stack    | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04)` + inset hairline                                    | Pricing cards                                                                     |
-| 5 — Modal          | `0 1px 1px rgba(0,0,0,0.02), 0 8px 16px -4px rgba(0,0,0,0.04), 0 24px 32px -8px rgba(0,0,0,0.06)` + inset hairline | Dialogs, dropdowns, the upload-resume modal                                       |
+| Level              | CSS                                                                                                                | Use                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| 0 — Flat           | none                                                                                                               | Landing hero band, polarity-flipped dark section |
+| 1 — Inset hairline | `0 0 0 1px var(--color-border) inset`                                                                              | Default in-app card chrome                       |
+| 2 — Subtle drop    | `0 1px 1px rgba(0,0,0,0.03), 0 2px 2px rgba(0,0,0,0.05)` + inset hairline                                          | Kanban cards, ATS Score Dashboard card           |
+| 3 — Soft stack     | `0 2px 2px rgba(0,0,0,0.05), 0 8px 8px -8px rgba(0,0,0,0.05)` + inset hairline                                     | Marketing feature cards                          |
+| 4 — Float stack    | `0 2px 2px rgba(0,0,0,0.05), 0 8px 16px -4px rgba(0,0,0,0.05)` + inset hairline                                    | Pricing cards                                    |
+| 5 — Modal          | `0 1px 1px rgba(0,0,0,0.03), 0 8px 16px -4px rgba(0,0,0,0.05), 0 24px 32px -8px rgba(0,0,0,0.08)` + inset hairline | Dialogs, dropdowns                               |
+
+---
+
+## Motion & Animation Tokens
+
+(Unchanged — see `ui-rules.md`'s Motion & Microinteractions section for full application.)
+
+```css
+@theme {
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-moderate: 320ms;
+  --duration-slow: 480ms;
+  --duration-hero: 800ms;
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+```
 
 ---
 
 ## Component Tokens
 
-### Buttons — Marketing (landing, pricing)
+### Buttons — Marketing
 
 ```
-button-primary:   bg-accent text-accent-foreground rounded-[100px] px-3 py-0 (button-lg label, ~48px tall)
-button-secondary: bg-surface text-text-primary rounded-[100px] px-3 py-0 (same label/height)
+button-primary:   bg-accent text-accent-foreground rounded-[100px], hover bg-accent-deep
+button-secondary: bg-surface text-text-primary rounded-[100px], border border-border
 ```
 
-### Buttons — In-App (sidebar shell)
+### Buttons — In-App
 
 ```
-button-primary-sm:   bg-accent text-accent-foreground rounded-sm px-2 h-7 (button-md label)
-button-secondary-sm: bg-surface border border-border text-text-primary rounded-sm px-2 h-7
+button-primary-sm:   bg-accent text-accent-foreground rounded-sm h-7, hover bg-accent-deep
+button-secondary-sm: bg-surface border border-border text-text-primary rounded-sm h-7
 ghost: bg-transparent text-text-secondary hover:bg-surface-secondary rounded-sm
 ```
 
@@ -274,7 +265,7 @@ ghost: bg-transparent text-text-secondary hover:bg-surface-secondary rounded-sm
 in-app card:    bg-surface border border-border rounded-md p-4   (Elevation Level 1 or 2)
 marketing card: bg-surface rounded-lg p-6                          (Elevation Level 3)
 pricing card:   bg-surface rounded-lg p-8                          (Elevation Level 4)
-featured pricing card (if ever used): bg-accent text-on-primary rounded-lg p-8
+featured pricing card: bg-accent text-on-primary rounded-lg p-8, gold accent border (border-2 border-gold) — the one card on the entire site allowed a gold border
 ```
 
 ### Form Inputs
@@ -283,9 +274,6 @@ featured pricing card (if ever used): bg-accent text-on-primary rounded-lg p-8
 background: bg-surface
 border: 1px solid border-border
 border-radius: rounded-sm
-height: 40px (form-input), 32px (form-input-sm), 48px (form-input-lg, hero/marketing only)
-text: body-sm, text-text-primary
-placeholder: text-text-muted
 focus: ring-1 ring-accent border-accent
 ```
 
@@ -306,75 +294,18 @@ background: bg-surface-secondary
 text: text-text-primary
 ```
 
-### Badges
-
-```
-border-radius: rounded-full
-padding: px-2 py-0.5
-typography: caption (12px / 400)
-```
-
 ---
 
 ## Invariants
 
 - Never use hex values directly in components — always use tokens via Tailwind utility classes.
-- Fonts are Geist (sans) and Geist Mono (technical) — see `library-docs.md` for the exact package, never substitute Inter unless Geist genuinely fails to load.
+- Fonts are Geist (sans) and Geist Mono (technical) — never substitute Inter unless Geist genuinely fails to load.
 - Never use Tailwind's built-in color scales (`bg-blue-500`, `text-gray-600`).
-- `--color-accent` (ink black) is the **only** accent — used for primary buttons and active states only, never decoratively, and never replaced with the link blue.
-- The mesh gradient tokens exist only for the landing-page hero — never used as a card background, icon, or anywhere at in-app scale.
+- `--color-accent` (indigo) carries every button, link, and active state — used constantly, not sparingly. This is deliberate: an accent used everywhere reads as intentional brand identity, not decoration.
+- `--color-gold` is reserved for exactly three contexts (see Color Usage Guide above) — using it anywhere else dilutes the one thing that makes it feel premium.
+- The aurora gradient exists only for the landing-page hero — never used as a card background, icon, or anywhere at in-app scale.
 - Marketing pages use the pill radius scale; in-app pages use the 6/8px radius scale — never mixed on one screen.
-- Shadows are always stacked (see Elevation table) — never a single generic `box-shadow` value.
+- Shadows are always stacked and neutral black-based — never tinted with the accent color, never a single generic `box-shadow`.
 - Match score bars, skill badges, and Kanban status badges always use the score-band/status tokens above — never hardcoded colors.
 - All borders default to `--color-border` — never `border-gray-*`.
-- Every transition uses a duration + easing token from the Motion scale below — never an inline arbitrary value like `duration-[180ms]`.
-
----
-
-## Motion & Animation Tokens
-
-Senior-level UI reads as _intentional_, not decorated — motion has a system here exactly like color does. Full application rules live in `ui-rules.md`'s Motion & Microinteractions section; these are the raw values.
-
-```css
-@theme {
-  /* Duration */
-  --duration-fast: 120ms; /* hover/focus state changes, badge color shifts */
-  --duration-base: 200ms; /* default — button press, tab switch, fade-in of fetched content */
-  --duration-moderate: 320ms; /* drawer/dialog open, sidebar collapse, accordion expand */
-  --duration-slow: 480ms; /* page-section reveal on scroll, multi-element stagger */
-  --duration-hero: 800ms; /* landing hero entrance only */
-
-  /* Easing */
-  --ease-standard: cubic-bezier(
-    0.4,
-    0,
-    0.2,
-    1
-  ); /* default for almost everything */
-  --ease-emphasized: cubic-bezier(
-    0.2,
-    0,
-    0,
-    1
-  ); /* entrances — decelerate into place */
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1); /* exits — accelerate away */
-  --ease-snap: cubic-bezier(
-    0.34,
-    1.56,
-    0.64,
-    1
-  ); /* Kanban card drop, slight overshoot */
-}
-```
-
-| Token                                   | Value | Use                                                      |
-| --------------------------------------- | ----- | -------------------------------------------------------- |
-| `duration-fast` + `ease-standard`       | 120ms | Button hover, link underline, badge hover                |
-| `duration-base` + `ease-standard`       | 200ms | Tab switch, skeleton → content fade, button press scale  |
-| `duration-moderate` + `ease-emphasized` | 320ms | Dialog/dropdown open, sidebar item expand, accordion     |
-| `duration-moderate` + `ease-exit`       | 320ms | Dialog/dropdown close                                    |
-| `duration-slow` + `ease-emphasized`     | 480ms | Scroll-triggered section reveal, staggered card entrance |
-| `duration-hero` + `ease-emphasized`     | 800ms | Landing hero headline/CTA entrance only                  |
-| `duration-base` + `ease-snap`           | 200ms | Kanban card drop settling into its new column            |
-
-Never animate more than `transform`, `opacity`, and `color`/`background-color` — never animate `width`, `height`, `top`/`left`, or `box-shadow` directly (causes layout thrash/jank). Reposition with `transform: translate(...)`, resize with `transform: scale(...)` where visually equivalent.
+- Every transition uses a duration + easing token from the Motion scale — never an inline arbitrary value.

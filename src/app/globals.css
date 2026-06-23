@@ -1,54 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  /* Surfaces — four-step ladder */
+  /* Surfaces — warm ivory ladder */
   --canvas: #ffffff;
-  --canvas-soft: #fafafa;
-  --canvas-soft-2: #f5f5f5;
+  --canvas-soft: #faf9f6;
+  --canvas-soft-2: #f3f1ec;
 
-  /* Borders */
-  --border: #ebebeb;
-  --border-strong: #a1a1a1;
+  /* Borders — warm-neutral */
+  --border: #e8e4dc;
+  --border-strong: #c9c2b4;
 
-  /* Text */
-  --text-primary: #171717;
-  --text-secondary: #4d4d4d;
-  --text-muted: #888888;
+  /* Text — warm charcoal */
+  --text-primary: #1c1b1f;
+  --text-secondary: #5b5752;
+  --text-muted: #94908a;
   --on-primary: #ffffff;
 
-  /* Accent — ink black, the only accent in this project */
-  --accent: #171717;
+  /* Accent — deep indigo-violet, used everywhere */
+  --accent: #4f3cc9;
+  --accent-deep: #3c2d9e;
+  --accent-light: #ece8fb;
   --accent-foreground: #ffffff;
 
-  /* Links — reserved for inline links/info only */
-  --link: #0070f3;
-  --link-deep: #0761d1;
-  --link-bg-soft: #d3e5ff;
+  /* Gold — premium signal only, three contexts max */
+  --gold: #c9a227;
+  --gold-light: #f5eac8;
+  --gold-foreground: #6b5310;
 
-  /* In-product semantic colors */
-  --success: #29bc9b;
-  --success-light: #aaffec;
-  --success-foreground: #0d6b56;
-  --warning: #f5a623;
-  --warning-light: #ffefcf;
-  --warning-foreground: #ab570a;
-  --error: #ee0000;
-  --error-light: #f7d4d6;
-  --error-foreground: #c50000;
-  --violet: #7928ca;
-  --violet-light: #d8ccf1;
-  --violet-foreground: #4c2889;
+  /* Jewel-tone semantics */
+  --success: #1f8a5f;
+  --success-light: #dcf3e7;
+  --success-foreground: #0e5c3d;
+  --warning: #d98324;
+  --warning-light: #fbe8d2;
+  --warning-foreground: #8a4e0e;
+  --error: #c8385a;
+  --error-light: #f8dce3;
+  --error-foreground: #8c1f3b;
+  --teal: #1b7a78;
+  --teal-light: #d9efee;
+  --teal-foreground: #0f4d4b;
 
   /* Google brand */
   --google: #4285f4;
 
-  /* Brand mesh gradient — landing page hero ONLY */
-  --gradient-develop-start: #007cf0;
-  --gradient-develop-end: #00dfd8;
-  --gradient-preview-start: #7928ca;
-  --gradient-preview-end: #ff0080;
-  --gradient-ship-start: #ff4d4d;
-  --gradient-ship-end: #f9cb28;
+  /* Hero aurora gradient — landing page only */
+  --gradient-aurora-start: #4f3cc9;
+  --gradient-aurora-mid: #8a6fe8;
+  --gradient-aurora-end: #c9a227;
+  --gradient-aurora-accent: #1b7a78;
 }
 
 @theme inline {
@@ -73,12 +73,14 @@
 
   /* Accent */
   --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-light: var(--accent-light);
   --color-accent-foreground: var(--accent-foreground);
 
-  /* Links */
-  --color-link: var(--link);
-  --color-link-deep: var(--link-deep);
-  --color-link-bg-soft: var(--link-bg-soft);
+  /* Gold */
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-foreground: var(--gold-foreground);
 
   /* Semantic */
   --color-success: var(--success);
@@ -90,12 +92,12 @@
   --color-error: var(--error);
   --color-error-light: var(--error-light);
   --color-error-foreground: var(--error-foreground);
-  --color-violet: var(--violet);
-  --color-violet-light: var(--violet-light);
-  --color-violet-foreground: var(--violet-foreground);
+  --color-teal: var(--teal);
+  --color-teal-light: var(--teal-light);
+  --color-teal-foreground: var(--teal-foreground);
   --color-google: var(--google);
 
-  /* Border radius — two registers, see ui-rules.md */
+  /* Border radius */
   --radius-none: 0px;
   --radius-xs: 4px;
   --radius-sm: 6px;
@@ -105,6 +107,17 @@
   --radius-pill-sm: 64px;
   --radius-pill: 100px;
   --radius-full: 9999px;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-moderate: 320ms;
+  --duration-slow: 480ms;
+  --duration-hero: 800ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 body {
@@ -118,6 +131,19 @@ pre {
   font-family: var(--font-mono);
 }
 
+/* Aurora gradient utility — landing page hero only, never used at in-app scale */
+.aurora-gradient {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    var(--gradient-aurora-start) 0%,
+    var(--gradient-aurora-mid) 35%,
+    var(--gradient-aurora-accent) 65%,
+    var(--gradient-aurora-end) 100%
+  );
+  opacity: 0.18;
+  filter: blur(60px);
+}
+
 /* Dark mode intentionally not implemented yet — ui-tokens.md only defines
    light-mode values. Build this out when the Settings page's theme toggle
-   (Feature 20 in build-plan.md) is actually being worked on, not before. */
+   (Feature 23 in build-plan.md) is actually being worked on, not before. */

@@ -65,7 +65,7 @@ Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-surface`, `bg-canvas/95` |
+| Background | `bg-surface`, `bg-surface/95` |
 | Border | `border border-border`, `border-t border-border` |
 | Border radius | `rounded-sm`, `rounded-md`, `rounded-full` |
 | Text - primary | `text-text-primary`, `text-on-primary` |
@@ -93,7 +93,7 @@ Last updated: `2026-06-21`
 | Spacing | `px-4 py-14`, `px-4 py-10`, `p-5`, `p-4` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
 | Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border) inset` |
-| Accent usage | `bg-accent`, `bg-violet`, `bg-violet-light`, `bg-success-light` |
+| Accent usage | `bg-accent`, `bg-accent-light`, `bg-accent/70`, `bg-teal/70` |
 
 **Pattern notes:**
 Hero is the only place where the mesh-gradient treatment appears. Keep it behind the content, never as a card fill.
@@ -113,7 +113,7 @@ Last updated: `2026-06-21`
 | Spacing | `px-4 py-16`, `px-4 py-10`, `p-6`, `p-5`, `p-4` |
 | Hover state | `none` |
 | Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border) inset` |
-| Accent usage | `bg-violet-light`, `bg-success-light`, `bg-link-bg-soft`, `bg-warning-light` |
+| Accent usage | `bg-accent-light`, `bg-success-light`, `bg-teal-light`, `bg-warning-light` |
 
 **Pattern notes:**
 These sections rely on white or surface cards with hairline borders and stacked shadows. The stat band uses token-based semantic backgrounds only.
@@ -205,15 +205,15 @@ Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-background`, `bg-surface`, `bg-accent` |
-| Border | `border border-border`, `border border-white/15` |
+| Background | `bg-background`, `bg-surface`, `bg-surface-secondary`, `bg-gradient-to-br` |
+| Border | `border border-border` |
 | Border radius | `rounded-[24px]`, `rounded-[18px]`, `rounded-[100px]` |
-| Text - primary | `text-on-primary`, `text-text-primary` |
-| Text - secondary | `text-white/70` |
+| Text - primary | `text-text-primary` |
+| Text - secondary | `text-text-secondary` |
 | Spacing | `px-4 py-16`, `px-6 py-6`, `px-6 py-10` |
 | Hover state | `hover:bg-surface-secondary` |
-| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]`, `shadow-[0_2px_2px_rgba(0,0,0,0.08),0_8px_16px_-4px_rgba(0,0,0,0.18),0_0_0_1px_rgba(255,255,255,0.06)_inset]` |
-| Accent usage | `bg-accent` |
+| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]`, `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.08),0_0_0_1px_var(--border)_inset]` |
+| Accent usage | `bg-accent`, `bg-accent-light`, `bg-accent-deep` |
 
 **Pattern notes:**
 The CTA now layers the hero-style radial gradient behind an inverted callout card, so the ending band feels connected to the landing hero without reusing the hero mesh directly as a card fill. Keep the outer wrapper roomy and the inner action pill clean and high-contrast.
@@ -365,7 +365,7 @@ Last updated: `2026-06-23`
 | Spacing | `p-6`, `p-5`, `mt-4`, `mt-5` |
 | Hover state | `none` |
 | Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04), 0 0 0 1px var(--border) inset` |
-| Accent usage | `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-violet` |
+| Accent usage | `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-accent` |
 
 **Pattern notes:**
 The landing ATS preview is a static, honest mock of the real analysis layout. Keep it marketing-friendly but still visibly rooted in the in-app score system.
@@ -375,15 +375,15 @@ Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-surface`, `bg-surface-secondary`, `bg-link-bg-soft`, `bg-success-light`, `bg-error-light` |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-accent-light`, `bg-success-light`, `bg-error-light` |
 | Border | `border border-border`, `border-error/30`, `border-success/30` |
 | Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
-| Text - primary | `text-text-primary`, `text-on-primary`, `text-link-deep`, `text-success-foreground`, `text-error-foreground` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-accent`, `text-success-foreground`, `text-error-foreground` |
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
 | Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
-| Accent usage | `bg-accent`, `bg-link-bg-soft`, `bg-success-light`, `bg-error-light` |
+| Accent usage | `bg-accent`, `bg-accent-light`, `bg-success-light`, `bg-error-light` |
 
 **Pattern notes:**
 Settings now uses a left-side tab rail on desktop, a horizontal tab row on smaller screens, a locked-light appearance card, and a typed-email account deletion confirmation.
@@ -395,18 +395,18 @@ Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-surface`, `bg-surface-secondary`, `bg-border`, `bg-error-light`, `bg-success-light`, `bg-warning-light`, `bg-link-bg-soft` |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-border`, `bg-error-light`, `bg-success-light`, `bg-warning-light`, `bg-accent-light` |
 | Border | `border border-border`, `border-accent`, `border-error-light` |
 | Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
-| Text - primary | `text-text-primary`, `text-on-primary`, `text-success`, `text-warning`, `text-error`, `text-link-deep` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-success`, `text-warning`, `text-error`, `text-accent` |
 | Text - secondary | `text-text-secondary`, `text-text-muted`, `text-success-foreground`, `text-warning-foreground`, `text-error-foreground` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `px-2 py-0.5`, `mt-2`, `mt-3`, `mt-4`, `mt-5` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
 | Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
-| Accent usage | `bg-accent`, `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-link-bg-soft` |
+| Accent usage | `bg-accent`, `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-accent-light` |
 
 **Pattern notes:**
-Copilot uses the in-app register exclusively: dense 16px cards, 6px controls, and rounded status chips. The page combines a three-column work area with a tabbed output panel, the resume tab uses a two-panel compare layout with a scrollable source-text pane on the left and a structured rewrite pane on the right, the cover-letter tab follows the same dense pattern with a tone selector and editable draft textarea, and the interview tab now uses role/difficulty selectors plus a reusable question-card workflow with answer reveal and next-question actions. Keep those compare/editor patterns and token-based chips consistent with the rest of the authenticated shell rather than introducing a marketing-style treatment.
+Copilot uses the in-app register exclusively: dense 16px cards, 6px controls, and rounded status chips. The page combines a three-column work area with a tabbed output panel, the resume tab uses a two-panel compare layout with a scrollable source-text pane on the left and a structured rewrite pane on the right, the cover-letter tab follows the same dense pattern with a tone selector and editable draft textarea, and the interview tab now uses a focused single-question layout with a compact navigator, large centered question card, and only the current practice controls. Keep those compare/editor patterns and token-based chips consistent with the rest of the authenticated shell rather than introducing a marketing-style treatment.
 
 ### Interview Question Card
 
@@ -463,7 +463,7 @@ Last updated: `2026-06-23`
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `py-0.5`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `min-h-[160px]` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
 | Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
-| Accent usage | `bg-accent`, `ring-accent`, `bg-link-bg-soft`, `bg-violet-light`, `bg-success-light`, `bg-error-light`, `bg-success` |
+| Accent usage | `bg-accent`, `ring-accent`, `bg-accent-light`, `bg-teal-light`, `bg-success-light`, `bg-error-light`, `bg-success` |
 
 **Pattern notes:**
 The applications tracker is a dense Kanban board in the in-app register: hero summary, stats row, filter bar, five status columns, draggable cards, and modal dialogs for create/edit/delete flows. Keep status chips token-based, keep drag feedback to the single accent ring, and keep all interactions in the same 6px-radius system used by the rest of the authenticated shell.
@@ -475,15 +475,15 @@ Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-surface`, `bg-surface-secondary`, `bg-warning-light`, `bg-link-bg-soft`, `bg-violet-light`, `bg-success-light` |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-warning-light`, `bg-accent-light`, `bg-teal-light`, `bg-success-light` |
 | Border | `border border-border`, `border border-warning-light`, `border-success`, `border-border` |
 | Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
-| Text - primary | `text-text-primary`, `text-on-primary`, `text-warning-foreground`, `text-link-deep`, `text-violet-foreground`, `text-success-foreground` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-warning-foreground`, `text-accent`, `text-teal-foreground`, `text-success-foreground` |
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `gap-2`, `gap-3`, `gap-4`, `gap-5`, `space-y-3`, `space-y-6` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
 | Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
-| Accent usage | `bg-accent`, `bg-warning-light`, `bg-link-bg-soft`, `bg-violet-light`, `bg-success-light` |
+| Accent usage | `bg-accent`, `bg-warning-light`, `bg-accent-light`, `bg-teal-light`, `bg-success-light` |
 
 **Pattern notes:**
 Dashboard stays in the in-app register and combines a neutral hero, a warning resume-attention banner, four stat cards, a recent-activity feed, a weekly focus checklist, and a quick-actions rail. Keep it dense, token-only, and utility-first. The real-data version keeps the same visual language while adding loading, empty, and error states inside the same surface/card pattern.
@@ -495,15 +495,15 @@ Last updated: `2026-06-23`
 
 | Property | Class |
 | --- | --- |
-| Background | `bg-surface`, `bg-surface-secondary`, `bg-warning-light`, `bg-link-bg-soft`, `bg-success-light`, `bg-error-light` |
+| Background | `bg-surface`, `bg-surface-secondary`, `bg-warning-light`, `bg-accent-light`, `bg-success-light`, `bg-error-light` |
 | Border | `border border-border`, `border border-warning-light`, `border border-error-light`, `border-error/30`, `border-success/30` |
 | Border radius | `rounded-md`, `rounded-sm`, `rounded-full` |
-| Text - primary | `text-text-primary`, `text-on-primary`, `text-warning-foreground`, `text-link-deep`, `text-success-foreground`, `text-error-foreground` |
+| Text - primary | `text-text-primary`, `text-on-primary`, `text-warning-foreground`, `text-accent`, `text-success-foreground`, `text-error-foreground` |
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `space-y-3`, `space-y-4`, `space-y-6` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
 | Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
-| Accent usage | `bg-accent`, `bg-link-bg-soft`, `bg-success-light`, `bg-warning-light`, `bg-error-light` |
+| Accent usage | `bg-accent`, `bg-accent-light`, `bg-success-light`, `bg-warning-light`, `bg-error-light` |
 
 **Pattern notes:**
 Settings keeps the dense in-app register but adds three distinct surfaces: a profile form, a local-only theme chooser, and a destructive account-delete block. Preserve the same compact 6px controls, token-based semantic chips, and explicit confirmation pattern for dangerous actions. The theme selector is intentionally stateful without introducing a global dark-mode visual treatment yet.

@@ -51,4 +51,4 @@
 ### What NOT to do
 
 - No newsletter signup form in the footer — out of scope per `project-overview.md`, don't invent one.
-- No mesh gradient or any decoration here — footer stays purely typographic, consistent with Vercel's own restrained footer treatment.
+- No aurora gradient or any decoration here — footer stays purely typographic, consistent with the brand's restrained, premium footer treatment.

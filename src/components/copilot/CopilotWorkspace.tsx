@@ -12,12 +12,12 @@ import {
 import { useGenerateInterviewQuestions } from "@/hooks/queries/useInterview";
 import { useResumes } from "@/hooks/queries/useResumes";
 import { apiDownload, apiFetch } from "@/lib/api-client";
-import { QuestionCard } from "@/components/interview/QuestionCard";
 import type {
   AnalysisRecord,
   CoverLetterRecord,
   CoverLetterTone,
   InterviewDifficulty,
+  InterviewQuestion,
   InterviewRole,
   InterviewSessionRecord,
   OptimizedResumeRecord,
@@ -272,6 +272,173 @@ function StatCard({
   );
 }
 
+function getInterviewCategoryChipClass(
+  category: InterviewQuestion["category"],
+): string {
+  if (category === "Technical") {
+    return "bg-accent-light text-accent";
+  }
+
+  if (category === "Behavioral") {
+    return "bg-teal-light text-teal-foreground";
+  }
+
+  return "bg-surface-secondary text-text-secondary";
+}
+
+function InterviewQuestionNavigator({
+  questions,
+  activeIndex,
+  onSelect,
+}: {
+  questions: InterviewQuestion[];
+  activeIndex: number;
+  onSelect: (index: number) => void;
+}) {
+  return (
+    <aside className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+            Question navigator
+          </p>
+          <h3 className="mt-2 text-[18px] font-semibold leading-7 tracking-[-0.04em] text-text-primary">
+            {questions.length} question{questions.length === 1 ? "" : "s"}
+          </h3>
+        </div>
+        <span className="inline-flex rounded-full bg-surface-secondary px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
+          {activeIndex + 1}/{questions.length || 1}
+        </span>
+      </div>
+
+      <div className="mt-4 space-y-2">
+        {questions.map((question, index) => {
+          const isActive = index === activeIndex;
+
+          return (
+            <button
+              key={`${question.category}-${index}-${question.question}`}
+              type="button"
+              className={`w-full rounded-md border px-3 py-3 text-left transition duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                isActive
+                  ? "border-accent bg-surface-secondary"
+                  : "border-border bg-surface hover:bg-surface-secondary"
+              }`}
+              onClick={() => onSelect(index)}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                    {question.category}
+                  </p>
+                  <p className="mt-1 break-words text-[14px] leading-6 text-text-primary">
+                    Question {index + 1}
+                  </p>
+                </div>
+                <span
+                  className={`inline-flex shrink-0 rounded-full px-2 py-0.5 text-[12px] font-medium leading-4 ${getInterviewCategoryChipClass(question.category)}`}
+                >
+                  {isActive ? "Now" : "Jump"}
+                </span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </aside>
+  );
+}
+
+function InterviewPracticeCard({
+  question,
+  index,
+  total,
+  onNext,
+  onRecordAnswer,
+}: {
+  question: InterviewQuestion;
+  index: number;
+  total: number;
+  onNext: () => void;
+  onRecordAnswer: () => void;
+}) {
+  const [showAnswer, setShowAnswer] = useState(false);
+
+  return (
+    <article className="min-w-0 rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset] lg:p-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+            Question {index + 1} of {total}
+          </p>
+          <h3 className="mt-2 text-[28px] font-semibold leading-9 tracking-[-0.04em] text-text-primary lg:text-[32px] lg:leading-10">
+            Current question
+          </h3>
+        </div>
+
+        <span
+          className={`inline-flex rounded-full px-2 py-0.5 text-[12px] font-medium leading-4 ${getInterviewCategoryChipClass(question.category)}`}
+        >
+          {question.category}
+        </span>
+      </div>
+
+      <p className="mt-6 max-w-3xl text-[20px] leading-8 text-text-primary lg:text-[24px] lg:leading-10">
+        {question.question}
+      </p>
+
+      {showAnswer ? (
+        <div className="mt-8 space-y-4 rounded-md border border-border bg-surface-secondary p-4 lg:p-5">
+          <div>
+            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+              Model answer
+            </p>
+            <p className="mt-2 break-words text-[14px] leading-6 text-text-secondary lg:text-[16px] lg:leading-7">
+              {question.modelAnswer}
+            </p>
+          </div>
+          <div>
+            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+              Follow-up
+            </p>
+            <p className="mt-2 break-words text-[14px] leading-6 text-text-secondary lg:text-[16px] lg:leading-7">
+              {question.followUp}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <p className="mt-8 max-w-2xl text-[14px] leading-6 text-text-muted">
+          Reveal the answer only after you have talked through the question.
+        </p>
+      )}
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        <button
+          type="button"
+          className="inline-flex h-8 items-center justify-center rounded-sm border border-border bg-surface px-3 text-[14px] font-medium leading-5 text-text-primary transition hover:bg-surface-secondary"
+          onClick={() => setShowAnswer((current) => !current)}
+        >
+          {showAnswer ? "Hide answer" : "Show answer"}
+        </button>
+        <button
+          type="button"
+          className="inline-flex h-8 items-center justify-center rounded-sm bg-accent px-3 text-[14px] font-medium leading-5 text-on-primary transition hover:opacity-90"
+          onClick={onNext}
+        >
+          Next question
+        </button>
+        <button
+          type="button"
+          className="inline-flex h-8 items-center justify-center rounded-sm border border-border bg-surface px-3 text-[14px] font-medium leading-5 text-text-primary transition hover:bg-surface-secondary"
+          onClick={onRecordAnswer}
+        >
+          Record answer
+        </button>
+      </div>
+    </article>
+  );
+}
+
 export function CopilotWorkspace() {
   const queryClient = useQueryClient();
   const [selectedResumeId, setSelectedResumeId] = useState<string>("");
@@ -297,7 +464,7 @@ export function CopilotWorkspace() {
   const [isPending, startTransition] = useTransition();
 
   const { data, isLoading, error } = useResumes();
-  const resumes = data?.resumes ?? [];
+  const resumes = useMemo(() => data?.resumes ?? [], [data?.resumes]);
 
   const activeResume = useMemo(
     () => resumes.find((resume) => resume.isActive) ?? null,
@@ -504,19 +671,33 @@ export function CopilotWorkspace() {
   }
 
   const activeInterviewSession = interviewSession ?? previewInterviewSession;
+  const activeInterviewQuestions = activeInterviewSession.questions;
   const activeInterviewQuestion =
-    activeInterviewSession.questions[interviewQuestionIndex] ??
-    activeInterviewSession.questions[0] ??
+    activeInterviewQuestions[interviewQuestionIndex] ??
+    activeInterviewQuestions[0] ??
     previewInterviewSession.questions[0];
+  const activeInterviewQuestionCount = activeInterviewQuestions.length || 1;
 
   function handleNextInterviewQuestion(): void {
-    if (activeInterviewSession.questions.length === 0) {
+    if (activeInterviewQuestions.length === 0) {
       return;
     }
 
     setInterviewQuestionIndex((current) =>
-      (current + 1) % activeInterviewSession.questions.length,
+      (current + 1) % activeInterviewQuestions.length,
     );
+  }
+
+  function handleSelectInterviewQuestion(nextIndex: number): void {
+    if (nextIndex < 0 || nextIndex >= activeInterviewQuestions.length) {
+      return;
+    }
+
+    setInterviewQuestionIndex(nextIndex);
+  }
+
+  function handleRecordInterviewAnswer(): void {
+    setFeedbackMessage("Answer recording is not connected yet.");
   }
 
   const liveAnalysis = analysisResult ?? previewAnalysis;
@@ -867,11 +1048,11 @@ export function CopilotWorkspace() {
         </div>
 
         <div className="mt-5 grid items-start gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,0.75fr)]">
-          <div className="min-w-0 rounded-md border border-border bg-surface-secondary p-4">
+          <div className={`min-w-0 rounded-md border border-border bg-surface-secondary p-4 ${selectedTab !== "summary" ? "col-span-full" : ""}`}>
             {selectedTab === "summary" ? (
               <div className="space-y-5">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex rounded-full bg-link-bg-soft px-2 py-0.5 text-[12px] font-medium leading-4 text-link-deep">
+                  <span className="inline-flex rounded-full bg-accent-light px-2 py-0.5 text-[12px] font-medium leading-4 text-accent">
                     {liveAnalysis.seniorityDetected}
                   </span>
                   <span className="inline-flex rounded-full bg-surface px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
@@ -1057,7 +1238,7 @@ export function CopilotWorkspace() {
                                   (keyword) => (
                                     <span
                                       key={keyword}
-                                      className="inline-flex rounded-full bg-link-bg-soft px-2 py-0.5 text-[12px] font-medium leading-4 text-link-deep"
+                                      className="inline-flex rounded-full bg-accent-light px-2 py-0.5 text-[12px] font-medium leading-4 text-accent"
                                     >
                                       {keyword}
                                     </span>
@@ -1196,7 +1377,7 @@ export function CopilotWorkspace() {
                         </span>
                       </div>
                       <textarea
-                        className="mt-3 min-h-[320px] w-full rounded-sm border border-border bg-surface px-3 py-2 text-[14px] leading-6 text-text-primary outline-none transition placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent"
+                        className="mt-3 min-h-80 w-full rounded-sm border border-border bg-surface px-3 py-2 text-[14px] leading-6 text-text-primary outline-none transition placeholder:text-text-muted focus:border-accent focus:ring-1 focus:ring-accent"
                         placeholder="Generate a cover letter to populate this draft, then refine the wording here."
                         value={coverLetterDraft}
                         onChange={(event) =>
@@ -1300,70 +1481,74 @@ export function CopilotWorkspace() {
                     </p>
                   </div>
                 ) : (
-                  <div className="grid items-start gap-4 2xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
-                    <QuestionCard
-                      key={`${activeInterviewSession.id}-${interviewQuestionIndex}`}
-                      question={activeInterviewQuestion}
-                      index={interviewQuestionIndex}
-                      total={activeInterviewSession.questions.length}
-                      onNext={handleNextInterviewQuestion}
-                    />
-
-                    <div className="space-y-3">
-                      <article className="min-w-0 rounded-md border border-border bg-surface-secondary p-4">
+                  <div className="space-y-6">
+                    <div className="flex flex-col gap-3 rounded-md border border-border bg-surface px-4 py-3 shadow-[0_0_0_1px_var(--border)_inset] lg:flex-row lg:items-center lg:justify-between">
+                      <div className="space-y-2">
                         <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                          Session details
+                          Live practice set
                         </p>
-                        <div className="mt-3 space-y-2 text-[14px] leading-5 text-text-secondary">
-                          <p>
-                            Role:{" "}
-                            <span className="text-text-primary">
-                              {activeInterviewSession.role}
-                            </span>
-                          </p>
-                          <p>
-                            Difficulty:{" "}
-                            <span className="text-text-primary">
-                              {activeInterviewSession.difficulty}
-                            </span>
-                          </p>
-                          <p>
-                            Questions:{" "}
-                            <span className="text-text-primary">
-                              {activeInterviewSession.questions.length}
-                            </span>
-                          </p>
-                          <p>
-                            Saved on{" "}
-                            <span className="text-text-primary">
-                              {formatDate(activeInterviewSession.createdAt)}
-                            </span>
-                          </p>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="inline-flex rounded-full bg-accent-light px-2 py-0.5 text-[12px] font-medium leading-4 text-accent">
+                            {activeInterviewSession.role}
+                          </span>
+                          <span className="inline-flex rounded-full bg-surface-secondary px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
+                            {activeInterviewSession.difficulty}
+                          </span>
+                          <span className="inline-flex rounded-full bg-surface-secondary px-2 py-0.5 text-[12px] font-medium leading-4 text-text-secondary">
+                            {activeInterviewQuestionCount} question
+                            {activeInterviewQuestionCount === 1 ? "" : "s"}
+                          </span>
                         </div>
-                      </article>
+                      </div>
 
-                      <article className="min-w-0 rounded-md border border-border bg-surface p-4">
-                        <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                          Practice notes
-                        </p>
-                        <ul className="mt-3 space-y-2">
-                          {activeInterviewSession.questions.map((item, itemIndex) => (
-                            <li
-                              key={`${item.category}-${itemIndex}-${item.question}`}
-                              className={`rounded-sm border px-3 py-2 text-[14px] leading-5 ${
-                                itemIndex === interviewQuestionIndex
-                                  ? "border-accent bg-surface-secondary text-text-primary"
-                                  : "border-border bg-surface-secondary text-text-secondary"
-                              }`}
-                            >
-                              <p className="font-medium text-text-primary">
-                                {item.category}
-                              </p>
-                              <p className="mt-1 break-words">{item.question}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      </article>
+                      <button
+                        type="button"
+                        className="inline-flex h-8 items-center justify-center rounded-sm border border-border bg-surface px-3 text-[14px] font-medium leading-5 text-text-primary transition hover:bg-surface-secondary disabled:cursor-not-allowed disabled:opacity-50"
+                        disabled={interviewQuestionsMutation.isPending}
+                        onClick={handleGenerateInterviewQuestions}
+                      >
+                        {interviewQuestionsMutation.isPending
+                          ? "Generating..."
+                          : "New set"}
+                      </button>
+                    </div>
+
+                    <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+                      <div className="space-y-4">
+                        <div className="mx-auto w-full max-w-5xl">
+                          <InterviewPracticeCard
+                            key={`${activeInterviewSession.id}-${interviewQuestionIndex}`}
+                            question={activeInterviewQuestion}
+                            index={interviewQuestionIndex}
+                            total={activeInterviewQuestionCount}
+                            onNext={handleNextInterviewQuestion}
+                            onRecordAnswer={handleRecordInterviewAnswer}
+                          />
+                        </div>
+
+                        <details className="rounded-md border border-border bg-surface p-4 xl:hidden">
+                          <summary className="cursor-pointer list-none text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                            Question navigator
+                          </summary>
+                          <div className="mt-4">
+                            <InterviewQuestionNavigator
+                              questions={activeInterviewQuestions}
+                              activeIndex={interviewQuestionIndex}
+                              onSelect={handleSelectInterviewQuestion}
+                            />
+                          </div>
+                        </details>
+                      </div>
+
+                      <div className="hidden xl:block">
+                        <div className="sticky top-6">
+                          <InterviewQuestionNavigator
+                            questions={activeInterviewQuestions}
+                            activeIndex={interviewQuestionIndex}
+                            onSelect={handleSelectInterviewQuestion}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1371,55 +1556,57 @@ export function CopilotWorkspace() {
             ) : null}
           </div>
 
-          <div className="min-w-0 rounded-md border border-border bg-surface p-4">
-            <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-              Insights
-            </p>
-            <div className="mt-4 space-y-3">
-              <div className="rounded-md border border-border bg-surface-secondary p-4">
-                <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                  Strengths
-                </p>
-                <ul className="mt-3 space-y-2">
-                  {liveAnalysis.strengths.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-md bg-surface px-3 py-2 text-[14px] leading-5 text-text-secondary"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {selectedTab === "summary" ? (
+            <div className="min-w-0 rounded-md border border-border bg-surface p-4">
+              <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                Insights
+              </p>
+              <div className="mt-4 space-y-3">
+                <div className="rounded-md border border-border bg-surface-secondary p-4">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                    Strengths
+                  </p>
+                  <ul className="mt-3 space-y-2">
+                    {liveAnalysis.strengths.map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-md bg-surface px-3 py-2 text-[14px] leading-5 text-text-secondary"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              <div className="rounded-md border border-border bg-surface-secondary p-4">
-                <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                  Weaknesses
-                </p>
-                <ul className="mt-3 space-y-2">
-                  {liveAnalysis.weaknesses.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-md bg-surface px-3 py-2 text-[14px] leading-5 text-text-secondary"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div className="rounded-md border border-border bg-surface-secondary p-4">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                    Weaknesses
+                  </p>
+                  <ul className="mt-3 space-y-2">
+                    {liveAnalysis.weaknesses.map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-md bg-surface px-3 py-2 text-[14px] leading-5 text-text-secondary"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              <div className="rounded-md border border-border bg-surface-secondary p-4">
-                <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                  ATS fit
-                </p>
-                <p className="mt-2 text-[14px] leading-6 text-text-secondary">
-                  {liveAnalysis.atsScore >= 80
-                    ? "This resume is already competitive. The fastest wins are keyword alignment and stronger measurable outcomes."
-                    : "There is room to improve the baseline fit before you optimize the resume draft."}
-                </p>
+                <div className="rounded-md border border-border bg-surface-secondary p-4">
+                  <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
+                    ATS fit
+                  </p>
+                  <p className="mt-2 text-[14px] leading-6 text-text-secondary">
+                    {liveAnalysis.atsScore >= 80
+                      ? "This resume is already competitive. The fastest wins are keyword alignment and stronger measurable outcomes."
+                      : "There is room to improve the baseline fit before you optimize the resume draft."}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </section>
     </div>

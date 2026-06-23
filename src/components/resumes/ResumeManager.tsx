@@ -691,7 +691,7 @@ export function ResumeManager() {
                 <p className="font-mono text-[12px] leading-4 text-text-muted">
                   EXTRACTED TEXT
                 </p>
-                <pre className="mt-3 max-h-72 overflow-auto whitespace-pre-wrap rounded-sm border border-border bg-canvas-soft-2 p-4 font-mono text-[13px] leading-5 text-text-primary">
+                <pre className="mt-3 max-h-72 overflow-auto whitespace-pre-wrap rounded-sm border border-border bg-surface-secondary p-4 font-mono text-[13px] leading-5 text-text-primary">
                   {getPreview(selectedResume.parsedText)}
                 </pre>
               </div>
