@@ -1,11 +1,13 @@
+import Image, { type StaticImageData } from "next/image";
+
 import { featureCards } from "@/components/landing/content";
 import { RevealSection } from "@/components/landing/RevealSection";
 import { SectionHeading } from "@/components/landing/SectionHeading";
 
-function FeatureIcon({ kind }: { kind: string }) {
+function FeatureIcon({ icon }: { icon: StaticImageData }) {
   return (
-    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface-secondary text-[18px] text-accent">
-      {kind === "score" ? "●" : kind === "resume" ? "▣" : "✦"}
+    <div className="flex h-20 w-20 items-center justify-center rounded-lg border border-border">
+      <Image src={icon} alt="" width={50} height={50} aria-hidden="true" />
     </div>
   );
 }
@@ -13,7 +15,7 @@ function FeatureIcon({ kind }: { kind: string }) {
 export function Features() {
   return (
     <section className="border-b border-border bg-background">
-      <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div className="mx-auto max-w-350 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <RevealSection>
           <SectionHeading
             eyebrow="FEATURES"
@@ -25,10 +27,8 @@ export function Features() {
         <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {featureCards.map((card) => (
             <RevealSection key={card.title}>
-              <article
-                className="h-full rounded-[12px] border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]"
-              >
-                <FeatureIcon kind={card.icon} />
+              <article className="h-full rounded-lg border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]">
+                <FeatureIcon icon={card.icon} />
                 <h3 className="mt-5 text-[20px] font-semibold leading-7 tracking-[-0.04em] text-text-primary">
                   {card.title}
                 </h3>

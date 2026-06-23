@@ -147,3 +147,22 @@ pre {
 /* Dark mode intentionally not implemented yet — ui-tokens.md only defines
    light-mode values. Build this out when the Settings page's theme toggle
    (Feature 23 in build-plan.md) is actually being worked on, not before. */
+
+
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

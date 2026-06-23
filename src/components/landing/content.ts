@@ -1,3 +1,6 @@
+import ats from "@/assets/ats.png";
+import resume from "@/assets/resume.png";
+import doc from "@/assets/document.png";
 export const navLinks = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Features", href: "/features" },
@@ -11,19 +14,19 @@ export const featureCards = [
     title: "ATS scoring",
     description:
       "See match quality, missing keywords, and the hiring signals behind a job description.",
-    icon: "score",
+    icon: ats,
   },
   {
     title: "Resume optimization",
     description:
       "Turn one resume into a sharper draft with stronger verbs, better structure, and clearer signals.",
-    icon: "resume",
+    icon: resume,
   },
   {
     title: "Cover letters and interview prep",
     description:
       "Generate a tailored letter and role-specific questions from the same analysis.",
-    icon: "prep",
+    icon: doc,
   },
 ];
 

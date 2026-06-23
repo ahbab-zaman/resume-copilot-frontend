@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { AuthForm } from "@/components/auth/AuthForm";
 
-import logo from "../../../../public/assets/logo-pilot.png";
+import logo from "@/assets/logo-pilot.png";
 
 const loginHighlights = [
   "Resume history and saved analyses in one place",

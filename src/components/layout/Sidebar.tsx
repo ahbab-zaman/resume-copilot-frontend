@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import logo from "@/assets/logo-pilot.png";
 
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 type SidebarProps = {
   user: {
@@ -33,15 +35,13 @@ export function Sidebar({ user }: SidebarProps) {
   return (
     <aside className="flex min-h-screen w-[240px] flex-col border-r border-border bg-surface">
       <div className="border-b border-border px-5 py-6">
-        <Link href="/dashboard" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-accent text-[13px] font-medium text-on-primary">
-            A
-          </div>
+        <Link href="/" className="flex items-center gap-3">
+          <Image height={60} width={60} src={logo} alt="Resume Copilot Logo" />
           <div>
             <p className="text-[14px] font-medium leading-5 text-text-primary">
-              AI Resume
+              Resume
             </p>
-            <p className="text-[12px] leading-4 text-text-muted">Job pilot</p>
+            <p className="text-[12px] leading-4 text-text-muted"> Copilot</p>
           </div>
         </Link>
       </div>

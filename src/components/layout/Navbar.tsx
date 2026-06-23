@@ -6,7 +6,7 @@ import { navLinks } from "@/components/landing/content";
 
 import { NavbarActions } from "./NavbarActions";
 import Image from "next/image";
-import logo from "../../../public/assets/logo-pilot.png";
+import logo from "@/assets/logo-pilot.png";
 export async function Navbar() {
   const session = await auth.api.getSession({ headers: await headers() });
 
