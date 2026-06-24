@@ -14,7 +14,7 @@ export function Navbar() {
   const user = session?.user ?? null;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-surface/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-surface-secondary/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-350 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
           <Image height={60} width={60} src={logo} alt="Resume Copilot Logo" />

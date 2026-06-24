@@ -1,7 +1,6 @@
 "use client";
 import { RevealSection } from "@/components/landing/RevealSection";
 import { SectionHeading } from "@/components/landing/SectionHeading";
-import { useEffect, useRef } from "react";
 
 const allTestimonials = [
   {
@@ -114,19 +113,23 @@ function MarqueeRow({
   direction?: "left" | "right";
   speed?: number;
 }) {
-  const doubled = [...items, ...items];
-
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
       <div
-        className="flex gap-4 w-max"
-        style={{
-          animation: `marquee-${direction} ${speed}s linear infinite`,
-        }}
+        className="marquee-track flex flex-nowrap [width:fit-content]"
+        data-direction={direction}
+        style={{ animationDuration: `${speed}s` }}
       >
-        {doubled.map((t, i) => (
-          <TestimonialCard key={`${t.name}-${i}`} testimonial={t} />
-        ))}
+        <div className="flex shrink-0 gap-4 pr-4">
+          {items.map((t) => (
+            <TestimonialCard key={`${t.name}-a`} testimonial={t} />
+          ))}
+        </div>
+        <div className="flex shrink-0 gap-4 pr-4" aria-hidden="true">
+          {items.map((t) => (
+            <TestimonialCard key={`${t.name}-b`} testimonial={t} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -135,10 +138,6 @@ function MarqueeRow({
 export function SocialProof() {
   return (
     <section className="border-b border-border bg-background overflow-hidden">
-      <style>{`
-       
-      `}</style>
-
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <RevealSection>
           <SectionHeading

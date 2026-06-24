@@ -7,12 +7,12 @@ export function CallToAction() {
         aria-hidden="true"
         className="aurora-gradient pointer-events-none absolute inset-x-0 top-0 h-full opacity-35"
       />
-      <div className="relative mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div className="overflow-hidden rounded-[24px] border border-border bg-surface px-6 py-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]">
+      <div className="relative mx-auto max-w-350 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="overflow-hidden rounded-3xl border border-border bg-surface px-6 py-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]">
           <div className="relative overflow-hidden rounded-[18px] border border-border bg-surface px-6 py-10 text-text-primary shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.08),0_0_0_1px_var(--color-border)_inset] sm:px-8">
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent-light/70 via-surface to-surface-secondary/80 opacity-90"
+              className="pointer-events-none absolute inset-0 bg-linear-to-br from-[#797a7e] via-surface to-surface-secondary"
             />
             <div className="relative flex flex-col items-center gap-6 text-center">
               <p className="inline-flex rounded-full border border-border bg-surface-secondary px-3 py-1 font-mono text-[12px] leading-4 text-text-secondary">

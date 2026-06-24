@@ -5,14 +5,14 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface">
+    <footer className="border-t border-border bg-surface-secondary">
       <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center">
               <Link
                 href="/"
-                className="flex h-10 w-10 items-center justify-center rounded-sm bg-accent text-[13px] font-semibold text-on-primary"
+                className="flex h-10 w-20 items-center justify-center text-[13px] font-semibold text-on-primary"
               >
                 <Image
                   height={80}

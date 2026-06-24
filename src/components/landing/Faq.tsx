@@ -13,23 +13,8 @@ export function Faq() {
           {/* Left — title + cta */}
           <div className="flex flex-col justify-start">
             <div className="flex items-center gap-2 mb-4">
-              <svg
-                style={{
-                  width: "14px",
-                  height: "14px",
-                  color: "var(--color-text-muted)",
-                  flexShrink: 0,
-                }}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01" />
-              </svg>
               <span
-                className="text-[12px] font-medium uppercase tracking-widest"
+                className="font-mono text-[12px] uppercase tracking-widest"
                 style={{ color: "var(--color-text-muted)" }}
               >
                 FAQ

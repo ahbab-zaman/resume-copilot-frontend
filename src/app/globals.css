@@ -255,3 +255,26 @@ pre {
     transform: translateX(0);
   }
 }
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  will-change: transform;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+  flex-wrap: nowrap;
+}
+
+.marquee-track[data-direction="right"] {
+  animation-direction: reverse;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
