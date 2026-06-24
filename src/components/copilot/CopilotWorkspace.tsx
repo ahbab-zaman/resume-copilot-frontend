@@ -820,8 +820,7 @@ export function CopilotWorkspace() {
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-[12px] leading-4 text-text-muted">
-                Minimum 40 characters. The backend stores the result for later
-                reuse.
+                Minimum 40 characters.
               </p>
               <button
                 type="button"
