@@ -14,7 +14,7 @@ const loginHighlights = [
 export default function LoginPage() {
   return (
     <main className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-      <div className="mx-auto flex min-h-[calc(100vh-3rem)] max-w-[1400px] flex-col">
+      <div className="mx-auto flex min-h-[calc(100vh-3rem)] max-w-350 flex-col">
         <header className="flex items-center justify-between gap-4 border-b border-border pb-6">
           <Link href="/" className="flex items-center gap-3">
             <Image height={56} width={56} src={logo} alt="Resume Copilot logo" />
@@ -42,7 +42,7 @@ export default function LoginPage() {
               <p className="font-mono text-[12px] leading-4 text-text-muted">
                 RETURNING USER
               </p>
-              <h1 className="mt-4 text-[48px] font-semibold leading-[48px] tracking-[-0.06em] text-text-primary max-[639px]:text-[36px] max-[639px]:leading-[40px]">
+              <h1 className="mt-4 text-[48px] font-semibold leading-12 tracking-[-0.06em] text-text-primary max-sm:text-[36px] max-sm:leading-10">
                 Sign in and keep moving.
               </h1>
               <p className="mt-4 max-w-xl text-[18px] leading-7 text-text-secondary">
@@ -55,7 +55,7 @@ export default function LoginPage() {
               {loginHighlights.map((item) => (
                 <div
                   key={item}
-                  className="rounded-[12px] border border-border bg-surface p-4 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]"
+                  className="rounded-lg border border-border bg-surface p-4 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]"
                 >
                   <p className="text-[14px] leading-5 text-text-primary">
                     {item}
@@ -64,7 +64,7 @@ export default function LoginPage() {
               ))}
             </div>
 
-            <div className="grid gap-4 rounded-[16px] border border-border bg-surface p-5 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset] sm:grid-cols-3">
+            <div className="grid gap-4 rounded-[16px] border border-border bg-surface p-5 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset] sm:grid-cols-3">
               <div>
                 <p className="text-[12px] font-medium leading-4 text-text-muted">
                   SESSION

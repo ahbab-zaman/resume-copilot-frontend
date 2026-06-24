@@ -260,7 +260,7 @@ function StatCard({
   body: string;
 }) {
   return (
-    <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+    <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
       <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
         {label}
       </p>
@@ -296,7 +296,7 @@ function InterviewQuestionNavigator({
   onSelect: (index: number) => void;
 }) {
   return (
-    <aside className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+    <aside className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -365,7 +365,7 @@ function InterviewPracticeCard({
   const [showAnswer, setShowAnswer] = useState(false);
 
   return (
-    <article className="min-w-0 rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset] lg:p-8">
+    <article className="min-w-0 rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset] lg:p-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -707,7 +707,7 @@ export function CopilotWorkspace() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -735,7 +735,7 @@ export function CopilotWorkspace() {
       </section>
 
       <section className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr_1.15fr]">
-        <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+        <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -844,7 +844,7 @@ export function CopilotWorkspace() {
           </div>
         </article>
 
-        <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+        <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -941,7 +941,7 @@ export function CopilotWorkspace() {
           </div>
         </article>
 
-        <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+        <article className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -1008,7 +1008,7 @@ export function CopilotWorkspace() {
         </article>
       </section>
 
-      <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -1139,7 +1139,7 @@ export function CopilotWorkspace() {
                   </div>
                 ) : (
                   <>
-                    <div className="grid gap-4 2xl:grid-cols-2">
+                    <div className="grid gap-4 xxl:grid-cols-2">
                       <article className="min-w-0 rounded-md border border-border bg-surface-secondary p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div>
@@ -1279,10 +1279,7 @@ export function CopilotWorkspace() {
                       </article>
                     </div>
 
-                    <p className="text-[12px] leading-4 text-text-muted">
-                      The backend stores the optimized resume so it can be
-                      revisited later from the saved analysis.
-                    </p>
+                  
                   </>
                 )}
               </div>
@@ -1385,16 +1382,7 @@ export function CopilotWorkspace() {
                       />
                     </div>
 
-                    <div className="rounded-md border border-border bg-surface p-4">
-                      <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
-                        Guidance
-                      </p>
-                      <p className="mt-2 text-[14px] leading-6 text-text-secondary">
-                        The backend stores the generated cover letter with the
-                        saved analysis. If PDF export is available later, the
-                        button above will activate automatically.
-                      </p>
-                    </div>
+                    
                   </div>
                 )}
               </div>
@@ -1481,7 +1469,7 @@ export function CopilotWorkspace() {
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    <div className="flex flex-col gap-3 rounded-md border border-border bg-surface px-4 py-3 shadow-[0_0_0_1px_var(--border)_inset] lg:flex-row lg:items-center lg:justify-between">
+                    <div className="flex flex-col gap-3 rounded-md border border-border bg-surface px-4 py-3 shadow-[0_0_0_1px_var(--color-border)_inset] lg:flex-row lg:items-center lg:justify-between">
                       <div className="space-y-2">
                         <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
                           Live practice set

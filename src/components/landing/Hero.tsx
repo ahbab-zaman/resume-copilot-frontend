@@ -2,43 +2,15 @@
 
 function HeroPreview() {
   return (
-    <div className="relative h-[560px] w-full select-none overflow-visible">
-      <style>{`
-        @keyframes float-1 {
-          0%, 100% { transform: rotate(-18deg) translateY(0px); }
-          50% { transform: rotate(-18deg) translateY(-12px); }
-        }
-        @keyframes float-2 {
-          0%, 100% { transform: rotate(-8deg) translateY(0px); }
-          50% { transform: rotate(-8deg) translateY(-14px); }
-        }
-        @keyframes float-3 {
-          0%, 100% { transform: rotate(4deg) translateY(0px); }
-          50% { transform: rotate(4deg) translateY(-10px); }
-        }
-        @keyframes float-4 {
-          0%, 100% { transform: rotate(16deg) translateY(0px); }
-          50% { transform: rotate(16deg) translateY(-13px); }
-        }
-        .card-1 { animation: float-1 4.2s ease-in-out infinite; }
-        .card-2 { animation: float-2 3.8s ease-in-out infinite 0.4s; }
-        .card-3 { animation: float-3 4.6s ease-in-out infinite 0.8s; }
-        .card-4 { animation: float-4 4.0s ease-in-out infinite 1.2s; }
-      `}</style>
-
-      {/* Fan origin — all cards spread from bottom center */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0">
-        {/* Card 1 — far left */}
+    <>
+      {/* ── DESKTOP: original fan layout ── */}
+      <div className="hidden xl:flex relative h-[500px] w-full select-none overflow-visible items-center justify-center">
         <div
-          className="card-1 absolute w-[260px] h-[360px] rounded-2xl border border-border bg-surface shadow-[0_16px_40px_-8px_rgba(0,0,0,0.18)]"
-          style={{
-            bottom: "120px",
-            left: "-340px",
-            transformOrigin: "bottom center",
-          }}
+          className="absolute w-[300px] h-[420px] rounded-tl-sm rounded-tr-sm rounded-bl-md rounded-br-md border border-border bg-surface shadow-md"
+          style={{ transform: "translateX(-80px) rotate(-10deg)", zIndex: 1 }}
         >
           <div className="p-4 pt-5">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <div className="h-8 w-8 rounded-full overflow-hidden border-2 border-surface shadow-sm shrink-0">
                 <img
                   src="https://i.pravatar.cc/150?img=12"
@@ -95,17 +67,13 @@ function HeroPreview() {
           </div>
         </div>
 
-        {/* Card 2 — left of center */}
+        {/* Card 2 */}
         <div
-          className="card-2 absolute w-[260px] h-[360px] rounded-2xl border border-border bg-surface shadow-[0_16px_40px_-8px_rgba(0,0,0,0.18)]"
-          style={{
-            bottom: "120px",
-            left: "-170px",
-            transformOrigin: "bottom center",
-          }}
+          className="absolute w-[300px] h-[420px] rounded-tl-sm rounded-tr-sm rounded-bl-md rounded-br-md border border-border bg-surface shadow-md"
+          style={{ transform: "translateX(-27px) rotate(-4deg)", zIndex: 2 }}
         >
           <div className="p-4 pt-5">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <div className="h-8 w-8 rounded-full overflow-hidden border-2 border-surface shadow-sm shrink-0">
                 <img
                   src="https://i.pravatar.cc/150?img=32"
@@ -162,17 +130,11 @@ function HeroPreview() {
           </div>
         </div>
 
-        {/* Card 3 — right of center (front card, no rotation overlap) */}
+        {/* Card 3 — front/top card */}
         <div
-          className="card-2 absolute w-[260px] h-[360px] rounded-2xl border border-border bg-surface shadow-[0_20px_48px_-8px_rgba(0,0,0,0.22)]"
-          style={{
-            bottom: "120px",
-            left: "-10px",
-            transformOrigin: "bottom center",
-            zIndex: 10,
-          }}
+          className="absolute w-[300px] h-[420px] rounded-tl-sm rounded-tr-sm rounded-bl-md rounded-br-md border border-border bg-surface shadow-xl"
+          style={{ transform: "translateX(27px) rotate(4deg)", zIndex: 3 }}
         >
-          {/* Avatar top center */}
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 h-10 w-10 rounded-full border-2 border-surface shadow-md overflow-hidden">
             <img
               src="https://i.pravatar.cc/150?img=47"
@@ -180,7 +142,7 @@ function HeroPreview() {
               className="h-full w-full object-cover"
             />
           </div>
-          <div className="p-4 pt-9">
+          <div className="p-4 pt-10">
             <div className="text-center mb-2">
               <p className="text-[11px] font-semibold text-text-primary">
                 Nick Tang
@@ -247,17 +209,13 @@ function HeroPreview() {
           </div>
         </div>
 
-        {/* Card 4 — far right */}
+        {/* Card 4 */}
         <div
-          className="card-4 absolute w-[260px] h-[360px] rounded-2xl border border-border bg-surface shadow-[0_16px_40px_-8px_rgba(0,0,0,0.18)]"
-          style={{
-            bottom: "120px",
-            left: "150px",
-            transformOrigin: "bottom center",
-          }}
+          className="absolute w-[300px] h-[420px] rounded-tl-sm rounded-tr-sm rounded-bl-md rounded-br-md border border-border bg-surface shadow-md"
+          style={{ transform: "translateX(80px) rotate(10deg)", zIndex: 2 }}
         >
           <div className="p-4 pt-5">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-2">
               <div className="h-8 w-8 rounded-full overflow-hidden border-2 border-surface shadow-sm shrink-0">
                 <img
                   src="https://i.pravatar.cc/150?img=25"
@@ -311,10 +269,186 @@ function HeroPreview() {
           </div>
         </div>
       </div>
-    </div>
+
+      {/* ── MOBILE: stacked bundle layout ── */}
+      <div className="xl:hidden relative h-[300px] w-full flex items-center justify-center select-none">
+        {/* Card 1 — bottom of stack */}
+        <div
+          className="absolute w-[200px] h-[260px] rounded-2xl border border-border bg-surface shadow-md"
+          style={{ transform: "translateX(-24px) rotate(-8deg)", zIndex: 1 }}
+        >
+          <div className="p-3 pt-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="h-7 w-7 rounded-full overflow-hidden border-2 border-surface shadow-sm shrink-0">
+                <img
+                  src="https://i.pravatar.cc/150?img=12"
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold text-text-primary">
+                  Sarah Chen
+                </p>
+                <p className="text-[9px] text-text-muted">UX Researcher</p>
+              </div>
+            </div>
+            <div className="h-px bg-border mb-2" />
+            <div className="flex flex-wrap gap-1 mt-2">
+              {["Figma", "Research", "Prototyping"].map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full bg-accent-light px-1.5 py-0.5 text-[8px] text-accent"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            <div className="mt-3 flex items-center justify-between rounded-lg border border-border bg-surface-secondary px-2 py-1.5">
+              <div className="flex items-center gap-1">
+                <div className="h-1.5 w-1.5 rounded-full bg-success" />
+                <span className="text-[8px] text-text-muted font-mono">
+                  ATS
+                </span>
+              </div>
+              <span className="text-[10px] font-bold text-success">79%</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2 */}
+        <div
+          className="absolute w-[200px] h-[260px] rounded-2xl border border-border bg-surface shadow-md"
+          style={{ transform: "translateX(-8px) rotate(-3deg)", zIndex: 2 }}
+        >
+          <div className="p-3 pt-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="h-7 w-7 rounded-full overflow-hidden border-2 border-surface shadow-sm shrink-0">
+                <img
+                  src="https://i.pravatar.cc/150?img=32"
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold text-text-primary">
+                  James Park
+                </p>
+                <p className="text-[9px] text-text-muted">Frontend Engineer</p>
+              </div>
+            </div>
+            <div className="h-px bg-border mb-2" />
+            <div className="flex flex-wrap gap-1 mt-2">
+              {["React", "TypeScript", "Node.js"].map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full bg-accent-light px-1.5 py-0.5 text-[8px] text-accent"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            <div className="mt-3 flex items-center justify-between rounded-lg border border-border bg-surface-secondary px-2 py-1.5">
+              <div className="flex items-center gap-1">
+                <div className="h-1.5 w-1.5 rounded-full bg-success" />
+                <span className="text-[8px] text-text-muted font-mono">
+                  ATS
+                </span>
+              </div>
+              <span className="text-[10px] font-bold text-success">83%</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3 — front/top card */}
+        <div
+          className="absolute w-[200px] h-[260px] rounded-2xl border border-border bg-surface shadow-lg"
+          style={{ transform: "translateX(8px) rotate(3deg)", zIndex: 3 }}
+        >
+          <div className="absolute -top-4 left-1/2 -translate-x-1/2 h-8 w-8 rounded-full border-2 border-surface shadow-md overflow-hidden">
+            <img
+              src="https://i.pravatar.cc/150?img=47"
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="p-3 pt-8">
+            <div className="text-center mb-2">
+              <p className="text-[10px] font-semibold text-text-primary">
+                Nick Tang
+              </p>
+              <p className="text-[9px] text-text-muted">Product Designer</p>
+            </div>
+            <div className="h-px bg-border mb-2" />
+            <div className="flex flex-wrap gap-1 mt-2">
+              {["Figma", "React", "Research"].map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full bg-accent-light px-1.5 py-0.5 text-[8px] text-accent"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            <div className="mt-3 flex items-center justify-between rounded-lg border border-border bg-surface-secondary px-2 py-1.5">
+              <div className="flex items-center gap-1.5">
+                <div className="h-1.5 w-1.5 rounded-full bg-success" />
+                <span className="text-[8px] text-text-muted font-mono">
+                  ATS
+                </span>
+              </div>
+              <span className="text-[10px] font-bold text-success">86%</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 4 */}
+        <div
+          className="absolute w-[200px] h-[260px] rounded-2xl border border-border bg-surface shadow-md"
+          style={{ transform: "translateX(24px) rotate(8deg)", zIndex: 2 }}
+        >
+          <div className="p-3 pt-4">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="h-7 w-7 rounded-full overflow-hidden border-2 border-surface shadow-sm shrink-0">
+                <img
+                  src="https://i.pravatar.cc/150?img=25"
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold text-text-primary">
+                  Priya Mehta
+                </p>
+                <p className="text-[9px] text-text-muted">Product Manager</p>
+              </div>
+            </div>
+            <div className="h-px bg-border mb-2" />
+            <div className="flex flex-wrap gap-1 mt-2">
+              {["Strategy", "Roadmap", "Agile"].map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full bg-accent-light px-1.5 py-0.5 text-[8px] text-accent"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+            <div className="mt-3 flex items-center justify-between rounded-lg border border-border bg-surface-secondary px-2 py-1.5">
+              <div className="flex items-center gap-1">
+                <div className="h-1.5 w-1.5 rounded-full bg-warning" />
+                <span className="text-[8px] text-text-muted font-mono">
+                  ATS
+                </span>
+              </div>
+              <span className="text-[10px] font-bold text-warning">71%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
-
 export function Hero() {
   return (
     <section
@@ -325,7 +459,7 @@ export function Hero() {
         aria-hidden="true"
         className="aurora-gradient pointer-events-none absolute inset-x-0 top-0 h-[70%]"
       />
-      <div className="relative mx-auto max-w-350 px-4 pb-20 pt-24 sm:px-6 lg:px-8 lg:pb-24 lg:pt-28">
+      <div className="relative mx-auto max-w-[1400px] px-4 pb-20 pt-24 sm:px-6 lg:px-8 lg:pb-24 lg:pt-28">
         <div className="grid items-center gap-12 xl:grid-cols-[0.8fr_1.2fr]">
           {/* Left */}
           <div className="max-w-xl">
@@ -333,7 +467,7 @@ export function Hero() {
               <span className="h-1.5 w-1.5 rounded-full bg-success" />
               AI-POWERED JOB APPLICATIONS
             </p>
-            <h1 className="mt-5 text-[48px] font-semibold leading-[1.1] tracking-[-0.06em] text-text-primary max-[639px]:text-[36px]">
+            <h1 className="mt-5 text-[48px] font-semibold leading-[1.1] tracking-[-0.06em] text-text-primary max-sm:text-[36px]">
               Land your next role, faster.
             </h1>
             <p className="mt-5 text-[18px] leading-7 text-text-secondary">
@@ -381,19 +515,12 @@ export function Hero() {
           </div>
 
           {/* Right — image */}
-          <div className="relative flex items-center justify-center pl-8 pt-8 overflow-visible">
+          <div className="relative flex items-center justify-center overflow-hidden xl:overflow-visible pt-8 xl:pl-8 w-full">
             <div
               aria-hidden="true"
               className="aurora-gradient absolute -inset-10 -z-10 rounded-[40px]"
             />
-            {/* <Image
-              src={banner}
-              alt="Resume builder dashboard"
-              className="w-full max-w-[680px] drop-shadow-2xl"
-              style={{
-                filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.15))",
-              }}
-            /> */}
+
             <HeroPreview />
           </div>
         </div>

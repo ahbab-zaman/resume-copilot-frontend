@@ -7,15 +7,19 @@ import { HowItWorks } from "@/components/landing/HowItWorks";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth.api.getSession({ headers: await headers() });
+
   return (
     <div className="min-h-screen bg-background text-text-primary">
       <Navbar />
       <main>
         <Hero />
+        <HowItWorks isAuthenticated={Boolean(session)} />
         <Features />
-        <HowItWorks />
         <AtsPreview />
         <SocialProof />
         <Faq />

@@ -1,14 +1,17 @@
-import Link from "next/link";
-import { headers } from "next/headers";
+"use client";
 
-import { auth } from "@/lib/auth";
+import Link from "next/link";
+import Image from "next/image";
+
+import logo from "@/assets/logo-pilot.png";
 import { navLinks } from "@/components/landing/content";
+import { authClient } from "@/lib/auth-client";
 
 import { NavbarActions } from "./NavbarActions";
-import Image from "next/image";
-import logo from "@/assets/logo-pilot.png";
-export async function Navbar() {
-  const session = await auth.api.getSession({ headers: await headers() });
+
+export function Navbar() {
+  const { data: session } = authClient.useSession();
+  const user = session?.user ?? null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-surface/95 backdrop-blur">
@@ -34,7 +37,7 @@ export async function Navbar() {
           ))}
         </nav>
 
-        <NavbarActions user={session?.user ?? null} />
+        <NavbarActions user={user} />
       </div>
     </header>
   );

@@ -2,7 +2,7 @@
 
 > **Used in:** Frontend repo only. Build alongside Feature 18 in `build-plan.md`.
 
-## Desktop Layout (≥1024px)
+## Desktop Layout (≥992px)
 
 - Page header row: `display-lg` "Resumes" left, `button-primary-sm` "Upload Resume" right, `mb-6`.
 - Below: a `bg-surface border border-border rounded-md` table card, Elevation Level 1.
@@ -24,11 +24,11 @@
 - Same drag-and-drop zone styling as the Copilot page's upload block (reuse the component — don't rebuild it) — consistency between the two upload entry points matters.
 - On successful upload: dialog closes, new row animates into the table at the top with the stagger-entrance pattern, brief success toast ("Resume uploaded").
 
-## Tablet (640–1023px)
+## Tablet (576–991px)
 
 - Table collapses the **Uploaded** column (date moves into a secondary line under the filename instead of its own column) to keep the remaining columns from feeling cramped.
 
-## Mobile (<640px)
+## Mobile (<576px)
 
 - Table becomes a stacked card list — one `bg-surface border-border rounded-md p-4` card per resume instead of a table row. Each card: filename + PDF icon top, score bar below, status badge + actions `⋯` menu in the bottom row.
 - "Upload Resume" button in the header becomes icon-only (`+` icon) to save header width, full label still available inside the dialog/empty state.

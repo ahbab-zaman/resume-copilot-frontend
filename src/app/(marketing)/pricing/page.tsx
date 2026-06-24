@@ -12,7 +12,7 @@ export default function PricingPage() {
             <p className="font-mono text-[12px] leading-4 text-text-muted">
               PRICING
             </p>
-            <h1 className="mt-4 text-[48px] font-semibold leading-[48px] tracking-[-0.06em] text-text-primary max-[639px]:text-[36px] max-[639px]:leading-[40px]">
+            <h1 className="mt-4 text-[48px] font-semibold leading-[48px] tracking-[-0.06em] text-text-primary max-sm:text-[36px] max-sm:leading-[40px]">
               Simple, transparent pricing.
             </h1>
             <p className="mt-4 max-w-2xl text-[18px] leading-7 text-text-secondary">

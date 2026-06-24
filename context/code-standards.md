@@ -179,7 +179,6 @@ Approved for this repo:
 - `next`, `react`, `react-dom`
 - `better-auth`
 - `tailwindcss`, `shadcn/ui` components, `lucide-react`
-- `geist` — Geist Sans + Geist Mono fonts (the actual Vercel typefaces, see `ui-tokens.md`/`ui-rules.md`)
 - `@tanstack/react-query` — all server data fetching/caching
 - `@reduxjs/toolkit`, `react-redux` — client-only cross-page state, never server data
 - `zod` — client-side form validation only

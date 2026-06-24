@@ -10,7 +10,7 @@ export function Pricing() {
           {pricingPlans.map((plan) => (
             <article
               key={plan.name}
-              className={`rounded-[16px] border p-8 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset] ${
+              className={`rounded-[16px] border p-8 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset] ${
                 plan.featured
                   ? "border-accent bg-accent text-on-primary"
                   : "border-border bg-surface text-text-primary"

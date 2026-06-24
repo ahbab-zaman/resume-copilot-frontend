@@ -91,34 +91,36 @@ const form = useForm<JdAnalysisInput>({
 - Tokens defined via `@theme` in `app/globals.css` — no `tailwind.config.ts` for colors.
 - See `ui-tokens.md` for the exact token list — never hardcode hex values or use Tailwind's built-in color palette (`bg-blue-500`, `text-gray-600`, etc.) in components.
 
-## Fonts — Geist + Geist Mono
+## Fonts — Roboto
 
-This project uses Vercel's own typefaces, shipped as the `geist` npm package — **not** `next/font/google`, Geist isn't hosted there.
-
-```bash
-npm install geist
-```
+This project uses Roboto via `next/font/google` — no separate package needed, and no licensing concern (unlike the previously-considered "Graphik Web," which is a commercial typeface this project doesn't have a license for).
 
 ```typescript
 // app/layout.tsx
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-roboto",
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+    <html lang="en" className={roboto.variable}>
       <body>{children}</body>
     </html>
   );
 }
 ```
 
-`--font-sans` and `--font-mono` are declared in `@theme` in `globals.css` and reference these variables. Use `font-mono` only for technical labels and the resume extracted-text preview — see `ui-rules.md`.
+`--font-sans` in `globals.css`'s `@theme inline` block references `var(--font-roboto)` with the fallback chain (Helvetica Neue, Arial, Noto Sans, system emoji fonts) already baked in. `--font-mono` is a plain system monospace stack — nothing to load via `next/font` for it.
 
 **Rules:**
 
-- Never substitute Inter for Geist — if `geist` genuinely fails to install or build, fall back to `Inter` only as a documented last resort and flag it, don't silently swap.
-- Never load Geist Mono onto body paragraphs or prose — mono is reserved per `ui-rules.md`.
+- Never reintroduce the `geist` package — this project no longer uses Geist or Geist Mono.
+- Stay at weight 600 as the display ceiling even though Roboto supports 700 — see `ui-rules.md`.
+- If a future request asks for "Graphik Web" specifically, flag the licensing issue again rather than silently trying to load it from an unverified source.
 
 ---
 

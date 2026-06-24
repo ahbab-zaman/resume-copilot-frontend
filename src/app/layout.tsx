@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Roboto } from "next/font/google";
 import logo from "@/assets/logo-pilot.png";
 
 import { QueryProvider } from "@/providers/QueryProvider";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 
 import "./globals.css";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-roboto",
+});
 
 export const metadata: Metadata = {
   title: "AI Resume Copilot",
@@ -22,10 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${roboto.variable} h-full antialiased`}>
       <body className="min-h-full bg-background text-text-primary">
         <QueryProvider>
           <ReduxProvider>{children}</ReduxProvider>

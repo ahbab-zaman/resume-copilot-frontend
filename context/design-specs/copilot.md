@@ -2,7 +2,7 @@
 
 > **Used in:** Frontend repo only. Build alongside Feature 19 in `build-plan.md`. This is the flagship page — it should feel like the most polished surface in the app, since it's where the product's value is actually demonstrated.
 
-## Desktop Layout (≥1024px)
+## Desktop Layout (≥992px)
 
 Two states: **Input State** (before analysis) and **Results State** (after). Don't build them as separate routes — same page, conditional render based on whether an analysis exists for the session.
 
@@ -32,11 +32,11 @@ Three-column grid `grid-cols-[280px_1fr_1fr] gap-6`, collapsing per Tablet/Mobil
 
 When the analysis completes, don't just pop the results in — the score ring animates its stroke from 0 to the final value over `duration-slow` (this IS an exception to the "no count-up animation" rule, because it's a one-time reveal of a freshly computed result, not a live data update), sub-bars fill left-to-right at `duration-base` staggered 60ms after the ring starts, Insights Panel fades in last.
 
-## Tablet (640–1023px)
+## Tablet (576–991px)
 
 - Results State collapses to two columns: `[Column 1 + Column 2 stacked]` `[Column 3]`, or simpler — stack all three columns vertically in order 2 → 3 → 1 (score first, since it's the headline result; recap last, since it's reference material).
 
-## Mobile (<640px)
+## Mobile (<576px)
 
 - Single column throughout, both states. Score ring shrinks proportionally but stays circular (don't flatten it into a bar-only view — the ring is a recognizable signature element).
 - Output Tabs become a horizontally-scrollable tab row if all three labels don't fit, rather than wrapping to two rows.

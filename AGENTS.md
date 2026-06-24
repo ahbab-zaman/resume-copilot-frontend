@@ -175,7 +175,7 @@ All in `skills/`. Use them — don't skip them because a task feels small.
 
 - Tailwind v4, tokens via `@theme` in `globals.css` — never hardcode hex values or use Tailwind's built-in color classes.
 - Sidebar nav for the authenticated app (six items), simple top navbar for public pages.
-- Font is Inter via `next/font/google`.
+- Font is Roboto via `next/font/google`.
 - Full detail in `context/ui-rules.md` and `context/ui-tokens.md`.
 
 ---

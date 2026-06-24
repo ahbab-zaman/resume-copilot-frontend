@@ -42,7 +42,7 @@ export default function RegisterPage() {
               <p className="font-mono text-[12px] leading-4 text-text-muted">
                 NEW ACCOUNT
               </p>
-              <h1 className="mt-4 text-[48px] font-semibold leading-[48px] tracking-[-0.06em] text-text-primary max-[639px]:text-[36px] max-[639px]:leading-[40px]">
+              <h1 className="mt-4 text-[48px] font-semibold leading-[48px] tracking-[-0.06em] text-text-primary max-sm:text-[36px] max-sm:leading-[40px]">
                 Create your account.
               </h1>
               <p className="mt-4 max-w-xl text-[18px] leading-7 text-text-secondary">
@@ -55,7 +55,7 @@ export default function RegisterPage() {
               {registerHighlights.map((item) => (
                 <div
                   key={item}
-                  className="rounded-[12px] border border-border bg-surface p-4 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]"
+                  className="rounded-[12px] border border-border bg-surface p-4 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]"
                 >
                   <p className="text-[14px] leading-5 text-text-primary">
                     {item}
@@ -64,7 +64,7 @@ export default function RegisterPage() {
               ))}
             </div>
 
-            <div className="grid gap-4 rounded-[16px] border border-border bg-surface p-5 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset] sm:grid-cols-3">
+            <div className="grid gap-4 rounded-[16px] border border-border bg-surface p-5 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset] sm:grid-cols-3">
               <div>
                 <p className="text-[12px] font-medium leading-4 text-text-muted">
                   SAVE

@@ -148,7 +148,7 @@ function ApplicationCard({
       draggable
       onDragStart={() => onDragStart(application)}
       onDragEnd={onDragEnd}
-      className={`cursor-grab rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset] transition ${
+      className={`cursor-grab rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset] transition ${
         dragging ? "ring-1 ring-accent opacity-60" : "hover:bg-surface-secondary"
       }`}
     >
@@ -220,7 +220,7 @@ function ApplicationDialog({
   if (mode === "delete" && application) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4">
-        <div className="w-full max-w-lg rounded-md border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]">
+        <div className="w-full max-w-lg rounded-md border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]">
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
             Delete application
           </p>
@@ -265,7 +265,7 @@ function ApplicationDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4">
-      <div className="w-full max-w-2xl rounded-md border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]">
+      <div className="w-full max-w-2xl rounded-md border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -420,7 +420,7 @@ function Column({
 
   return (
     <section
-      className={`rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset] transition ${
+      className={`rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset] transition ${
         onDragOverStatus === status ? "ring-1 ring-accent" : ""
       }`}
       onDragOver={(event) => event.preventDefault()}
@@ -673,7 +673,7 @@ export function ApplicationsWorkspace() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -723,7 +723,7 @@ export function ApplicationsWorkspace() {
         ].map((item) => (
           <article
             key={item.label}
-            className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]"
+            className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]"
           >
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               {item.label}
@@ -738,7 +738,7 @@ export function ApplicationsWorkspace() {
         ))}
       </section>
 
-      <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -792,17 +792,17 @@ export function ApplicationsWorkspace() {
       </section>
 
       {isLoading ? (
-        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <p className="text-[14px] leading-6 text-text-secondary">
             Loading applications...
           </p>
         </section>
       ) : error instanceof Error ? (
-        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <p className="text-[14px] leading-6 text-error">{error.message}</p>
         </section>
       ) : applications.length === 0 ? (
-        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
             Empty tracker
           </p>

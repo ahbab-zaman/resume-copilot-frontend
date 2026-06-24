@@ -80,7 +80,7 @@ function ActionLink({ label, href, body }: QuickAction) {
   return (
     <Link
       href={href}
-      className="group flex h-full flex-col rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset] transition hover:bg-surface-secondary"
+      className="group flex h-full flex-col rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset] transition hover:bg-surface-secondary"
     >
       <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
         Quick action
@@ -211,7 +211,7 @@ export function DashboardWorkspace() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -245,7 +245,7 @@ export function DashboardWorkspace() {
       </section>
 
       {!isLoading && !error && !activeResume ? (
-        <section className="rounded-md border border-warning-light bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-warning-light bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
               <span className="inline-flex rounded-full bg-warning-light px-2 py-0.5 text-[12px] font-medium leading-4 text-warning-foreground">
@@ -279,7 +279,7 @@ export function DashboardWorkspace() {
       ) : null}
 
       {error ? (
-        <section className="rounded-md border border-warning-light bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-warning-light bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
             Dashboard unavailable
           </p>
@@ -306,7 +306,7 @@ export function DashboardWorkspace() {
         {stats.map((stat) => (
           <article
             key={stat.label}
-            className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]"
+            className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]"
           >
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               {stat.label}
@@ -323,7 +323,7 @@ export function DashboardWorkspace() {
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
         <div className="space-y-6">
-          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -392,7 +392,7 @@ export function DashboardWorkspace() {
             </div>
           </section>
 
-          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -439,7 +439,7 @@ export function DashboardWorkspace() {
         </div>
 
         <aside className="space-y-6">
-          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -462,7 +462,7 @@ export function DashboardWorkspace() {
             </div>
           </section>
 
-          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               Dashboard note
             </p>

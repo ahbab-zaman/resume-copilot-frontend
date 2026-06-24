@@ -23,7 +23,7 @@ export function QuestionCard({
   const canAdvance = showNextButton && typeof onNext === "function";
 
   return (
-    <article className="min-w-0 rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+    <article className="min-w-0 rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">

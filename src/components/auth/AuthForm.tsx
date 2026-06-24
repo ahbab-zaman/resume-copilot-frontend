@@ -106,7 +106,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   }
 
   return (
-    <div className="w-full rounded-[16px] border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset] sm:p-8">
+    <div className="w-full rounded-[16px] border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset] sm:p-8">
       <div className="space-y-3">
         <p className="inline-flex rounded-full border border-border bg-surface-secondary px-3 py-1 font-mono text-[12px] leading-4 text-text-muted">
           {badgeLabel}

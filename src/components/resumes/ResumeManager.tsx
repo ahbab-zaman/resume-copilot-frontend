@@ -201,7 +201,7 @@ function ResumeCard({
 
   return (
     <article
-      className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]"
+      className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]"
       onClick={() => onSelect(resume)}
     >
       <div className="flex items-start justify-between gap-3">
@@ -306,7 +306,7 @@ function ResumeDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4">
-      <div className="w-full max-w-md rounded-md border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]">
+      <div className="w-full max-w-md rounded-md border border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="font-mono text-[12px] leading-4 text-text-muted">
@@ -519,7 +519,7 @@ export function ResumeManager() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="font-mono text-[12px] leading-4 text-text-muted">RESUMES</p>
@@ -550,7 +550,7 @@ export function ResumeManager() {
         ].map((item) => (
           <article
             key={item.label}
-            className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]"
+            className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]"
           >
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               {item.label}
@@ -570,15 +570,15 @@ export function ResumeManager() {
       </section>
 
       {isLoading ? (
-        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <p className="text-[14px] leading-6 text-text-secondary">Loading resumes...</p>
         </section>
       ) : error instanceof Error ? (
-        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <p className="text-[14px] leading-6 text-error">{error.message}</p>
         </section>
       ) : tableEmpty ? (
-        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
           <div className="flex flex-col items-center justify-center py-10 text-center">
             <div className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface-secondary text-[18px] text-text-muted">
               PDF
@@ -599,7 +599,7 @@ export function ResumeManager() {
           </div>
         </section>
       ) : (
-        <section className="rounded-md border border-border bg-surface shadow-[0_0_0_1px_var(--border)_inset]">
+        <section className="rounded-md border border-border bg-surface shadow-[0_0_0_1px_var(--color-border)_inset]">
           <div className="overflow-hidden">
             <div className="hidden lg:block">
               <table className="w-full border-collapse">
@@ -665,7 +665,7 @@ export function ResumeManager() {
       {showDetails && selectedResume ? (
         <div className="fixed inset-0 z-40 flex justify-end bg-background/70" onClick={() => setShowDetails(false)}>
           <aside
-            className="h-full w-full max-w-xl overflow-y-auto border-l border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]"
+            className="h-full w-full max-w-xl overflow-y-auto border-l border-border bg-surface p-6 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">

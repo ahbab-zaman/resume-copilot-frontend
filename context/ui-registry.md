@@ -1,4 +1,4 @@
-# UI Registry - Frontend
+﻿# UI Registry - Frontend
 
 > **Used in:** Frontend repo only. Living document, updated after every component is built. Read this before building any new component - match existing patterns exactly before inventing new ones.
 
@@ -72,7 +72,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `h-8`, `px-3 py-2`, `p-2` |
 | Hover state | `hover:bg-surface-secondary`, `hover:text-text-primary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `text-on-primary` |
 
 **Pattern notes:**
@@ -92,7 +92,7 @@ Last updated: `2026-06-21`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `px-4 py-14`, `px-4 py-10`, `p-5`, `p-4` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `bg-accent`, `bg-accent-light`, `bg-accent/70`, `bg-teal/70` |
 
 **Pattern notes:**
@@ -112,7 +112,7 @@ Last updated: `2026-06-21`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `px-4 py-16`, `px-4 py-10`, `p-6`, `p-5`, `p-4` |
 | Hover state | `none` |
-| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `bg-accent-light`, `bg-success-light`, `bg-teal-light`, `bg-warning-light` |
 
 **Pattern notes:**
@@ -132,7 +132,7 @@ Last updated: `2026-06-21`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `px-4 py-16`, `p-6`, `p-5` |
 | Hover state | `none` |
-| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `bg-accent`, `text-on-primary` |
 
 **Pattern notes:**
@@ -152,7 +152,7 @@ Last updated: `2026-06-21`
 | Text - secondary | `text-text-secondary` |
 | Spacing | `px-4 py-16`, `p-6`, `mt-6`, `mt-4` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `bg-accent`, `text-on-primary`, `bg-success` |
 
 **Pattern notes:**
@@ -172,7 +172,7 @@ Last updated: `2026-06-21`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `px-4 py-16`, `p-5` |
 | Hover state | `none` |
-| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0, 0, 0, 0.04), 0 8px 8px -8px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `none` |
 
 **Pattern notes:**
@@ -212,7 +212,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary` |
 | Spacing | `px-4 py-16`, `px-6 py-6`, `px-6 py-10` |
 | Hover state | `hover:bg-surface-secondary` |
-| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]`, `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.08),0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]`, `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.08),0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `bg-accent-light`, `bg-accent-deep` |
 
 **Pattern notes:**
@@ -232,7 +232,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-8`, `mt-6`, `mt-8`, `px-3 py-2` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90`, `active:scale-[0.98]` |
-| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `bg-accent`, `bg-google` |
 
 **Pattern notes:**
@@ -272,7 +272,7 @@ Last updated: `2026-06-22`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-5`, `p-4`, `px-4 py-4`, `px-3 py-2`, `h-10`, `h-8` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `text-on-primary`, `bg-success-light` |
 
 **Pattern notes:**
@@ -292,7 +292,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `h-12`, `px-4`, `p-4`, `py-6` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_16px_-4px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `text-on-primary` |
 
 **Pattern notes:**
@@ -328,7 +328,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `mt-4`, `mt-2` |
 | Hover state | `hover:bg-surface-secondary` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `border-accent` |
 
 **Pattern notes:**
@@ -346,7 +346,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary` |
 | Spacing | `px-4 py-16`, `p-6`, `mt-12` |
 | Hover state | `none` |
-| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 8px -8px rgba(0,0,0,0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 8px -8px rgba(0,0,0,0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `bg-accent` |
 
 **Pattern notes:**
@@ -364,7 +364,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted`, `text-success-foreground`, `text-warning-foreground`, `text-error-foreground` |
 | Spacing | `p-6`, `p-5`, `mt-4`, `mt-5` |
 | Hover state | `none` |
-| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04), 0 0 0 1px var(--border) inset` |
+| Shadow | `0 2px 2px rgba(0,0,0,0.04), 0 8px 16px -4px rgba(0,0,0,0.04), 0 0 0 1px var(--color-border) inset` |
 | Accent usage | `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-accent` |
 
 **Pattern notes:**
@@ -382,7 +382,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `bg-accent-light`, `bg-success-light`, `bg-error-light` |
 
 **Pattern notes:**
@@ -402,7 +402,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted`, `text-success-foreground`, `text-warning-foreground`, `text-error-foreground` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `px-2 py-0.5`, `mt-2`, `mt-3`, `mt-4`, `mt-5` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `bg-success-light`, `bg-warning-light`, `bg-error-light`, `bg-accent-light` |
 
 **Pattern notes:**
@@ -422,7 +422,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-4`, `mt-2`, `mt-4`, `px-3 py-2`, `h-8` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent` |
 
 **Pattern notes:**
@@ -442,7 +442,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent` |
 
 **Pattern notes:**
@@ -462,7 +462,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `py-0.5`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `min-h-[160px]` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `ring-accent`, `bg-accent-light`, `bg-teal-light`, `bg-success-light`, `bg-error-light`, `bg-success` |
 
 **Pattern notes:**
@@ -482,7 +482,7 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `gap-2`, `gap-3`, `gap-4`, `gap-5`, `space-y-3`, `space-y-6` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `bg-warning-light`, `bg-accent-light`, `bg-teal-light`, `bg-success-light` |
 
 **Pattern notes:**
@@ -502,8 +502,9 @@ Last updated: `2026-06-23`
 | Text - secondary | `text-text-secondary`, `text-text-muted` |
 | Spacing | `p-6`, `p-4`, `px-3 py-2`, `mt-2`, `mt-3`, `mt-4`, `mt-5`, `space-y-3`, `space-y-4`, `space-y-6` |
 | Hover state | `hover:bg-surface-secondary`, `hover:opacity-90` |
-| Shadow | `shadow-[0_0_0_1px_var(--border)_inset]` |
+| Shadow | `shadow-[0_0_0_1px_var(--color-border)_inset]` |
 | Accent usage | `bg-accent`, `bg-accent-light`, `bg-success-light`, `bg-warning-light`, `bg-error-light` |
 
 **Pattern notes:**
 Settings keeps the dense in-app register but adds three distinct surfaces: a profile form, a local-only theme chooser, and a destructive account-delete block. Preserve the same compact 6px controls, token-based semantic chips, and explicit confirmation pattern for dangerous actions. The theme selector is intentionally stateful without introducing a global dark-mode visual treatment yet.
+

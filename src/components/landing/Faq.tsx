@@ -1,61 +1,119 @@
 "use client";
 
 import { useState } from "react";
-
 import { faqs } from "@/components/landing/content";
-import { SectionHeading } from "@/components/landing/SectionHeading";
 
 export function Faq() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <section id="faq" className="border-b border-border bg-surface">
-      <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <SectionHeading
-          eyebrow="FAQ"
-          title="Frequently asked questions."
-          description="A few direct answers for the things people usually want to know before they sign up."
-        />
-
-        <div className="mx-auto mt-12 max-w-2xl space-y-4">
-          {faqs.map((faq, index) => {
-            const open = index === openIndex;
-
-            return (
-              <article
-                key={faq.question}
-                className="rounded-[16px] border border-border bg-surface p-5 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]"
+      <div className="mx-auto max-w-350 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="grid gap-16 md:grid-cols-[1fr_1.6fr] md:gap-24">
+          {/* Left — title + cta */}
+          <div className="flex flex-col justify-start">
+            <div className="flex items-center gap-2 mb-4">
+              <svg
+                style={{
+                  width: "14px",
+                  height: "14px",
+                  color: "var(--color-text-muted)",
+                  flexShrink: 0,
+                }}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                <button
-                  className="flex w-full items-center justify-between gap-4 text-left"
-                  type="button"
-                  onClick={() => setOpenIndex(index)}
-                >
-                  <span className="text-[16px] font-medium leading-6 tracking-[-0.03em] text-text-primary">
-                    {faq.question}
-                  </span>
-                  <span
-                    className={`text-[20px] leading-none text-text-muted transition-transform duration-200 ${
-                      open ? "rotate-180" : ""
-                    }`}
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01" />
+              </svg>
+              <span
+                className="text-[12px] font-medium uppercase tracking-widest"
+                style={{ color: "var(--color-text-muted)" }}
+              >
+                FAQ
+              </span>
+            </div>
+
+            <h2
+              className="font-bold leading-tight tracking-tight text-text-primary"
+              style={{ fontSize: "clamp(28px, 4vw, 38px)" }}
+            >
+              Everything You Need to Know
+            </h2>
+
+            <p
+              className="mt-4 text-[15px] leading-6"
+              style={{ color: "var(--color-text-muted)" }}
+            >
+              Still have a question? Reach our customer service.
+            </p>
+
+            <a
+              href="/contact"
+              className="mt-8 inline-flex h-11 w-fit items-center justify-center rounded-lg px-6 text-[14px] font-semibold text-white transition hover:opacity-90"
+              style={{ background: "var(--color-accent)" }}
+            >
+              Contact us
+            </a>
+          </div>
+
+          {/* Right — accordion */}
+          <div className="divide-y divide-border">
+            {faqs.map((faq, index) => {
+              const open = index === openIndex;
+
+              return (
+                <article key={faq.question}>
+                  <button
+                    className="flex w-full items-center justify-between gap-6 py-5 text-left"
+                    type="button"
+                    onClick={() => setOpenIndex(open ? -1 : index)}
                   >
-                    ▾
-                  </span>
-                </button>
-                <div
-                  className={`grid transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
-                    open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="pt-4 text-[16px] leading-7 text-text-secondary">
-                      {faq.answer}
-                    </p>
+                    <span
+                      className="text-[16px] font-medium leading-6 text-text-primary"
+                      style={{ letterSpacing: "-0.01em" }}
+                    >
+                      {faq.question}
+                    </span>
+
+                    {/* + / − icon */}
+                    <span
+                      className="shrink-0 flex items-center justify-center rounded-full border"
+                      style={{
+                        width: "28px",
+                        height: "28px",
+                        borderColor: "var(--color-border)",
+                        color: "var(--color-text-muted)",
+                        fontSize: "18px",
+                        lineHeight: 1,
+                      }}
+                    >
+                      {open ? "−" : "+"}
+                    </span>
+                  </button>
+
+                  <div
+                    className="grid transition-all duration-300 ease-emphasized"
+                    style={{
+                      gridTemplateRows: open ? "1fr" : "0fr",
+                      opacity: open ? 1 : 0,
+                    }}
+                  >
+                    <div className="overflow-hidden">
+                      <p
+                        className="pb-5 text-[15px] leading-7"
+                        style={{ color: "var(--color-text-secondary)" }}
+                      >
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

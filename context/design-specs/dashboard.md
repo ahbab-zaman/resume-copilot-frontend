@@ -20,7 +20,7 @@
 
 ## Dashboard Page Content
 
-## Desktop Layout (≥1024px)
+## Desktop Layout (≥992px)
 
 - Page header: `display-lg` "Dashboard", below it a one-line greeting (`body-md`, `text-text-secondary`) — "Welcome back" is acceptable but prefer something with actual signal once data exists, e.g. "You've analyzed 3 jobs this week."
 - **Incomplete-resume banner** (only if no active resume exists): full-width, `bg-warning-light` background, `border border-warning`, `rounded-md`, icon + "Upload a resume to start using the Copilot" + inline `button-secondary-sm` CTA — sits directly under the header, above everything else, `mb-6`.
@@ -30,12 +30,12 @@
   - Left: **Recent Activity** card — list of up to 10 entries, each row: colored dot (8px, color per activity type — reuse the dot-color convention already in `ui-tokens.md`'s component tokens) + description (`body-sm`) + relative timestamp (`caption`, `text-text-muted`, right-aligned).
   - Right: **Quick Actions** card — 4 stacked `button-secondary-sm`-style rows (full width inside the card), each with an icon: Upload Resume, New Job Analysis, Start Mock Interview, Track Application — each navigates to the relevant page.
 
-## Tablet (640–1023px)
+## Tablet (576–991px)
 
 - Stat cards: 4-up → 2×2 grid.
 - Two-column row stacks vertically: Recent Activity first, Quick Actions below.
 
-## Mobile (<640px)
+## Mobile (<576px)
 
 - Stat cards: 1-up, full width, stacked.
 - Quick Actions: collapses to a horizontal-scroll row of icon+label chips instead of a stacked card, to save vertical space on a page that's already stat-heavy.

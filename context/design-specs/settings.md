@@ -2,7 +2,7 @@
 
 > **Used in:** Frontend repo only. Build alongside Feature 23 in `build-plan.md`.
 
-## Desktop Layout (≥1024px)
+## Desktop Layout (≥992px)
 
 - Page header: `display-lg` "Settings".
 - Left-nav-within-page pattern: a narrow vertical tab list (`w-48`, `body-sm`, ghost-style active/inactive matching the sidebar's own active-indicator convention) for **Profile**, **Appearance**, **Account** — content area to the right, `gap-8`.
@@ -22,12 +22,12 @@
 - Sign Out: `button-secondary-sm`.
 - Delete Account: separated by a `border-t border-border pt-6 mt-6` divider, section labeled in `text-error` (`body-sm-strong`, "Danger Zone"), explanation text (`body-sm`, `text-text-secondary`) describing what gets deleted, then a `bg-error text-on-primary` destructive button "Delete Account" — clicking opens a Level 5 confirmation dialog requiring the user to type their email to confirm (a stronger confirmation pattern than a plain Yes/No, appropriate for an irreversible destructive action).
 
-## Tablet (640–1023px)
+## Tablet (576–991px)
 
 - Vertical tab list becomes a horizontal tab row (tab-ghost chrome) above the content instead of beside it.
 - Profile form's two-column grid drops to one column.
 
-## Mobile (<640px)
+## Mobile (<576px)
 
 - Same horizontal tab row as tablet, scrollable if needed (only 3 items, likely fits without scrolling).
 - All forms single column, full width.

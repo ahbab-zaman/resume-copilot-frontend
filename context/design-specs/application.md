@@ -2,7 +2,7 @@
 
 > **Used in:** Frontend repo only. Build alongside Feature 20 in `build-plan.md`.
 
-## Desktop Layout (≥1024px)
+## Desktop Layout (≥992px)
 
 - Page header: `display-lg` "Applications" left, `button-primary-sm` "Add Application" right.
 - **Stats row** below header, `mb-6`: three compact inline stats (not full stat-cards, just `body-sm-strong` number + `caption` label pairs in a row, `gap-8`) — Total Applications, Interviews Received, Success Rate. Lighter-weight than the Dashboard's stat cards since this page's main content is the board itself.
@@ -30,12 +30,12 @@
 - Level 5 modal, `max-w-md`. Fields: Company (text), Role (text), Status (segmented control matching the 5 columns, not a plain dropdown — visually ties the dialog to the board), Date Applied (date picker), Notes (textarea).
 - Delete action: ghost destructive-styled button (`text-error`) in the dialog footer, left-aligned, separate from Cancel/Save on the right — prevents accidental clicks between Delete and Save.
 
-## Tablet (640–1023px)
+## Tablet (576–991px)
 
 - Five columns stay side by side but the board becomes horizontally scrollable (`overflow-x-auto`), each column fixed at `min-w-[220px]` — don't shrink columns to fit, per `ui-rules.md`.
 - Stats row and filter bar wrap to two lines if needed rather than truncating.
 
-## Mobile (<640px)
+## Mobile (<576px)
 
 - Board becomes single-column per `ui-rules.md`'s Kanban mobile rule: a segmented control or horizontally-scrollable pill row above the card list lets the user pick which status to view (Applied / Screening / Interview / Rejected / Offer), only that column's cards render below.
 - Switching the selected status cross-fades the card list, `duration-base`.

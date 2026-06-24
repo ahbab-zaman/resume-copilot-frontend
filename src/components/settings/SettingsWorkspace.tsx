@@ -152,7 +152,7 @@ export function SettingsWorkspace({ user }: SettingsWorkspaceProps) {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <p className="font-mono text-[12px] leading-4 text-text-muted">
@@ -200,7 +200,7 @@ export function SettingsWorkspace({ user }: SettingsWorkspaceProps) {
 
         <div className="space-y-6">
           {tab === "profile" ? (
-            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-mono text-[12px] leading-4 text-text-muted">
@@ -276,7 +276,7 @@ export function SettingsWorkspace({ user }: SettingsWorkspaceProps) {
           ) : null}
 
           {tab === "appearance" ? (
-            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-mono text-[12px] leading-4 text-text-muted">
@@ -318,7 +318,7 @@ export function SettingsWorkspace({ user }: SettingsWorkspaceProps) {
           ) : null}
 
           {tab === "account" ? (
-            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-mono text-[12px] leading-4 text-text-muted">

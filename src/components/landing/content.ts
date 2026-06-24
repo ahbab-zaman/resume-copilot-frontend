@@ -1,25 +1,24 @@
-import ats from "@/assets/ats.png";
-import resume from "@/assets/resume.png";
-import doc from "@/assets/document.png";
+import ats from "@/assets/resume-writer.png";
+import resume from "@/assets/score.png";
+import doc from "@/assets/website.png";
 export const navLinks = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "Features", href: "/features" },
-  { label: "How it works", href: "/how-it-works" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Contact Us", href: "/contact" },
   { label: "FAQ", href: "/faq" },
 ];
 
 export const featureCards = [
   {
-    title: "ATS scoring",
-    description:
-      "See match quality, missing keywords, and the hiring signals behind a job description.",
-    icon: ats,
-  },
-  {
     title: "Resume optimization",
     description:
       "Turn one resume into a sharper draft with stronger verbs, better structure, and clearer signals.",
+    icon: ats,
+  },
+  {
+    title: "ATS scoring and gap analysis",
+    description:
+      "Practice your responses to common interview questions tailored to the job you're applying for.",
     icon: resume,
   },
   {

@@ -6,7 +6,7 @@ import Image from "next/image";
 export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
-      <div className="mx-auto max-w-350 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div>
             <div className="flex items-center gap-3">

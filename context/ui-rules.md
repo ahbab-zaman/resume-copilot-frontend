@@ -5,11 +5,10 @@
 ## Font
 
 ```typescript
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Roboto } from "next/font/google";
 ```
 
-Apply `${GeistSans.variable} ${GeistMono.variable}` on the `<html>` tag in the root layout. `--font-sans` and `--font-mono` are declared in `@theme` in `globals.css`. Never fall back to a system font as the primary face. See `library-docs.md` for the exact package and import.
+Apply `roboto.variable` on the `<html>` tag in the root layout. `--font-sans` and `--font-mono` are declared in `@theme` in `globals.css`. Never fall back to a system font as the primary face. See `library-docs.md` for the exact package and import.
 
 ---
 
@@ -69,15 +68,21 @@ Every interactive element has a deliberate motion response — the absence of mo
 
 ## Responsive Strategy
 
-Three breakpoints, using Tailwind's defaults directly — no custom breakpoint tokens needed.
+Seven breakpoints, using the custom Tailwind v4 scale defined in `globals.css`.
 
 | Name    | Width      | Tailwind prefix  |
 | ------- | ---------- | ---------------- |
-| Mobile  | < 640px    | (none — default) |
-| Tablet  | 640–1023px | `sm:`            |
-| Desktop | ≥ 1024px   | `lg:`            |
+| xxs     | 0px        | (none — default) |
+| xs      | 360px      | `xs:`            |
+| sm      | 576px      | `sm:`            |
+| md      | 768px      | `md:`            |
+| lg      | 992px      | `lg:`            |
+| xl      | 1200px     | `xl:`            |
+| xxl     | 1400px     | `xxl:`           |
 
 Exact per-page responsive behavior lives in each page's file under `context/design-specs/` — the rules below are the _cross-page_ defaults every page inherits unless its spec says otherwise.
+
+For collapsed reasoning used across the app: mobile is below `sm` (576px), tablet is `sm` through `lg` (576–991px), and desktop is `lg` and up (992px+).
 
 ### Sidebar (In-App Shell)
 
@@ -323,7 +328,7 @@ Tokens defined with `@theme` in `globals.css` — no `tailwind.config.ts`. Alway
 - Never render a heading in all-caps or with positive letter-spacing — sentence-case + negative tracking only.
 - Never apply a single flat `box-shadow` — always the stacked elevation levels in `ui-tokens.md`.
 - Never use the aurora gradient outside the landing-page hero — not as an icon, not as a card background, not reduced to one color. Never use gold anywhere beyond its three sanctioned contexts (featured pricing card, premium badge, the gradient's warm stop).
-- Never set body paragraphs or prose in Geist Mono — mono is for extracted-text previews, code-like content, and technical eyebrow labels only.
-- Never use weight 700+ on Geist anywhere except the logotype.
+- Never set body paragraphs or prose in the mono stack — mono is for extracted-text previews, code-like content, and technical eyebrow labels only.
+- Never use weight 700+ on Roboto anywhere except the logotype.
 - Never mix the pill button scale and the 6px button scale on the same screen.
 - Never use `position: fixed` except for the sidebar and dialogs/dropdowns (Radix/shadcn portal pattern, not manual `fixed`).

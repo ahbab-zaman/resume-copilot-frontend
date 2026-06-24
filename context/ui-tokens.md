@@ -1,103 +1,19 @@
 # UI Tokens — Frontend
 
-> **Used in:** Frontend repo only. A premium, considered palette — warm ivory canvas, one confident indigo accent used everywhere (buttons, links, active states), and a champagne gold reserved exclusively for rare "premium" signals (Pro tier, premium badges). Structural system (radius scales, elevation, motion, typography, two-register marketing/in-app split) is unchanged from before — only the color identity changed. Never hardcode hex values or use raw Tailwind color classes in components.
+> **Used in:** Frontend repo only. Vivid, energetic SaaS identity — coral as the one accent used everywhere (buttons, links route through a separate indigo-blue to stay distinct from CTAs), orange reserved for rare "premium" signals, and confident saturated semantic colors (this palette is intentionally more saturated than a muted/jewel-tone system — that's a deliberate identity choice, not an inconsistency). Structural system (radius scales, elevation, motion, typography sizes, two-register marketing/in-app split) is unchanged — only colors, font, and breakpoints changed. Never hardcode hex values or use raw Tailwind color classes in components.
 
 ## How to Use
 
-Tailwind v4. Tokens defined via `@theme` in `app/globals.css` — no `tailwind.config.ts` for colors.
+Tailwind v4. Tokens defined via `@theme inline` in `app/globals.css` — no `tailwind.config.ts` for colors.
 
 ```tsx
 // Correct
 className = "bg-surface text-text-primary border-border rounded-sm";
 
 // Never
-className = "bg-[#faf9f6] text-[#1c1b1f]";
-className = "bg-blue-500 text-gray-600";
+className = "bg-[#ff5e59] text-[#343a40]";
+className = "bg-red-500 text-gray-600";
 ```
-
----
-
-## globals.css — Token Definition
-
-```css
-@import "tailwindcss";
-
-@theme {
-  /* Fonts */
-  --font-sans: "Geist", "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono:
-    "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-
-  /* Surfaces — warm ivory ladder, not cold gray */
-  --color-background: #faf9f6; /* warm ivory — default page background */
-  --color-surface: #ffffff; /* pure white — cards, dialogs, kept crisp against the warm body */
-  --color-surface-secondary: #f3f1ec; /* warm cream inset — hover states, dropdowns */
-
-  /* Borders — warm-neutral, not blue-gray */
-  --color-border: #e8e4dc;
-  --color-border-strong: #c9c2b4;
-
-  /* Text — warm charcoal, not cool black */
-  --color-text-primary: #1c1b1f;
-  --color-text-secondary: #5b5752;
-  --color-text-muted: #94908a;
-  --color-on-primary: #ffffff;
-
-  /* The one accent — deep indigo-violet, used for every CTA, link, and active state */
-  --color-accent: #4f3cc9;
-  --color-accent-deep: #3c2d9e; /* hover/pressed */
-  --color-accent-light: #ece8fb; /* soft badge background */
-  --color-accent-foreground: #ffffff;
-
-  /* Champagne gold — premium signal ONLY. Pro tier, premium badges. Nowhere else. */
-  --color-gold: #c9a227;
-  --color-gold-light: #f5eac8;
-  --color-gold-foreground: #6b5310;
-
-  /* Jewel-tone semantics — muted, never flat/saturated */
-  --color-success: #1f8a5f; /* deep emerald */
-  --color-success-light: #dcf3e7;
-  --color-success-foreground: #0e5c3d;
-  --color-warning: #d98324; /* warm copper-amber */
-  --color-warning-light: #fbe8d2;
-  --color-warning-foreground: #8a4e0e;
-  --color-error: #c8385a; /* sophisticated rose, not stock red */
-  --color-error-light: #f8dce3;
-  --color-error-foreground: #8c1f3b;
-  --color-teal: #1b7a78; /* secondary jewel tone — category variety only */
-  --color-teal-light: #d9efee;
-  --color-teal-foreground: #0f4d4b;
-
-  /* Google brand (OAuth button) */
-  --color-google: #4285f4;
-
-  /* Hero decoration — one signature gradient mesh, recolored to the new identity */
-  --gradient-aurora-start: #4f3cc9; /* indigo */
-  --gradient-aurora-mid: #8a6fe8; /* soft violet */
-  --gradient-aurora-end: #c9a227; /* champagne gold — the gradient is the one place gold appears more freely, since it's decorative, not a UI signal */
-  --gradient-aurora-accent: #1b7a78; /* teal accent stop */
-
-  /* Border radius — two deliberate scales, never mixed on one screen */
-  --radius-none: 0px;
-  --radius-xs: 4px;
-  --radius-sm: 6px; /* in-app: nav buttons, form inputs, dropdowns */
-  --radius-md: 8px; /* in-app: cards (dashboard, copilot, resumes, applications, interview, settings) */
-  --radius-lg: 12px; /* marketing: larger feature/pricing cards */
-  --radius-xl: 16px; /* marketing: hero-adjacent image cards */
-  --radius-pill-sm: 64px;
-  --radius-pill: 100px; /* marketing: every primary/secondary CTA pill on landing + pricing */
-  --radius-full: 9999px; /* badges, circular icon buttons, sidebar ghost pills */
-}
-```
-
----
-
-## Two Radius Scales — Never Mixed on One Screen
-
-| Surface                                        | Radius scale                        | Button shape          |
-| ---------------------------------------------- | ----------------------------------- | --------------------- |
-| **Marketing** (`/`, `/pricing`, public navbar) | `radius-lg` / `radius-xl` for cards | `radius-pill` (100px) |
-| **In-app** (sidebar shell)                     | `radius-sm` / `radius-md` for cards | `radius-sm` (6px)     |
 
 ---
 
@@ -121,26 +37,38 @@ className = "bg-blue-500 text-gray-600";
 | Secondary text, labels         | `text-text-secondary` |
 | Placeholder, muted, fine print | `text-text-muted`     |
 
-### Accent — Indigo (Used Constantly, Not Sparingly)
+### Accent — Coral, Used Constantly
 
-Unlike a restrained single-purpose accent, this indigo is vibrant enough to carry every interactive signal in the product — buttons, links, active states, focus rings. Using it everywhere is what makes it feel intentional.
+Every button, every active state. This is the color that should feel synonymous with the product.
 
-| Element                                  | Token                             |
-| ---------------------------------------- | --------------------------------- |
-| Primary button background                | `bg-accent`                       |
-| Primary button hover/press               | `bg-accent-deep`                  |
-| Primary button text                      | `text-accent-foreground`          |
-| Inline link                              | `text-accent`, underline on hover |
-| Active sidebar item — left indicator bar | `bg-accent`                       |
-| Soft badge background                    | `bg-accent-light`                 |
+| Element                                  | Token                    |
+| ---------------------------------------- | ------------------------ |
+| Primary button background                | `bg-accent`              |
+| Primary button hover/press               | `bg-accent-deep`         |
+| Primary button text                      | `text-accent-foreground` |
+| Active sidebar item — left indicator bar | `bg-accent`              |
+| Soft badge background                    | `bg-accent-light`        |
 
-### Gold — Premium Signal, Used in Exactly Three Places
+### Link / Category — Indigo-Blue, Kept Distinct From Accent
+
+Deliberately separate from the coral accent so a hyperlink never visually competes with a call-to-action button on the same screen.
+
+| Element               | Token                                    |
+| --------------------- | ---------------------------------------- |
+| Inline link           | `text-link`, underline on hover          |
+| Soft badge background | `bg-link-light` / `text-link-foreground` |
+
+### Premium — Orange, Used in Exactly Three Places
 
 1. The featured/Pro pricing tier card.
 2. A "Premium"/"Pro" badge, if one is ever needed.
 3. The hero gradient's warm stop (decorative, not a UI signal).
 
-Never use gold for a button, a link, a regular badge, or anything that appears more than a handful of times on a page. The moment it's common, it stops working.
+Never use `bg-premium`/`text-premium` for a button, a link, or a regular badge — the moment it's common, it stops signaling anything.
+
+### A Note on Primary vs. Danger
+
+The accent (`#ff5e59`) and the error/danger color (`#e80029`) are both red-family hues, close enough that color alone won't reliably distinguish "primary action" from "destructive action." **Never rely on hue alone for this distinction** — a destructive button always also gets a `ti-trash`/warning icon and, for anything irreversible (delete account, delete resume), a confirmation dialog. Placement matters too: keep primary and destructive buttons from sitting directly adjacent without a clear visual break (spacing, a divider, or opposite alignment in a dialog footer).
 
 ### ATS Match Score Bands
 
@@ -161,8 +89,8 @@ Never use gold for a button, a link, a regular badge, or anything that appears m
 
 | Status    | Background         | Text                      |
 | --------- | ------------------ | ------------------------- |
-| Applied   | `bg-accent-light`  | `text-accent`             |
-| Screening | `bg-teal-light`    | `text-teal-foreground`    |
+| Applied   | `bg-info-light`    | `text-info-foreground`    |
+| Screening | `bg-purple-light`  | `text-purple-foreground`  |
 | Interview | `bg-success-light` | `text-success-foreground` |
 | Rejected  | `bg-error-light`   | `text-error-foreground`   |
 | Offer     | `bg-success`       | `text-on-primary`         |
@@ -171,7 +99,7 @@ Never use gold for a button, a link, a regular badge, or anything that appears m
 
 | Category   | Background             | Text                   |
 | ---------- | ---------------------- | ---------------------- |
-| Technical  | `bg-accent-light`      | `text-accent`          |
+| Technical  | `bg-link-light`        | `text-link-foreground` |
 | Behavioral | `bg-teal-light`        | `text-teal-foreground` |
 | HR         | `bg-surface-secondary` | `text-text-secondary`  |
 
@@ -179,7 +107,7 @@ Never use gold for a button, a link, a regular badge, or anything that appears m
 
 ## Typography Scale
 
-(Unchanged from before — Geist sans, Geist Mono for technical labels, weight 600 ceiling, negative tracking on display sizes. See `ui-rules.md` for full application rules.)
+Font changed to **Roboto** (with the system fallback chain in `globals.css`) — sizes, weights, and line-heights are otherwise unchanged from before. See `library-docs.md` for the `next/font/google` setup.
 
 | Token            | Size | Weight | Line height | Letter spacing | Use                                             |
 | ---------------- | ---- | ------ | ----------- | -------------- | ----------------------------------------------- |
@@ -198,6 +126,26 @@ Never use gold for a button, a link, a regular badge, or anything that appears m
 | `button-md`      | 14px | 500    | 20px        | 0              | In-app (6px-radius) button labels               |
 | `button-lg`      | 16px | 500    | 24px        | 0              | Marketing (pill) button labels                  |
 
+Roboto does support weight 700 (unlike Geist's 600 ceiling) — but **stay at the 600 ceiling anyway** for consistency with the sizes above; don't introduce 700 just because the font supports it.
+
+---
+
+## Breakpoints — 7-Tier Scale
+
+Defined as real Tailwind v4 custom breakpoints via `--breakpoint-*` in `@theme inline` — these generate actual `xs:`, `sm:`, `md:`, `lg:`, `xl:`, `xxl:` variants, not just documentation.
+
+| Tier | Width  | Tailwind prefix              |
+| ---- | ------ | ---------------------------- |
+| xxs  | 0px    | (none — default/base styles) |
+| xs   | 360px  | `xs:`                        |
+| sm   | 576px  | `sm:`                        |
+| md   | 768px  | `md:`                        |
+| lg   | 992px  | `lg:`                        |
+| xl   | 1200px | `xl:`                        |
+| xxl  | 1400px | `xxl:`                       |
+
+For the simpler mobile/tablet/desktop collapsing logic used throughout `ui-rules.md`: **mobile** = below `sm` (576px), **tablet** = `sm` to `lg` (576–991px), **desktop** = `lg` and up (992px+). `xs` (360px) is for the narrowest phones specifically (tighter padding, smaller touch-safe adjustments); `xxl` (1400px) caps the max content width on very large monitors — see `ui-rules.md`'s Responsive Strategy section for full detail.
+
 ---
 
 ## Spacing
@@ -208,7 +156,7 @@ Never use gold for a button, a link, a regular badge, or anything that appears m
 
 ## Elevation — Stacked Shadows, Never a Single Drop
 
-Shadows stay neutral black-based regardless of accent color — that's standard practice and keeps elevation feeling like physical depth, not tinted color.
+Shadows stay neutral black-based regardless of accent color.
 
 | Level              | CSS                                                                                                                | Use                                              |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
@@ -226,18 +174,15 @@ Shadows stay neutral black-based regardless of accent color — that's standard 
 (Unchanged — see `ui-rules.md`'s Motion & Microinteractions section for full application.)
 
 ```css
-@theme {
-  --duration-fast: 120ms;
-  --duration-base: 200ms;
-  --duration-moderate: 320ms;
-  --duration-slow: 480ms;
-  --duration-hero: 800ms;
-
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
-  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+--duration-fast: 120ms;
+--duration-base: 200ms;
+--duration-moderate: 320ms;
+--duration-slow: 480ms;
+--duration-hero: 800ms;
+--ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+--ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+--ease-exit: cubic-bezier(0.4, 0, 1, 1);
+--ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
 ```
 
 ---
@@ -257,6 +202,7 @@ button-secondary: bg-surface text-text-primary rounded-[100px], border border-bo
 button-primary-sm:   bg-accent text-accent-foreground rounded-sm h-7, hover bg-accent-deep
 button-secondary-sm: bg-surface border border-border text-text-primary rounded-sm h-7
 ghost: bg-transparent text-text-secondary hover:bg-surface-secondary rounded-sm
+destructive: bg-error text-on-primary rounded-sm h-7 — always paired with a trash/warning icon, never adjacent to a primary button without a clear visual break
 ```
 
 ### Cards
@@ -265,7 +211,7 @@ ghost: bg-transparent text-text-secondary hover:bg-surface-secondary rounded-sm
 in-app card:    bg-surface border border-border rounded-md p-4   (Elevation Level 1 or 2)
 marketing card: bg-surface rounded-lg p-6                          (Elevation Level 3)
 pricing card:   bg-surface rounded-lg p-8                          (Elevation Level 4)
-featured pricing card: bg-accent text-on-primary rounded-lg p-8, gold accent border (border-2 border-gold) — the one card on the entire site allowed a gold border
+featured pricing card: bg-accent text-on-primary rounded-lg p-8, premium accent border (border-2 border-premium)
 ```
 
 ### Form Inputs
@@ -299,13 +245,15 @@ text: text-text-primary
 ## Invariants
 
 - Never use hex values directly in components — always use tokens via Tailwind utility classes.
-- Fonts are Geist (sans) and Geist Mono (technical) — never substitute Inter unless Geist genuinely fails to load.
-- Never use Tailwind's built-in color scales (`bg-blue-500`, `text-gray-600`).
-- `--color-accent` (indigo) carries every button, link, and active state — used constantly, not sparingly. This is deliberate: an accent used everywhere reads as intentional brand identity, not decoration.
-- `--color-gold` is reserved for exactly three contexts (see Color Usage Guide above) — using it anywhere else dilutes the one thing that makes it feel premium.
-- The aurora gradient exists only for the landing-page hero — never used as a card background, icon, or anywhere at in-app scale.
+- Font is Roboto (with the system fallback chain defined in `globals.css`) — see `library-docs.md` for the `next/font/google` setup.
+- Never use Tailwind's built-in color scales (`bg-red-500`, `text-gray-600`).
+- `--color-accent` (coral) carries every button and active state — used constantly. `--color-link` (indigo-blue) is reserved for hyperlinks and category badges specifically, kept separate so links never visually compete with CTAs.
+- `--color-premium` (orange) is reserved for exactly three contexts (see Color Usage Guide) — using it elsewhere dilutes the one thing that makes it feel premium.
+- Never rely on color alone to distinguish primary from destructive actions — see the "A Note on Primary vs. Danger" section above. Always pair destructive actions with an icon and, for irreversible ones, a confirmation dialog.
+- The hero gradient exists only for the landing-page hero — never used as a card background, icon, or anywhere at in-app scale.
 - Marketing pages use the pill radius scale; in-app pages use the 6/8px radius scale — never mixed on one screen.
-- Shadows are always stacked and neutral black-based — never tinted with the accent color, never a single generic `box-shadow`.
+- Shadows are always stacked and neutral black-based — never tinted with the accent color.
 - Match score bars, skill badges, and Kanban status badges always use the score-band/status tokens above — never hardcoded colors.
 - All borders default to `--color-border` — never `border-gray-*`.
 - Every transition uses a duration + easing token from the Motion scale — never an inline arbitrary value.
+- Breakpoints are the 7-tier custom scale (`xs`–`xxl`) defined in `globals.css` — never assume Tailwind's stock breakpoint values when reasoning about a layout's responsive behavior.

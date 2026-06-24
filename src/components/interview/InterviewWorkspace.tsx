@@ -90,7 +90,7 @@ type InterviewSectionProps = {
 
 function InterviewSection({ title, questions }: InterviewSectionProps) {
   return (
-    <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+    <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -167,7 +167,7 @@ export function InterviewWorkspace() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+      <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
         <div className="max-w-3xl">
           <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
             Interview
@@ -185,7 +185,7 @@ export function InterviewWorkspace() {
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div className="space-y-6">
-          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
@@ -284,7 +284,7 @@ export function InterviewWorkspace() {
               ))}
             </div>
           ) : (
-            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--border)_inset]">
+            <section className="rounded-md border border-border bg-surface p-6 shadow-[0_0_0_1px_var(--color-border)_inset]">
               <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
                 No session yet
               </p>
@@ -301,7 +301,7 @@ export function InterviewWorkspace() {
         </div>
 
         <aside className="space-y-6">
-          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               Session details
             </p>
@@ -354,7 +354,7 @@ export function InterviewWorkspace() {
             )}
           </section>
 
-          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--border)_inset]">
+          <section className="rounded-md border border-border bg-surface p-4 shadow-[0_0_0_1px_var(--color-border)_inset]">
             <p className="text-[12px] font-medium uppercase tracking-[0.12em] text-text-muted">
               Flow
             </p>

@@ -84,7 +84,7 @@ function TestimonialCard({
   testimonial: (typeof allTestimonials)[0];
 }) {
   return (
-    <article className="w-[320px] shrink-0 rounded-[16px] border border-border bg-surface p-5 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--border)_inset]">
+    <article className="w-[320px] shrink-0 rounded-[16px] border border-border bg-surface p-5 shadow-[0_2px_2px_rgba(0,0,0,0.04),0_8px_8px_-8px_rgba(0,0,0,0.04),0_0_0_1px_var(--color-border)_inset]">
       <p className="text-[15px] leading-7 text-text-secondary">
         &ldquo;{testimonial.quote}&rdquo;
       </p>

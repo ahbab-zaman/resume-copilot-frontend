@@ -1,86 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  /* Surfaces — warm ivory ladder */
-  --canvas: #ffffff;
-  --canvas-soft: #faf9f6;
-  --canvas-soft-2: #f3f1ec;
+  /* Raw palette as provided */
+  --blue: #514eea;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #faf4f3;
+  --red: #e80029;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #056640;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #ffffff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #ff5e59;
+  --secondary: #514eea;
+  --success: #056640;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #e80029;
+  --light: #f8f9fa;
+  --dark: #3f3f3f;
+  --blue-dark: #081430;
 
-  /* Borders — warm-neutral */
-  --border: #e8e4dc;
-  --border-strong: #c9c2b4;
+  /* Derived tints/shades (not given directly — computed for usable UI states) */
+  --primary-deep: #e8453f; /* ~12% darker primary, hover/press state */
+  --border-hairline: #e4e6e9; /* derived light neutral border */
+  --text-muted-tint: #9aa0a6; /* derived lighter gray for placeholder/fine print */
+  --success-light: #d7eee3;
+  --success-foreground: #033f27;
+  --warning-light: #fff3cd;
+  --warning-foreground: #856404;
+  --danger-light: #fbd7dd;
+  --danger-foreground: #8c0016;
+  --info-light: #d1ecf0;
+  --info-foreground: #0c5460;
+  --secondary-light: #e6e5fb; /* light tint of --secondary/--blue for category badges */
+  --secondary-foreground: #2e2bb0;
+  --teal-light: #d2f4ea;
+  --teal-foreground: #0f6848;
+  --purple-light: #ece4f7;
+  --purple-foreground: #4a2d80;
+  --orange-light: #ffe5cc;
+  --orange-foreground: #93450a;
 
-  /* Text — warm charcoal */
-  --text-primary: #1c1b1f;
-  --text-secondary: #5b5752;
-  --text-muted: #94908a;
-  --on-primary: #ffffff;
-
-  /* Accent — deep indigo-violet, used everywhere */
-  --accent: #4f3cc9;
-  --accent-deep: #3c2d9e;
-  --accent-light: #ece8fb;
-  --accent-foreground: #ffffff;
-
-  /* Gold — premium signal only, three contexts max */
-  --gold: #c9a227;
-  --gold-light: #f5eac8;
-  --gold-foreground: #6b5310;
-
-  /* Jewel-tone semantics */
-  --success: #1f8a5f;
-  --success-light: #dcf3e7;
-  --success-foreground: #0e5c3d;
-  --warning: #d98324;
-  --warning-light: #fbe8d2;
-  --warning-foreground: #8a4e0e;
-  --error: #c8385a;
-  --error-light: #f8dce3;
-  --error-foreground: #8c1f3b;
-  --teal: #1b7a78;
-  --teal-light: #d9efee;
-  --teal-foreground: #0f4d4b;
-
-  /* Google brand */
+  /* Google brand (OAuth button) — unrelated to this palette, kept as-is */
   --google: #4285f4;
 
-  /* Hero aurora gradient — landing page only */
-  --gradient-aurora-start: #4f3cc9;
-  --gradient-aurora-mid: #8a6fe8;
-  --gradient-aurora-end: #c9a227;
-  --gradient-aurora-accent: #1b7a78;
+  /* Hero gradient stops — recolored to the new identity */
+  --gradient-start: #ff5e59; /* primary coral */
+  --gradient-mid: #514eea; /* secondary indigo-blue */
+  --gradient-accent: #20c997; /* teal */
+  --gradient-end: #fd7e14; /* orange */
 }
 
 @theme inline {
   /* Fonts */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans:
+    var(--font-roboto), "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
 
   /* Surfaces */
-  --color-background: var(--canvas-soft);
-  --color-surface: var(--canvas);
-  --color-surface-secondary: var(--canvas-soft-2);
+  --color-background: var(--light);
+  --color-surface: var(--white);
+  --color-surface-secondary: var(--pink);
 
   /* Borders */
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
+  --color-border: var(--border-hairline);
+  --color-border-strong: var(--gray);
 
   /* Text */
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
-  --color-on-primary: var(--on-primary);
+  --color-text-primary: var(--gray-dark);
+  --color-text-secondary: var(--gray);
+  --color-text-muted: var(--text-muted-tint);
+  --color-on-primary: var(--white);
 
-  /* Accent */
-  --color-accent: var(--accent);
-  --color-accent-deep: var(--accent-deep);
-  --color-accent-light: var(--accent-light);
-  --color-accent-foreground: var(--accent-foreground);
+  /* Accent — coral, used everywhere */
+  --color-accent: var(--primary);
+  --color-accent-deep: var(--primary-deep);
+  --color-accent-light: var(--pink);
+  --color-accent-foreground: var(--white);
 
-  /* Gold */
-  --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
-  --color-gold-foreground: var(--gold-foreground);
+  /* Links / category — indigo-blue, kept distinct from accent */
+  --color-link: var(--secondary);
+  --color-link-light: var(--secondary-light);
+  --color-link-foreground: var(--secondary-foreground);
+
+  /* Premium signal — orange, rare use only */
+  --color-premium: var(--orange);
+  --color-premium-light: var(--orange-light);
+  --color-premium-foreground: var(--orange-foreground);
 
   /* Semantic */
   --color-success: var(--success);
@@ -89,15 +103,21 @@
   --color-warning: var(--warning);
   --color-warning-light: var(--warning-light);
   --color-warning-foreground: var(--warning-foreground);
-  --color-error: var(--error);
-  --color-error-light: var(--error-light);
-  --color-error-foreground: var(--error-foreground);
+  --color-error: var(--danger);
+  --color-error-light: var(--danger-light);
+  --color-error-foreground: var(--danger-foreground);
+  --color-info: var(--info);
+  --color-info-light: var(--info-light);
+  --color-info-foreground: var(--info-foreground);
   --color-teal: var(--teal);
   --color-teal-light: var(--teal-light);
   --color-teal-foreground: var(--teal-foreground);
+  --color-purple: var(--purple);
+  --color-purple-light: var(--purple-light);
+  --color-purple-foreground: var(--purple-foreground);
   --color-google: var(--google);
 
-  /* Border radius */
+  /* Border radius — unchanged structural system */
   --radius-none: 0px;
   --radius-xs: 4px;
   --radius-sm: 6px;
@@ -108,7 +128,7 @@
   --radius-pill: 100px;
   --radius-full: 9999px;
 
-  /* Motion */
+  /* Motion — unchanged */
   --duration-fast: 120ms;
   --duration-base: 200ms;
   --duration-moderate: 320ms;
@@ -118,6 +138,37 @@
   --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Breakpoints — the exact 7-tier scale provided. xxs (0px) is the unprefixed
+     base style in Tailwind, so it's not defined as its own prefix below. */
+  --breakpoint-xs: 360px;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body::-webkit-scrollbar,
+.dropdown-menu::-webkit-scrollbar {
+  width: 0.375rem;
+  background-color: var(--pink);
+}
+
+body::-webkit-scrollbar-thumb,
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: var(--blue-dark);
 }
 
 body {
@@ -131,14 +182,14 @@ pre {
   font-family: var(--font-mono);
 }
 
-/* Aurora gradient utility — landing page hero only, never used at in-app scale */
+/* Hero gradient utility — landing page only, never used at in-app scale */
 .aurora-gradient {
   background: radial-gradient(
     ellipse 80% 60% at 50% 0%,
-    var(--gradient-aurora-start) 0%,
-    var(--gradient-aurora-mid) 35%,
-    var(--gradient-aurora-accent) 65%,
-    var(--gradient-aurora-end) 100%
+    var(--gradient-start) 0%,
+    var(--gradient-mid) 35%,
+    var(--gradient-accent) 65%,
+    var(--gradient-end) 100%
   );
   opacity: 0.18;
   filter: blur(60px);
@@ -147,22 +198,60 @@ pre {
 /* Dark mode intentionally not implemented yet — ui-tokens.md only defines
    light-mode values. Build this out when the Settings page's theme toggle
    (Feature 23 in build-plan.md) is actually being worked on, not before. */
-
-
-
-@keyframes marquee-left {
-  0% {
-    transform: translateX(0);
-  }
+@keyframes float-1 {
+  0%,
   100% {
-    transform: translateX(-50%);
+    transform: rotate(-18deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-18deg) translateY(-12px);
   }
 }
-@keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
-  }
+@keyframes float-2 {
+  0%,
   100% {
+    transform: rotate(-8deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-8deg) translateY(-14px);
+  }
+}
+@keyframes float-3 {
+  0%,
+  100% {
+    transform: rotate(4deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(4deg) translateY(-10px);
+  }
+}
+@keyframes float-4 {
+  0%,
+  100% {
+    transform: rotate(16deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(16deg) translateY(-13px);
+  }
+}
+.card-1 {
+  animation: float-1 4.2s ease-in-out infinite;
+}
+.card-2 {
+  animation: float-2 3.8s ease-in-out infinite 0.4s;
+}
+.card-3 {
+  animation: float-3 4.6s ease-in-out infinite 0.8s;
+}
+.card-4 {
+  animation: float-4 4s ease-in-out infinite 1.2s;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
     transform: translateX(0);
   }
 }

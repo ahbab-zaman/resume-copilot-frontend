@@ -4,7 +4,7 @@
 
 ## Public Navbar
 
-### Desktop Layout (≥1024px)
+### Desktop Layout (≥992px)
 
 - Fixed/sticky, `height: 64px`, `bg-surface`, `border-b border-border` (hairline only, no shadow while at top of page).
 - On scroll past 8px: add Elevation Level 2 shadow (subtle drop) — gives the bar separation once content scrolls under it. Transition: `duration-base`/`ease-standard`.
@@ -13,12 +13,12 @@
 - Nav links (Features, Pricing, FAQ): `body-sm`, `text-text-secondary`, `gap-8` between items. Hover: `text-text-primary` + a 2px underline that wipes in from the left via `transform: scaleX(0 → 1)`, `duration-fast`. Active route (e.g. on `/pricing`): underline persists, `text-text-primary`.
 - Right cluster: "Log In" (`button-secondary-sm`) + "Get Started" (`button-primary-sm`), `gap-3`.
 
-### Tablet (640–1023px)
+### Tablet (576–991px)
 
 - Same 64px bar. Nav links collapse into a hamburger icon (24px, `text-text-primary`) positioned left of the auth buttons. Logo stays left.
 - Tapping hamburger opens a full-screen overlay (`bg-surface`, fade+scale in per `ui-rules.md`'s Dialog motion pattern) with nav links stacked vertically, `body-lg`, `gap-6`, centered, auth buttons pinned at the bottom of the overlay.
 
-### Mobile (<640px)
+### Mobile (<576px)
 
 - Bar height drops to 56px, horizontal padding `px-4`.
 - Same hamburger pattern as tablet. "Get Started" button shrinks to icon+label compact form if needed, but never disappears — it's the primary conversion action.
@@ -31,7 +31,7 @@
 
 ## Footer
 
-### Desktop Layout (≥1024px)
+### Desktop Layout (≥992px)
 
 - `bg-surface`, `text-text-secondary`, padding `py-16 px-6` (spacing.4xl top/bottom).
 - Four-column grid: **Product** (Features, Pricing, Copilot), **Company** (About, Blog — placeholder links acceptable pre-launch), **Resources** (FAQ, Support), **Legal** (Privacy, Terms).
@@ -39,11 +39,11 @@
 - Links: `body-sm`, `text-text-secondary`, hover `text-text-primary`, `duration-fast`, stacked `gap-2`.
 - Bottom row below a `border-t border-border` divider, `mt-12 pt-6`: logo mark (small, 20px) + "© 2026 AI Resume Job Pilot" left, social icons (if any) right — `icon-button-circular` chrome at 32px.
 
-### Tablet (640–1023px)
+### Tablet (576–991px)
 
 - Four columns collapse to two columns, 2×2 grid, same column content.
 
-### Mobile (<640px)
+### Mobile (<576px)
 
 - Single column, each section becomes a collapsible accordion (tap column header to expand/collapse links) to avoid an extremely long scroll — `duration-moderate`/`ease-emphasized` expand, chevron icon rotates 180deg.
 - Bottom row stacks vertically, centered.

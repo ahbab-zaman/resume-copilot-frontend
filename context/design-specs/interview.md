@@ -2,7 +2,7 @@
 
 > **Used in:** Frontend repo only. Build alongside Feature 21 in `build-plan.md`.
 
-## Desktop Layout (≥1024px)
+## Desktop Layout (≥992px)
 
 Two states: **Setup State** and **Practice State** — same page, conditional render, same pattern as the Copilot page.
 
@@ -23,12 +23,12 @@ Two states: **Setup State** and **Practice State** — same page, conditional re
   - If a follow-up question exists: shown as a smaller indented line below the model answer once expanded, `body-sm italic`, `text-text-secondary`, prefixed "Follow-up:".
   - "Next Question" — bottom-right of the card, ghost button, advances focus/scroll to the next card in the same category (purely a UX convenience, doesn't remove the current card).
 
-## Tablet (640–1023px)
+## Tablet (576–991px)
 
 - Role selector cards: 3-up stays (they're narrow enough), or drop to a horizontal-scroll row if they feel cramped — test both, prefer keeping 3-up if it fits without text wrapping awkwardly.
 - Question groups: unchanged, full width.
 
-## Mobile (<640px)
+## Mobile (<576px)
 
 - Role selector cards stack vertically, full width, `gap-3`.
 - Difficulty segmented control stays horizontal (only 3 options, fits fine).

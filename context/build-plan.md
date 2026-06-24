@@ -18,7 +18,7 @@ Every feature below states what happens in the **Frontend repo**, the **Backend 
 
 ### 02 Frontend Skeleton + better-auth ✅ Done
 
-**Frontend:** Next.js app boots, Tailwind + shadcn installed, root layout with Geist font. better-auth configured (`lib/auth.ts`) with email/password + Google OAuth + JWT plugin. `/login` and `/register` working end to end — can create an account and land on a placeholder `/dashboard`.
+**Frontend:** Next.js app boots, Tailwind + shadcn installed, root layout with Roboto font. better-auth configured (`lib/auth.ts`) with email/password + Google OAuth + JWT plugin. `/login` and `/register` working end to end — can create an account and land on a placeholder `/dashboard`.
 
 ### 03 Database Schema
 
