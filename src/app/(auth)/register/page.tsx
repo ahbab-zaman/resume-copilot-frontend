@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { AuthForm } from "@/components/auth/AuthForm";
 
-import logo from "../../../../public/assets/logo-pilot.png";
+import logo from "@/assets/logo-pilot.png";
 
 const registerHighlights = [
   "Keep every resume version and ATS result in one workspace",

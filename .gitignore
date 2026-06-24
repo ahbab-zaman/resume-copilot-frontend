@@ -43,3 +43,5 @@ next-env.d.ts
 # skills
 # /context/
 # /.agents/
+
+.vercel
