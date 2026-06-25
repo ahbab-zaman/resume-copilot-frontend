@@ -128,8 +128,8 @@ export const footerColumns = [
   {
     title: "Product",
     links: [
-      { label: "Features", href: "/features" },
-      { label: "How it works", href: "/how-it-works" },
+      { label: "Features", href: "/#features" },
+      { label: "How it works", href: "/#ats-preview" },
       { label: "Pricing", href: "/pricing" },
       { label: "FAQ", href: "/faq" },
     ],

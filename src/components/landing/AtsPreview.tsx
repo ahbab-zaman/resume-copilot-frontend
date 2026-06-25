@@ -25,7 +25,10 @@ export function AtsPreview() {
   const offset = circumference - (animated ? 86 / 100 : 0) * circumference;
 
   return (
-    <section className="border-b border-border bg-surface-secondary">
+    <section
+      id="ats-preview"
+      className="scroll-mt-24 border-b border-border bg-surface-secondary"
+    >
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {/* ── Left — heading + context ── */}

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { authClient } from "@/lib/auth-client";
 import { navLinks } from "@/components/landing/content";
+import { Menu } from "lucide-react";
 
 type NavbarUser = {
   name?: string | null;
@@ -156,6 +157,7 @@ export function NavbarActions({ user }: NavbarActionsProps) {
     .slice(0, 2)
     .join("")
     .toUpperCase();
+  const mobileNavLinks = navLinks.filter((link) => link.href !== "/dashboard");
 
   return (
     <>
@@ -173,7 +175,7 @@ export function NavbarActions({ user }: NavbarActionsProps) {
           openMobileMenu();
         }}
       >
-        Menu
+        <Menu />
       </button>
 
       {/* Desktop actions */}
@@ -357,11 +359,8 @@ export function NavbarActions({ user }: NavbarActionsProps) {
 
             {/* Nav links */}
             <div className="flex-1 px-3 py-3">
-              <p className="mb-1 px-3 text-[11px] font-medium uppercase tracking-widest text-text-muted">
-                Navigation
-              </p>
               <div className="space-y-0.5">
-                {navLinks.map((item) => (
+                {mobileNavLinks.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}

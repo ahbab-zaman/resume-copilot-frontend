@@ -27,7 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${roboto.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${roboto.variable} h-full scroll-smooth antialiased`}
+    >
       <body className="min-h-full bg-background text-text-primary">
         <QueryProvider>
           <ReduxProvider>{children}</ReduxProvider>

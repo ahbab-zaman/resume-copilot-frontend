@@ -115,7 +115,10 @@ export function Features() {
   const next = () => setCurrent((i) => (i + 1) % featureCards.length);
 
   return (
-    <section className="border-b border-border bg-background">
+    <section
+      id="features"
+      className="scroll-mt-24 border-b border-border bg-background"
+    >
       <div className="mx-auto max-w-[1400px] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
         <RevealSection>
           <SectionHeading
