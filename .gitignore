@@ -41,7 +41,11 @@ yarn-error.log*
 next-env.d.ts
 
 # skills
-# /context/
-# /.agents/
+/.agents/
+/context/
+/scripts/
+/AGENTS.md
+/CLAUDE.md
+/memory.md
 
 .vercel
