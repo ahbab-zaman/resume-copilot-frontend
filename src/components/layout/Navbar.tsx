@@ -15,14 +15,9 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-surface-secondary/90 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-350 items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3">
-          <Image height={60} width={60} src={logo} alt="Resume Copilot Logo" />
-          <div>
-            <p className="text-[14px] font-semibold leading-5 tracking-[-0.03em] text-text-primary">
-              Resume Copilot
-            </p>
-          </div>
+      <div className="mx-auto flex h-16 max-w-350 items-center justify-between px-4 sm:px-6 lg:px-8 py-2">
+        <Link href="/">
+          <Image height={50} width={50} src={logo} className="py-2" alt="Resume Copilot Logo" />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

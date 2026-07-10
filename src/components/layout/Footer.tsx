@@ -12,11 +12,11 @@ export function Footer() {
             <div className="flex items-center">
               <Link
                 href="/"
-                className="flex h-10 w-20 items-center justify-center text-[13px] font-semibold text-on-primary"
+                className="flex items-center justify-center text-[13px] font-semibold text-on-primary"
               >
                 <Image
-                  height={80}
-                  width={80}
+                  height={50}
+                  width={50}
                   src={logo}
                   alt="Resume Copilot Logo"
                 />
@@ -25,6 +25,9 @@ export function Footer() {
                 <p className="text-[14px] font-semibold leading-5 text-text-primary">
                   Resume Copilot
                 </p>
+                <span className="text-[12px] leading-4 text-text-muted">
+                  Optimized resume tailoring, ATS scoring, and interview prep in one workspace
+                </span>
               </div>
             </div>
             <p className="mt-4 max-w-md text-[14px] leading-6 text-text-secondary">
